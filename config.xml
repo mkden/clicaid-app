@@ -13,8 +13,7 @@
 
   <content src="index.html" />
 
-  <!-- Доступы: минимально разрешаем всё (для проверки сборки).
-       Потом можно сузить до нужных доменов. -->
+ <plugin name="cordova-plugin-whitelist" spec="1" />
   <access origin="*" />
 
   <!-- Интенты -->
