@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <link rel="stylesheet" href="css/style.css">
+
+<script src="cordova.js"></script>
+<script src="js/index.js"></script>
+<script>	
+var id_user=window.localStorage.getItem("id_user");
+var user_prava=window.localStorage.getItem("user_prava");
+ 
+
+
+	
+	
+	
+if(user_prava==2)
+{		
+setTimeout("location.href = 'zlist.html';",100);
+}
+else if(user_prava==4)
+{		
+setTimeout("location.href = 'kurerpage.html';",100);
+}
+else if(user_prava==0){
+window.location.href = "home.html";
+}	
+else{
+window.location.href = "login.html";
+}
+
+
+window.plugins.OneSignal.enableInAppAlertNotification(true);
+
+
+
+
+
+
+
+
+</script>
+	
+</head>
+
+<body>
+
+ 
+
+    <!-- ///////////// Js Files ////////////////////  -->
+    <!-- Jquery -->
+    <script src="js/lib/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap-->
+    <script src="js/lib/popper.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <script src="js/plugins/owl-carousel/owl.carousel.min.js"></script>
+    <!-- jQuery Circle Progress -->
+    <script src="js/plugins/jquery-circle-progress/circle-progress.min.js"></script>
+    <!-- Base Js File -->
+    <script src="js/base.js"></script>
+  
+
+
+</body>
+</html>

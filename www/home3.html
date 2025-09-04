@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <title>Clicaid</title>
+    <link rel="stylesheet" href="css/style.css">
+	
+
+	
+</head>
+
+<body class="bg-white">
+    <!-- loader -->
+    <div id="loader">
+	  <span class="icon-logo fa-2x ring"></span>
+    </div>
+    <!-- * loader -->
+
+
+
+<div class="appHeader no-border transparent position-absolute">
+        <div class="left">
+            <a href="home3.html" class="headerButton goBack">
+                	<i class="fas fa-chevron-left md hydrated" aria-label="chevron back outline"></i>
+            </a>
+        </div>
+        <div class="pageTitle"></div>
+        <div class="right">
+            <a href="#" class="headerButton">
+            </a>
+        </div>
+    </div>
+
+
+<div id="gdatadv" style="display:none;">
+<div class="mhstop mhsb">
+<h4 style="color:red;">Специалист выехал к Вам.
+Ожидате звонка</h4>
+</div>
+<div class="sectadv">
+
+<div class="redb vizov sectadvb"></div>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- App Capsule -->
+    <div id="appCapsule" class="pt-0">
+   <div class="login-form mt-1">
+            <div class="mt-1 mb-5">
+            </div>
+            <div class="section mt-1 mhsb">
+                <h4>Экстреный вызов на случай ЧС по Адресу или по Геолокации</h4>
+            </div>
+            <div class="mt-1 mb-5">
+			
+			
+
+
+
+<div class="greenb vizov"></div>
+
+
+         <div class="row section" onclick="gdatadv()">
+                    <div class="col-4">  
+                    </div>
+                    <div class="col-4">
+                        <div class="aBox">
+						<i class="fas fa-phone-volume"></i>
+						<span>Экстреный звонок</span>
+						</div>
+                    </div>
+                    <div class="col-4">
+                    </div>
+                </div>
+
+
+
+
+   
+
+
+			
+		
+			
+			
+
+			
+			
+			
+			
+			
+			
+				
+            </div>
+        </div>
+
+
+    </div>
+    <!-- * App Capsule -->
+
+
+
+
+   <!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="home.html" class="item active">
+            <div class="col">
+<i class="fal fa-home-lg-alt fa-2x"></i>
+            </div>
+        </a>
+        <a href="vigul.html" class="item">
+            <div class="col">
+    <i class="fad fa-users fa-2x"></i>
+            </div>
+        </a>
+
+
+        <a href="#" class="item">
+            <div class="col">
+            </div>
+        </a>
+
+        <a href="balance.html" class="item">
+            <div class="col">
+              <i class="fal fa-credit-card fa-2x"></i>
+            </div>
+        </a>
+        <a href="page-profile.html" class="item">
+            <div class="col">
+			<i class="fal fa-user fa-2x"></i>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
+
+
+
+
+
+
+    <!-- ///////////// Js Files ////////////////////  -->
+    <!-- Jquery -->
+    <script src="js/lib/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap-->
+    <script src="js/lib/popper.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <!-- Owl Carousel -->
+    <script src="js/plugins/owl-carousel/owl.carousel.min.js"></script>
+    <!-- jQuery Circle Progress -->
+    <script src="js/plugins/jquery-circle-progress/circle-progress.min.js"></script>
+    <!-- Base Js File -->
+    <script src="js/base.js"></script>
+	
+<script type="text/javascript" > 
+var id_user = window.localStorage.getItem("id_user");
+
+function gdatadv()  
+{  
+$("#gdatadv").show();
+$("#appCapsule").hide();
+$("#endv").hide();
+}
+
+
+
+
+
+
+function showa()  
+{  
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/user-info.php?id_user="+id_user, 
+dataType:"json", 
+cache: false,  
+success: function(data){   
+$("#bal").text(data.balance);
+$("#userEmail").val(data.tel);
+}  
+});  
+}
+		
+		
+		
+
+</script>
+
+</body>
+</html>

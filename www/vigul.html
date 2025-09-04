@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <title>Clicaid</title>
+    <link rel="stylesheet" href="css/style.css">
+	  <link rel="stylesheet" href="./css/jquery-ui.css">
+	  	<script>	
+	function checkConnection() {
+        if(navigator.connection.type==0)
+        {
+            window.location.href = "offline.html";
+        }
+        else if(navigator.connection.type=='none')
+        {
+            window.location.href = "offline.html";
+
+        }
+        else
+        {
+
+        }
+    }	
+	
+setInterval(function(){
+var c = checkConnection();
+}, 2000); // 10000 = 10 seconds, check for connection every 10 seconds
+</script>	
+</head>
+
+<body class="bg-white">
+
+
+   <!-- App Capsule -->
+    <div id="loadpage">
+
+    <!-- loader -->
+    <div id="loader">
+	  <span class="icon-logo fa-2x ring"></span>
+    </div>
+    <!-- * loader -->
+
+
+
+<div class="appHeader no-border transparent position-absolute">
+        <div class="left">
+            <a href="javascript:;" class="headerButton goBack">
+						<i class="fas fa-chevron-left md hydrated" aria-label="chevron back outline"></i>
+            </a>
+        </div>
+        <div class="pageTitle"></div>
+        <div class="right">
+            <a href="#" class="headerButton">
+    <i class="fad fa-users fa-2x"></i>
+            </a>
+        </div>
+    </div>
+
+
+    <!-- App Capsule -->
+    <div id="appCapsule" class="pt-0">
+	
+	
+
+	
+   <div class="login-form mt-1">
+            <div class="mt-1 mb-5">
+            </div>
+            <div class="section mt-1">
+                <h1>Сопровождение</h1>
+
+            </div>
+			
+			
+
+            <div class="section full mt-2 form" style="padding:10px;">
+		<form id="pa" name="pa">
+
+
+                <div class="row">
+				
+                    <div class="col-12">
+					 <div class="input-wrapper">
+<label class="label" for="a">Где вас должен встретить Экипаж</label>
+<input type="hidden" name="startcord1" id="startcord1">
+                        </div>
+						       </div>
+						
+ <div class="col-4"><input type="text" name="a" id="city1" class="form-control" placeholder="Город"></div>
+<div class="col-4"><input type="text" name="a" id="street" class="form-control" placeholder="Улица"></div>
+<div class="col-4">	<input type="text" name="a" id="dom" class="form-control" placeholder="Дом"></div>
+
+
+
+
+
+
+          <div class="col-12">
+					 <div class="input-wrapper">
+    <label class="label" for="tochka3"> <a href="#" id="hider">Добавить промежуточный Адрес <span id="hider-ico"><i class="far fa-plus-circle"></i></span></a></label>
+	<input type="hidden" name="startcord3" id="startcord3">
+                        </div>
+                    </div>
+
+ <div id="tochka3" style="display:none;">
+<div class="col-4" style="float: left;"><input type="text" name="a" id="city3" class="form-control" placeholder="Город"></div>
+<div class="col-4" style="float: left;"><input type="text" name="a" id="street3" class="form-control" placeholder="Улица"></div>
+<div class="col-4" style="float: left;"><input type="text" name="a" id="dom3" class="form-control" placeholder="Дом"></div>  
+ </div>
+
+
+
+				 
+              <div class="col-12">
+					 <div class="input-wrapper">
+<label class="label" for="ddd">Конечный пункт Сопровождения</label>
+<input type="hidden" name="startcord2" id="startcord2">
+                        </div>
+						       </div>
+						
+ <div class="col-4"><input type="text" name="a" id="city2" class="form-control" placeholder="Город"></div>
+<div class="col-4"><input type="text" name="a" id="street2" class="form-control" placeholder="Улица"></div>
+<div class="col-4">	<input type="text" name="a" id="dom2" class="form-control" placeholder="Дом"></div>  
+
+		<div class="col-4">
+					 <div class="input-wrapper">
+    <label class="label" for="b">Время</label>
+    <input type="time" name="b" id="b" class="form-control" >
+                        </div>
+                    </div>
+					
+					
+					 <div class="col-4">
+					 <div class="input-wrapper">
+    <label class="label" for="aa">Cоп-ние Авто</label>
+<select id="aa" name="aa" class="form-control custom-select" onchange="changea();">
+	<option value="0">Нет</option>
+	<option value="1">Да</option>
+</select>
+                        </div>
+                    </div>
+					
+					
+					
+								 <div class="col-4">
+					 <div class="input-wrapper">
+    <label class="label" for="bb">Cоп-ние в нашем Авто</label>
+<select id="bb" name="bb" class="form-control custom-select" onchange="changea();">
+	<option value="0">Нет</option>
+	<option value="1">Да</option>
+</select>
+                        </div>
+                    </div>
+					
+					
+
+							 <div class="col-4">
+					 <div class="input-wrapper">
+    <label class="label" for="aaa">Груз</label>
+<select id="aaa" name="aaa" class="form-control custom-select" onchange="changeg(this);">
+	<option value="0">Нет</option>
+	<option value="1">Да</option>
+</select>
+                        </div>
+                    </div>	
+					
+
+					 <div class="col-4">
+					 <div class="input-wrapper hide" style="display:none;">
+    <label class="label" for="bbb">Вес в КГ</label>
+    <input type="number" name="bbb" id="bbb" class="form-control" min="1">
+                        </div>
+                    </div>
+					
+				<div class="col-4">
+					 <div class="input-wrapper hide" style="display:none;">
+    <label class="label" for="ccc">Габариты в СМ</label>
+    <input type="text" name="ccc" id="ccc" class="form-control" min="1" placeholder="Ш х В х Г">
+                        </div>
+                    </div>
+				
+					
+
+   
+   					<div class="col-4">
+					 <div class="input-wrapper">
+    <label class="label" for="cc">Сколько вас</label>
+			<div class="stepper stepper-outline-dark">
+                            <a href="#" class="stepper-button stepper-down">-</a>
+                            <input type="text" name="cc" id="cc" class="form-control" value="1" disabled="">
+                            <a href="#" class="stepper-button stepper-up">+</a>
+      </div>
+                        </div>
+                    </div>
+	
+					<div class="col-4">
+					 <div class="input-wrapper">
+    <label class="label" for="c">Кол-во Машин</label>	
+	<div class="stepper stepper-outline-dark">
+                            <a href="#" class="stepper-button stepper-down">-</a>
+                            <input type="text" name="c" id="c" class="form-control" value="1" disabled="">
+                            <a href="#" class="stepper-button stepper-up">+</a>
+      </div>
+                        </div>
+                    </div>
+					
+					<div class="col-4">
+					 <div class="input-wrapper">
+    <label class="label" for="d">Кол-во Охраны</label>
+		<div class="stepper stepper-outline-dark">
+                            <a href="#" class="stepper-button stepper-down">-</a>
+                            <input type="text" name="d" id="d" class="form-control" value="1" disabled="">
+                            <a href="#" class="stepper-button stepper-up">+</a>
+      </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+<div class="form-button-group bniz">		
+
+<a href="#" class="btn btn-primary btn-block btn-lg calc">Расчитать Стоимость</a>
+</div>	
+
+
+
+	</form>
+				
+				
+</div>
+ 
+
+<div class="section mt-2 schet" style="display:none;">
+ 
+            <div class="addgeo">
+			  <h4>К Оплате за сопровождение</h4>
+                <h1><span id="bal"></span>&#8381;</h1>
+            </div>
+ 
+<div class="row">
+<div class="col-12">
+<div class="form-group boxed">
+<div class="input-wrapper">
+<input type="text" name="text" id="text" class="form-control" placeholder="Добавить комментарий?">
+</div>
+</div>
+</div>
+</div>
+ <div class="form-button-group bniz">	
+<button type="submit" class="btn btn-primary btn-block btn-lg">Заказать</button>
+</div>
+ 
+ 
+
+</div>
+ 
+ 
+        </div>
+
+
+    </div>
+    <!-- * App Capsule -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="home.html" class="item">
+            <div class="col">
+<i class="fal fa-home-lg-alt fa-2x"></i>
+            </div>
+        </a>
+        <a href="vigul.html" class="item active">
+            <div class="col">
+    <i class="fad fa-users fa-2x"></i>
+            </div>
+        </a>
+
+
+        <a href="#" class="item">
+            <div class="col">
+            </div>
+        </a>
+
+        <a href="balance.html" class="item">
+            <div class="col">
+              <i class="fal fa-credit-card fa-2x"></i>
+            </div>
+        </a>
+        <a href="page-profile.html" class="item">
+            <div class="col">
+			<i class="fal fa-user fa-2x"></i>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
+
+
+
+
+
+
+
+
+
+
+    <!-- ///////////// Js Files ////////////////////  -->
+    <!-- Jquery -->
+    <script src="js/lib/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap-->
+    <script src="js/lib/popper.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <!-- Owl Carousel -->
+    <script src="js/plugins/owl-carousel/owl.carousel.min.js"></script>
+	    <!-- Base Js File -->
+    <script src="js/base.js"></script>
+    <!-- jQuery Circle Progress -->
+    <script src="js/plugins/jquery-circle-progress/circle-progress.min.js"></script>
+
+
+
+
+
+
+<script src="js/jquery.min1.11.1.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?callback=initMap&libraries=places&key=AIzaSyDIJ9XX2ZvRKCJcFRrl-lRanEtFUow4piM&language=ru&region=RU"></script>
+<script type="text/javascript" src="js/costdost.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+<script type="text/javascript" > 
+
+
+
+
+
+
+var id_user = window.localStorage.getItem("id_user");
+
+
+
+
+
+
+function changeg(a) {
+        var label = a.value;
+        if (label==1) {
+			$('.hide').show();
+ }else {
+           $('.hide').hide();
+        }
+         
+}
+
+
+
+document.getElementById('hider').onclick = function() {
+  var el = document.getElementById('tochka3');
+  el.style.display === 'none' ? el.style.display = 'initial' : el.style.display = 'none';
+  el.style.display === 'none' ? $("#hider-ico").html('<i class="far fa-plus-circle"></i>') : $("#hider-ico").html('<i class="far fa-minus-circle"></i>');
+}
+
+
+
+
+ $(".calc").click(function(){
+
+$('.schet').show();
+$('.form').hide();
+
+$.ajax({
+                url:'https://clicaid.ru/api-mobile/checkCity.php',
+                type:'post',
+                data:{city:pcity,mycord:mycord},
+success:function(data){
+
+}
+			 
+});
+
+
+
+
+
+
+
+ });
+</script>
+
+</body>
+</html>

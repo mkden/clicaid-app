@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <title>Clicaid</title>
+    <link rel="stylesheet" href="css/style.css">
+		<script>	
+	function checkConnection() {
+        if(navigator.connection.type==0)
+        {
+            window.location.href = "offline.html";
+        }
+        else if(navigator.connection.type=='none')
+        {
+            window.location.href = "offline.html";
+
+        }
+        else
+        {
+
+        }
+    }	
+	
+setInterval(function(){
+var c = checkConnection();
+}, 2000); // 10000 = 10 seconds, check for connection every 10 seconds
+</script>	
+</head>
+
+<body class="bg-white">
+
+
+
+    <!-- loader -->
+    <div id="loader">
+	  <span class="icon-logo fa-2x ring"></span>
+    </div>
+    <!-- * loader -->
+
+
+<div class="appHeader no-border transparent position-absolute">
+        <div class="left">
+            <a href="javascript:;" class="headerButton goBack">
+                	<i class="fas fa-chevron-left md hydrated" aria-label="chevron back outline"></i>
+            </a>
+        </div>
+        <div class="pageTitle"></div>
+        <div class="right">
+            <a href="#" class="headerButton">
+   <span class="icon-logo fa-2x"></span>
+            </a>
+        </div>
+    </div>
+
+
+    <!-- App Capsule -->
+    <div id="appCapsule" >
+ 
+ 
+ <div class="listview-title mt-2">Все заказы</div>
+ 
+
+
+
+ <!--Accordion wrapper-->
+<div class="accordion md-accordion" id="list" role="tablist" aria-multiselectable="true">
+</div>
+ 
+
+    </div>
+    <!-- * App Capsule -->
+
+
+
+ <!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="home.html" class="item active" id="ba">
+            <div class="col">
+<i class="fal fa-home-lg-alt fa-2x"></i>
+            </div>
+        </a>
+        <a href="#" class="item">
+            <div class="col">
+            </div>
+        </a>
+
+        <a href="balance.html" class="item" id="bc">
+            <div class="col">
+              <i class="fal fa-credit-card fa-2x"></i>
+            </div>
+        </a>
+		
+		        <a href="#" class="item">
+            <div class="col">
+            </div>
+        </a>
+		
+        <a href="page-profile.html" class="item" id="bd">
+            <div class="col">
+			<i class="fal fa-user fa-2x"></i>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
+
+
+
+
+
+
+    <!-- ///////////// Js Files ////////////////////  -->
+    <!-- Jquery -->
+    <script src="js/lib/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap-->
+    <script src="js/lib/popper.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <script src="js/plugins/owl-carousel/owl.carousel.min.js"></script>
+    <!-- jQuery Circle Progress -->
+    <script src="js/plugins/jquery-circle-progress/circle-progress.min.js"></script>
+    <!-- Base Js File -->
+    <script src="js/base.js"></script>
+
+
+	
+<script type="text/javascript" > 
+
+
+
+
+function pTemplate(p) {
+
+if (p.status == 0){
+var kur = '';
+}
+else{
+var kur = '';
+}
+
+
+return `
+
+	
+
+
+  <!-- Accordion card -->
+  <div class="card">
+
+    <!-- Card header -->
+    <div class="card-header" role="tab" id="headingTwo${p.id}">
+      <a class="collapsed" data-toggle="collapse" data-parent="#list" href="#collapseTwo${p.id}"
+        aria-expanded="false" aria-controls="collapseTwo${p.id}">
+		<h5 class="mb-0">
+     Заказ №${p.id} ${p.currentDate} ${p.time} <i class="fas fa-angle-down rotate-icon"></i>
+      </h5>
+	  </a>
+    </div>
+
+    <!-- Card body -->
+    <div id="collapseTwo${p.id}" class="collapse" role="tabpanel" aria-labelledby="headingTwo${p.id}"
+      data-parent="#list">
+      <div class="card-body">
+       ${p.adress}
+      </div>
+    </div>
+
+  </div>
+  <!-- Accordion card -->
+
+
+
+
+	
+ `;
+ 
+}
+
+var id_user = window.localStorage.getItem("id_user");
+
+function show()  
+{  
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/zakazi.php?z=a&id_user="+id_user, 
+dataType:"json",
+cache: false,  
+success: function(data){
+
+if (data == null){		 
+document.getElementById("list").innerHTML = `нет заказов`;							 
+}
+else{	
+document.getElementById("list").innerHTML = `${data.map(pTemplate).join("")}`;
+}
+
+}  
+});  
+}  
+		
+		
+		
+$(document).ready(function(){	
+show();
+}); 
+</script>
+
+
+
+</body>
+</html>

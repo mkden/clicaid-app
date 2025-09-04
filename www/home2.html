@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <title>Clicaid</title>
+    <link rel="stylesheet" href="css/style.css">
+
+	<script>	
+	function checkConnection() {
+        if(navigator.connection.type==0)
+        {
+            window.location.href = "offline.html";
+        }
+        else if(navigator.connection.type=='none')
+        {
+            window.location.href = "offline.html";
+
+        }
+        else
+        {
+
+        }
+    }	
+	
+setInterval(function(){
+var c = checkConnection();
+}, 2000); // 10000 = 10 seconds, check for connection every 10 seconds
+
+
+
+
+
+function Successgeo(position) {
+var lat = position.coords.latitude;
+var lng = position.coords.longitude;
+$.ajax({
+url: "https://clicaid.ru/api-mobile/kur-zakazi.php?id_user="+id_user+"&lat="+lat+"&lng="+lng, 
+cache: false
+}).done(function(data) {
+});
+window.localStorage.setItem("latu", lat);
+window.localStorage.setItem("lngu", lng);
+}
+
+function Errorgeo(error) {
+$('.error').text('Включите GPS');
+notification('notification', 3000);
+}
+
+
+
+setInterval(function(){
+navigator.geolocation.getCurrentPosition( Successgeo, Errorgeo, {
+    enableHighAccuracy : true,
+    maximumAge: Infinity, // should be default, just in case
+    timeout: 10000
+});
+}, 4000);
+</script>		
+	
+
+	
+</head>
+
+<body class="bg-white">
+    <!-- loader -->
+    <div id="loader">
+	  <span class="icon-logo fa-2x ring"></span>
+    </div>
+    <!-- * loader -->
+
+
+
+<div class="appHeader no-border transparent position-absolute">
+        <div class="left">
+        </div>
+        <div class="pageTitle"></div>
+        <div class="right">
+            <a href="#" class="headerButton">
+            </a>
+        </div>
+    </div>
+
+
+<div id="gdatadv" style="display:none;">
+<div class="endad">
+<h4 style="color:red;">Адвокат в пути. Ожидайте звонка</h4>
+</div>
+<div class="adv-bg sectadv">
+
+<div class="redb vizov sectadvb" id="vizov"></div>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="endv" style="display:none;">
+<div class="endad">
+<h4>Заявка получена.</h4>
+</div>
+<div class="endab">
+В Течении <b>10 мин.</b> <br/>
+с Вами свяжется наш специалист 
+</div>
+<div class="form-button-group bniz">
+<a href="home2.html" class="btn btn-primary btn-block btn-lg">Вернутся</a>
+</div>
+</div>
+
+
+    <!-- App Capsule -->
+    <div id="appCapsule" class="pt-0">
+   <div class="login-form mt-1">
+            <div class="mt-1 mb-5">
+            </div>
+            <div class="section mt-1">
+                <h4>Экстреный вызов Адвоката по адресу или по геолокации</h4>
+            </div>
+            <div class="mt-1 mb-5">
+			
+			
+<div class="adv-bg">
+
+
+<div class="greenb vizov mincircle"></div>
+
+<a href="#" id="callcenter">
+         <div class="row section nizp">
+                    <div class="col-4"></div>
+                    <div class="col-4">
+                        <div class="aBox">
+						<i class="atel"></i>
+						<span>Экстреный<br/>звонок<br/>Адвокату</span>
+						</div>
+                    </div>
+                    <div class="col-4">
+                    </div>
+
+                </div>
+</a>
+
+	</div>
+
+                <div class="row section nizpp">
+                    <div class="col-4" data-toggle="modal" data-target="#ModalBasic" onclick="clicka(1)">
+                        <div class="abBox">
+						<i class="fal fa-user-headset"></i>
+						</div>
+						<div class="abBoxt"><br/>Консультацию<br/>адвоката</div>
+                    </div>
+                    <div class="col-4" data-toggle="modal" data-target="#ModalBasic" onclick="clicka(2)">
+                        <div class="abBox">
+						<i class="fas fa-user-tie"></i>
+						</div>
+						<div class="abBoxt"><br/>Нанять<br/>Адвоката</div>
+                    </div>
+                    <div class="col-4" data-toggle="modal" data-target="#ModalBasic" onclick="clicka(3)">
+                        <div class="abBox">
+						<i class="fas fa-briefcase"></i>
+						</div>
+						<div class="abBoxt"><br/>Юдредическая<br/>помощь</div>
+                    </div>
+                </div>
+
+
+			
+		
+			
+			
+			
+			
+			 <!-- Modal Basic -->
+        <div class="modal fade modalbox" id="ModalBasic" data-backdrop="static" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="title"></h5>
+                        <a href="javascript:;" data-dismiss="modal">X</a>
+                    </div>
+                    <div class="modal-body">
+					
+					
+					<div class="row">
+                    <div class="col-8" id="atext">
+					</div>
+					<div class="col-4" id="aimage">
+					</div>
+					 </div>
+					
+					<div id="atxt">
+
+<label for="textpost" class="atextlabel">Опишите ситуацию вкратце</label>
+<textarea class="atextaria" id="textpost" rows="8"></textarea>
+
+
+ <div class="form-button-group bniz">	
+<button type="submit" class="btn btn-primary btn-block btn-lg" onclick="endadv(3,0);">Отправить</button>
+</div>
+			
+			
+			
+					</div>
+				 <div id="abuton">
+                        <p>
+                           <button type="button" onclick="endadv(1,1)" class="btn btn-outline-dark mr-1 mb-1 aBaton"> Административные</button>
+                        </p>
+                        <p>
+                           <button type="button" onclick="endadv(1,2)" class="btn btn-outline-dark mr-1 mb-1 aBaton">Гражданские</button>
+                        </p>
+                        <p>
+                            <button type="button" onclick="endadv(1,3)" class="btn btn-outline-dark mr-1 mb-1 aBaton">Уголовные</button>
+                        </p>
+				</div>
+				
+				
+						 <div id="bbuton">
+                        <p>
+                            <button type="button" onclick="endadv(2,1);" class="btn btn-outline-dark mr-1 mb-1 aBaton"> Административные</button>
+                        </p>
+                        <p>
+                           <button type="button" onclick="endadv(2,2);" class="btn btn-outline-dark mr-1 mb-1 aBaton">Гражданские</button>
+                        </p>
+                        <p>
+                            <button type="button" onclick="endadv(2,3);" class="btn btn-outline-dark mr-1 mb-1 aBaton">Уголовные</button>
+                        </p>
+				</div>
+				
+				
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- * Modal Basic -->
+			
+			
+			
+			
+			
+			
+			
+				
+            </div>
+        </div>
+
+
+    </div>
+    <!-- * App Capsule -->
+
+
+
+
+   <!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="home.html" class="item active">
+            <div class="col">
+<i class="fal fa-home-lg-alt fa-2x"></i>
+            </div>
+        </a>
+        <a href="vigul.html" class="item">
+            <div class="col">
+    <i class="fad fa-users fa-2x"></i>
+            </div>
+        </a>
+
+
+        <a href="#" class="item">
+            <div class="col">
+            </div>
+        </a>
+
+        <a href="balance.html" class="item">
+            <div class="col">
+              <i class="fal fa-credit-card fa-2x"></i>
+            </div>
+        </a>
+        <a href="page-profile.html" class="item">
+            <div class="col">
+			<i class="fal fa-user fa-2x"></i>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
+
+
+
+
+
+         <div id="notification" class="notification-box">
+                    <div class="notification-dialog android-style">
+                        <div class="notification-header">
+                            <div class="in">
+                                <strong>Ошибка!</strong>
+                            </div>
+                            <a href="#" class="close-button">
+                                <ion-icon name="close"></ion-icon>
+                            </a>
+                        </div>
+                        <div class="notification-content">
+                            <div class="in">
+                                <h3 class="subtitle error" style="color:red;"></h3>
+                                <div class="text">
+                           
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+		   <!-- Jquery -->
+    <script src="js/lib/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap-->
+    <script src="js/lib/popper.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <!-- Owl Carousel -->
+    <script src="js/plugins/owl-carousel/owl.carousel.min.js"></script>
+    <!-- jQuery Circle Progress -->
+    <script src="js/plugins/jquery-circle-progress/circle-progress.min.js"></script>
+    <!-- Base Js File -->
+    <script src="js/base.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyDqmF1kw4GLZbDGg3PxtVS9eTXlKF90kBY&language=ru"></script>
+	
+
+
+	
+<script type="text/javascript" > 
+var id_user = window.localStorage.getItem("id_user");
+var callcenter = window.localStorage.getItem("callcenter");
+
+
+
+function showst()  
+{  
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/user-info.php?z=a&id_user="+id_user, 
+dataType:"json", 
+cache: false,  
+success: function(data){
+if(data.status>'0'){
+$("#appCapsule").hide();
+$("#endv").hide();
+$('#gdatadv').show();
+}
+else if(data.status=='3'){
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/adv-zakazi.php?status=0&z=a&id_user="+id_user+"&otz=0", 
+dataType:"text", 
+cache: false,  
+success: function(data){ 
+}  
+}); 
+window.location.href = "home2.html";
+	 }
+}  
+});  
+}	
+		
+		
+		
+		
+setInterval(function(){
+var c = showst();
+}, 10000);
+
+
+
+
+function GetAddress(lat,lng) {
+		
+//old reference
+const appendChild = Element.prototype.appendChild;
+const urlCatchers = [
+  "/AuthenticationService.Authenticate?",
+  "/QuotaService.RecordEvent?"
+];
+Element.prototype.appendChild = function (element) {
+  const isGMapScript = element.tagName === 'SCRIPT' && /maps\.googleapis\.com/i.test(element.src);
+  const isGMapAccessScript = isGMapScript && urlCatchers.some(url => element.src.includes(url));
+  if (!isGMapAccessScript) {
+    return appendChild.call(this, element);
+  }
+const callback = element.src.split(/.*callback=([^\&]+)/, 2).pop();
+const [a, b] = callback.split('.');
+window[a][b]([1, null, 0, null, null, [1]]);
+  return element;
+};
+//old reference		
+		
+
+		
+            var lat = parseFloat(lat);
+            var lng = parseFloat(lng);
+            var latlng = new google.maps.LatLng(lat, lng);
+            var geocoder = geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[1]) {
+					window.localStorage.setItem("myadress", results[1].formatted_address);
+					
+                   // alert("Location: " + results[1].formatted_address);
+					
+                    }
+                }
+            });
+        }
+
+
+
+
+
+
+function endadv(a,b)  
+{
+var balance = window.localStorage.getItem("balance");
+var pricea=window.localStorage.getItem("pricea");
+var balance = Math.round(balance);
+var latu=window.localStorage.getItem("latu");
+var lngu=window.localStorage.getItem("lngu");	
+var mycord = latu+','+lngu;
+GetAddress(latu,lngu);
+var myadress=window.localStorage.getItem("myadress");
+
+if(balance<pricea){
+    notification('notification', 3000);
+    $('.error').text('Стоимость вызова '+pricea+'р, пополните баланс!');
+     }
+     else{
+if(a==0 && latu>0){
+$.ajax({
+url:'https://clicaid.ru/api-mobile/order.php?z=a&za='+a+'&id_user='+id_user,
+type:'post',
+data:{adress:myadress,cord:mycord},
+success:function(data){
+if (data == '1')  {
+	$("#endv").show();
+	$("#appCapsule").hide();
+  }
+else{
+notification('notification', 3000);
+$(".error").text("Сервиса Clicaid пока здесь нет.");
+}	
+}				 
+});
+
+}
+else if(a==1 && latu>0){
+$('#ModalBasic').modal('toggle');
+$.ajax({
+url:'https://clicaid.ru/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
+type:'post',
+data:{adress:myadress,cord:mycord},
+success:function(data){
+if (data == '1')  {
+	$("#endv").show();
+	$("#appCapsule").hide();
+  }
+else{
+notification('notification', 3000);
+$(".error").text("Сервиса Clicaid пока здесь нет.");
+}	
+}				 
+});
+
+}
+else if(a==2 && latu>0){
+$('#ModalBasic').modal('toggle');
+$.ajax({
+url:'https://clicaid.ru/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
+type:'post',
+data:{adress:myadress,cord:mycord},
+success:function(data){
+if (data == '1')  {
+	$("#endv").show();
+	$("#appCapsule").hide();
+  }
+else{
+notification('notification', 3000);
+$(".error").text("Сервиса Clicaid пока здесь нет.");
+}	
+}				 
+});
+
+}
+else if(a==3 && latu>0){
+var textpost =  $('#textpost').val();
+$('#ModalBasic').modal('toggle');
+$.ajax({
+url:'https://clicaid.ru/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
+type:'post',
+data:{adress:myadress,cord:mycord,textpost:textpost},
+success:function(data){
+if (data == '1')  {
+	$("#endv").show();
+	$("#appCapsule").hide();
+  }
+else{
+notification('notification', 3000);
+$(".error").text("Сервиса Clicaid пока здесь нет.");
+}	
+}				 
+});
+
+}
+
+
+
+}
+}
+
+function clicka(a)  
+{  
+if(a==1){
+$("#atext").text('По какому делу вам необходима консультация');
+$("#aimage").html("<i class='fal fa-user-headset'></i>");
+$("#atxt").hide();
+$("#bbuton").hide();
+$("#abuton").show();
+}
+else if(a==2){
+$("#atext").text('Выбирите по какмоу делу Вам необходим Адвокат');
+$("#aimage").html("<i class='fas fa-user-tie'></i>");
+$("#atxt").hide();
+$("#bbuton").show();
+$("#abuton").hide();
+}
+else if(a==3){
+$("#atext").text('Опишите ситуацию и с Вами свяжется  Адвокат');
+$("#aimage").html("<i class='fas fa-briefcase'></i>");
+$("#atxt").show();
+$("#abuton").hide();
+$("#bbuton").hide();
+}
+
+}
+
+
+
+    $(".vizov").click(function(){
+var balance = window.localStorage.getItem("balance");
+var pricea=window.localStorage.getItem("pricea");
+var balance = Math.round(balance);
+
+if(balance<pricea){
+    notification('notification', 3000);
+    $('.error').text('Стоимость вызова '+pricea+'р, пополните баланс!');
+     }
+     else{
+
+
+if(this.classList.contains('vizov')){
+window.localStorage.setItem("z", "a");
+window.location.href = "geo.html";
+}
+
+}
+        
+});
+
+
+
+
+function showa()  
+{  
+$("#callcenter").attr("href", "tel:"+callcenter);
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/user-info.php?z=a&id_user="+id_user, 
+dataType:"json", 
+cache: false,  
+success: function(data){
+if(data.status>'0'){
+$("#appCapsule").hide();
+$("#endv").hide();
+$('#gdatadv').show();
+}
+}  
+});  
+}
+		
+		
+		
+$(document).ready(function(){	
+
+showa();
+
+
+var HoverListener = {
+  addElem: function( elem, callback, delay )
+  {
+    if ( delay === undefined )
+    {
+      delay = 1000;
+    }
+
+    var hoverTimer;
+
+    addEvent( elem, 'mouseover', function()
+    {
+      hoverTimer = setTimeout( callback, delay );
+    } );
+
+    addEvent( elem, 'mouseout', function()
+    {
+      clearTimeout( hoverTimer );
+    } );
+  }
+}
+
+
+//  Generic event abstractor
+function addEvent( obj, evt, fn )
+{
+  if ( 'undefined' != typeof obj.addEventListener )
+  {
+    obj.addEventListener( evt, fn, false );
+  }
+  else if ( 'undefined' != typeof obj.attachEvent )
+  {
+    obj.attachEvent( "on" + evt, fn );
+  }
+}
+
+addEvent( window, 'load', function()
+{
+  HoverListener.addElem(
+      document.getElementById('vizov')
+    , function()
+      {
+endadv(0,0);	   
+      }
+    , 4000
+  );
+} );
+
+}); 
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

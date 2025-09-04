@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <link rel="stylesheet" href="css/style.css">
+ <link rel="stylesheet" href="css/jquery-ui.css">
+	<script src="cordova.js"></script>
+<script src="js/index.js"></script>
+	
+	
+<script type="text/javascript">
+	
+	function checkConnection() {
+        if(navigator.connection.type==0)
+        {
+            window.location.href = "offline.html";
+        }
+        else if(navigator.connection.type=='none')
+        {
+            window.location.href = "offline.html";
+
+        }
+        else
+        {
+
+        }
+    }	
+	
+setInterval(function(){
+var c = checkConnection();
+}, 2000); // 10000 = 10 seconds, check for connection every 10 seconds
+	
+
+
+document.addEventListener("deviceready",onDeviceReady,false); 
+
+
+
+function onDeviceReady() {
+    checkConnection();
+	
+}
+ 
+ 
+OneSignal.enableNotificationsWhenActive(true);
+ 
+
+
+plugins.OneSignal.enableInAppAlertNotification(true);
+</script>
+	
+	
+	
+	
+	
+</head>
+
+<body class="bg-white">
+
+    <!-- loader -->
+    <div id="loader">
+	  <span class="icon-logo fa-2x ring"></span>
+    </div>
+    <!-- * loader -->
+
+
+
+
+
+
+
+
+<div class="appHeader no-border transparent position-absolute">
+        <div class="left">
+     <a href="login.html" class="headerButton goBack">
+               <i class="fas fa-chevron-left md hydrated"></i>
+            </a>
+        </div>
+        <div class="pageTitle"></div>
+        <div class="right">
+
+        </div>
+    </div>
+
+
+   <br/>   <br/>
+
+    <!-- App Capsule -->
+    <div id="appCapsule" class="pt-0">
+
+        <div class="login-form mt-1" id="vhod">
+
+
+<center><div id="message"></div></center>
+
+
+
+            <div class="section mt-1">
+                <h1>Войти</h1>
+                <h4></h4>
+            </div>
+            <div class="section mt-1 mb-5">
+<form id="log_form" onsubmit="return false">
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+   <input type="text" onkeyup="submitForm(event)" class="form-control" name="tel" placeholder="Номер телефона" id="tel" required>
+   
+
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="form-button-group">
+					
+							 <a href="#" class="btn btn-primary btn-block btn-lg" id="log">Войти</a>
+					
+                    </div>
+ </form>
+   
+            </div>
+        </div>
+
+
+
+
+
+
+<div class="login-form" id="regs" style="display: none;">
+
+<center><div id="message2"></div></center>
+
+            <div class="section">
+                <h1>Регистрация</h1>
+                <h4></h4>
+            </div>
+            <div class="section mt-2 mb-5">
+ 
+ 
+ 
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <input type="text" class="form-control" id="familia" placeholder="Фамилия">
+                            <i class="clear-input">
+                              <i class="fal fa-times-circle"></i>
+                            </i>
+                        </div>
+                    </div>
+ <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <input type="text" class="form-control" id="name" placeholder="Имя">
+                            <i class="clear-input">
+                              <i class="fal fa-times-circle"></i>
+                            </i>
+                        </div>
+                    </div>
+					 <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <input type="text" class="form-control" id="otchestvo" placeholder="Отчество">
+                            <i class="clear-input">
+                              <i class="fal fa-times-circle"></i>
+                            </i>
+                        </div>
+                    </div>
+
+
+
+
+
+   <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <input type="text" class="form-control" id="agedate" placeholder="Дата рождения" onChange="showAge()">
+                            <i class="clear-input">
+                              <i class="fal fa-times-circle"></i>
+                            </i>
+                        </div>
+						
+						 <input type="hidden" id="age">
+
+                    </div>
+
+
+
+
+
+		                   <div class="form-group boxed">
+                        <div class="input-wrapper">
+   <input type="text" class="form-control" name="tel" placeholder="Номер телефона" id="tel2" required>
+                        </div>
+                    </div>
+
+				   
+                    <div class=" mt-1 text-left">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customChecka1">
+                            <label class="custom-control-label text-muted" for="customChecka1">Разрешать нам отслеживать при необходимости ваше местоположение</label>
+                        </div>
+
+                    </div>
+
+                    <div class="form-button-group" >
+                        <button class="btn btn-primary btn-block btn-lg" id="reg" >Дальше</button>
+                    </div>
+
+   
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <div class="login-form" id="codes" style="display: none;">
+		<center><div id="message4"></div></center>
+            <div class="section">
+                <h1>Подтверждение телефона</h1>
+                <h4 id="message3"></h4>
+            </div>
+            <div class="section mt-2 mb-5">
+      
+
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+						      <input name="code" type="code" id="code" class="form-control verify-input" placeholder="****" maxlength="4"/>
+                        </div>
+                    </div>
+
+
+ <div class="form-group boxed">
+ <div class="input-wrapper" style="font-size:25px;">
++7 000 000 <b>XX-XX</b>
+</div>
+</div>
+
+
+
+                    <div class="form-button-group">
+                    </div>
+
+   
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <!-- * App Capsule -->
+
+    <!-- ///////////// Js Files ////////////////////  -->
+	    <!-- Jquery -->
+    <script src="js/lib/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap-->
+    <script src="js/lib/popper.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+	    <!-- Owl Carousel -->
+    <script src="js/plugins/owl-carousel/owl.carousel.min.js"></script>
+    <!-- jQuery Circle Progress -->
+    <script src="js/plugins/jquery-circle-progress/circle-progress.min.js"></script>
+    <!-- Base Js File -->
+    <script src="js/base.js"></script>
+
+
+
+<script src="js/jquery-ui.js"></script>
+<script src="js/jquery-ui-lang.min.js"></script>
+<script type="text/javascript" src="js/jquery.maskedinput.min.js"></script>
+<script type="text/javascript">
+
+$(function($){
+   $("#tel").mask("+7 (999) 999-9999");
+   $("#tel2").mask("+7 (999) 999-9999");
+      $("#agedate").mask("99.99.9999");
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     function login(){
+ document.getElementById('vhod').style.display='block';
+  document.getElementById('codes').style.display='none';
+    document.getElementById('regs').style.display='none';
+  }
+  
+     function reg(){
+ document.getElementById('vhod').style.display='none';
+  document.getElementById('codes').style.display='none';
+    document.getElementById('regs').style.display='block';
+  }
+  
+  
+   function code(){
+ document.getElementById('vhod').style.display='none';
+  document.getElementById('codes').style.display='block';
+    document.getElementById('regs').style.display='none';
+  }
+
+
+  
+   $('.login-create').click(function () {
+reg();
+  }); 
+
+   $('.login-already').click(function () {
+login();
+  }); 
+  
+  
+  
+  
+function submitForm(e) {
+
+var keyCode = e.keyCode ? e.keyCode : e.which;
+if (keyCode == 13){
+
+       var tel = $("#tel").val();
+            $.ajax({
+                url:'https://clicaid.ru/api-mobile/checkUser.php',
+                type:'post',
+				//dataType:"json",
+                data:{tel:tel,type:'log'},
+				     success:function(data){
+                    if(data > 0){
+//$("#message3").html("<b>На номер "+tel+" отправленно СМС с кодом.</b>");
+					$("#message3").html("<b>Последние 4 цифры входящего номера телефона - Ваш код.</b>");                    code();
+                    }
+					else{
+						$("#message2").html("<b style='color:red'>Вы не зарегистрированны!</b>");
+						$("#tel2").val(tel);
+						reg();
+                    }
+                    
+                }
+            });
+
+ }
+ } 
+  
+  
+  
+  
+  
+  
+  
+     $("#log").click(function(){
+	 $("#log").hide();
+        var tel = $("#tel").val();
+            $.ajax({
+                url:'https://clicaid.ru/api-mobile/checkUser.php',
+                type:'post',
+				//dataType:"json",
+                data:{tel:tel,type:'log'},
+				     success:function(data){
+                    if(data > 0){
+					//$("#message3").html("<b>На номер "+tel+" отправленно СМС с кодом.</b>");
+					$("#message3").html("<b>Последние 4 цифры входящего номера телефона - Ваш код.</b>");
+                    code();
+                    }
+					else{
+						$("#message2").html("<b style='color:red'>Вы не зарегистрированны!</b>");
+						$("#tel2").val(tel);
+						reg();
+                    }
+                    
+                }
+            });
+  
+    });
+	
+	/////////////////////////
+
+
+
+
+
+$("#reg").click(function(){
+ $("#reg").hide();
+        var tel = $("#tel2").val();
+		//var city = window.localStorage.getItem("mycity");
+		var agedate = $("#agedate").val();
+		var age = $("#age").val();
+		
+
+	
+var familia = $("#familia").val();	
+var name = $("#name").val();	
+var otchestvo = $("#otchestvo").val();	
+
+
+if(name.length < 3){
+$('#message2').html('<b style="color:red">Некорректное имя!</b>');
+}
+else if(familia.length < 5){
+$('#message2').html('<b style="color:red">Некорректное имя!</b>');
+	}
+else if(otchestvo.length < 5){
+$('#message2').html('<b style="color:red">Некорректное имя!</b>');
+	}
+else if(tel.length < 5){
+$('#message2').html('<b style="color:red">Некорректный телефон!</b>');
+}	
+else if(age < 5){
+$('#message2').html('<b style="color:red">Некорректная дата рождения!</b>');
+	}
+else{
+            $.ajax({
+                url:'https://clicaid.ru/api-mobile/checkUser.php',
+                type:'post',
+				dataType:"text",
+                data:{name:name,otchestvo:otchestvo,familia:familia,tel:tel,agedate:agedate,age:age,type:'reg'},
+ success:function(data){  
+                 if(data > '0'){
+//$("#message3").html("<b>На номер "+tel+" отправленно СМС с кодом.</b>");
+					$("#message3").html("<b>Последние 4 цифры входящего номера телефона - Ваш код.</b>");                    code();
+                    }
+				 else{
+					$("#message2").html("<b style='color:red'>Вы уже зарегистрированны!</b>");
+                    }
+                }
+            });
+			}
+			
+			
+   
+    });
+	
+
+	
+	/////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var input = document.getElementById('code'),
+    code,
+    inputHandler = function(e) {
+      code = input.value;
+	    if(code.length == 4) {	
+     
+var tel1 = $("#tel").val(); 
+var tel2 = $("#tel2").val();
+if(tel1.length>6){var tel = tel1;}else{var tel = tel2;}
+	 
+	 
+	 	             $.ajax({
+                url:'https://clicaid.ru/api-mobile/checkUser.php',
+                type:'post',
+				dataType:"json",
+                data:{tel:tel,code:code},
+				     success:function(data){
+                    if(data.id > 0 && data.prava == 0){
+					window.localStorage.setItem("id_user", data.id);
+					window.localStorage.setItem("user_prava", data.prava);
+					window.localStorage.setItem("loggedIn", 1);
+					//window.plugins.OneSignal.setExternalUserId(data.id);
+					window.location.href = "home.html";
+                    }
+					else if(data.id > 0 && data.prava == 4){
+					window.localStorage.setItem("id_user", data.id);
+					window.localStorage.setItem("user_prava", data.prava);
+					//window.plugins.OneSignal.setExternalUserId(data.id);
+					window.location.href = "kurerpage.html";
+                    }
+					else if(data.id > 0 && data.prava == 3){
+					window.localStorage.setItem("id_user", data.id);
+					window.localStorage.setItem("user_prava", data.prava);
+					//window.plugins.OneSignal.setExternalUserId(data.id);
+					window.location.href = "uristpage.html";
+                    }
+					else{
+						$("#message4").html("<b style='color:red'>Неверный код!</b>");
+                    } 
+                }
+            });
+	 
+	 
+	  }
+    }
+
+
+input.addEventListener('input', inputHandler);
+
+
+
+
+
+
+
+
+
+
+
+function gregorianAge(dateString) {
+
+ var dates = dateString.split(".");
+    var d = new Date();
+
+    var userday = dates[0];
+    var usermonth = dates[1];
+    var useryear = dates[2];
+
+    var curday = d.getDate();
+    var curmonth = d.getMonth()+1;
+    var curyear = d.getFullYear();
+
+    var age = curyear - useryear;
+
+    if((curmonth < usermonth) || ( (curmonth == usermonth) && curday < userday   )){
+
+        age--;
+
+    }
+
+    return age;
+
+}
+
+function showAge() {
+  $('#age').val(gregorianAge($('#agedate').val()))
+}
+
+
+
+
+
+</script>
+
+
+
+</body>
+</html>

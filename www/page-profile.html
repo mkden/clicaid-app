@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <title>Clicaid</title>
+    <link rel="stylesheet" href="css/style.css">
+	 <link rel="stylesheet" href="css/jquery-ui.css">
+	 
+	<script>	
+	function checkConnection() {
+        if(navigator.connection.type==0)
+        {
+            window.location.href = "offline.html";
+        }
+        else if(navigator.connection.type=='none')
+        {
+            window.location.href = "offline.html";
+
+        }
+        else
+        {
+
+        }
+    }	
+	
+setInterval(function(){
+var c = checkConnection();
+}, 2000); // 10000 = 10 seconds, check for connection every 10 seconds
+</script>	
+</head>
+
+<body class="bg-white">
+
+
+    <!-- loader -->
+    <div id="loader">
+	  <span class="icon-logo fa-2x ring"></span>
+    </div>
+    <!-- * loader -->
+
+    <!-- App Header -->
+<div class="appHeader no-border transparent position-absolute">
+        <div class="left">
+            <a href="javascript:;" class="headerButton goBack">
+			<i class="fas fa-chevron-left md hydrated" aria-label="chevron back outline"></i>
+            </a>
+        </div>
+        <div class="pageTitle"></div>
+        <div class="right">
+            <a href="#" class="headerButton">
+             <i class="fal fa-user fa-2x"></i>
+            </a>
+        </div>
+    </div>
+    <!-- * App Header -->
+
+    <!-- App Capsule -->
+    <div id="appCapsule">
+
+        <div class="section mt-2">
+            <div class="profile-head">
+                <div class="in">
+                    <h2 class="name" id="name"></h2>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="section mt-1 mb-2">
+            <div class="profile-info">
+                <div class=" bio">
+               <h2 id="myname"></h2>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="section full">
+            <div class="wide-block transparent p-0">
+                <ul class="nav nav-tabs lined iconed" role="tablist">
+      <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#settings" role="tab">
+                           <i class="fas fa-user-cog fa-1x"></i>&nbsp; Настройки
+                        </a>
+                    </li>
+ 
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#adress" role="tab">
+                        <i class="far fa-address-card fa-1x"></i>&nbsp;  Мои адреса
+                        </a>
+                    </li>
+              
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- tab content -->
+        <div class="section full mb-2">
+            <div class="tab-content">
+
+         
+
+                <!--  bookmarks -->
+                <div class="tab-pane fade" id="adress" role="tabpanel">
+                  
+
+<ul class="listview image-listview text" id="adress-list"></ul>
+				 
+				 
+				  
+<div class="adresr"> 
+<a href="#" data-toggle="modal" data-target="#addadres" onclick="formatadr();">Добавить адрес <i class="far fa-plus-circle"></i></a>
+</div>
+				  
+	
+		<div class="modal fade modalbox show" id="addadres">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header text-center">
+					<h5 class="modal-title" id="adrt">Добавление адреса</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closem">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+					</div>
+					<div class="modal-body">
+
+
+<div id="message_f"></div>
+
+<form id="adrForm">
+
+<div class="row">
+<div class="col-md-12">
+<div class="form-group boxed">
+<div class="input-wrapper">
+<input type="text" name="name" placeholder="Дом/работа/И др." class="form-control" id="aname">
+</div>
+</div>
+</div>
+<div class="col-md-12">
+<div class="form-group boxed">
+<div class="input-wrapper">
+<input type="text" name="city" placeholder="Город" class="form-control" id="city">
+</div>
+</div>
+</div>
+<div class="col-md-12">
+<div class="form-group boxed">
+<div class="input-wrapper">
+<input type="text" name="street" placeholder="Улица" class="form-control" autocomplete="nop" id="street" >
+</div>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="form-group boxed">
+<div class="input-wrapper">
+<input type="text" name="dom" placeholder="Дом" class="form-control" id="dom" autocomplete="nop" >
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="form-group boxed">
+<div class="input-wrapper">
+<input type="text" name="korp" placeholder="Корпус" class="form-control" id="korp" autocomplete="nop" >
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="form-group boxed">
+<div class="input-wrapper">
+<input type="text" name="kv" placeholder="№ Кв." class="form-control" id="kv" autocomplete="nop" >
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<input type="hidden" name="cord" class="" id="acord" >
+<input type="hidden" name="adrid" class="" id="adrid" value="new">
+
+</div>
+
+
+
+<div class="col-md-12">
+<button class="btn btn-text-primary shadowed mr-1 mb-1" type="sumbit" id="adrb" style="width:100%">Добавить</button>
+</div>
+
+</div>
+
+
+
+
+
+</form>
+
+</div>
+					
+					
+					
+				<div class="modal-footer" style="display:none;margin-bottom:200px;width: 80%;border: none;" id="deladr">
+                        <button type="button" class="btn btn-primary dismiss padd" data-dismiss="modal">Отменить</button>
+<form id="adrdelForm">
+<input type="hidden" name="adrid" id="adrids">
+<input type="hidden" name="del" value="1">
+<button type="sumbit" class="btn btn-danger confirm padd" >Удалить</button>
+</form>
+
+                    </div>				
+					
+					
+					
+					
+					
+				</div>
+			</div>
+		</div>
+
+					
+				  
+				  
+				  
+                </div>
+                <!-- * bookmarks -->
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+                <!-- settings -->
+                <div class="tab-pane fade  show active" id="settings" role="tabpanel">
+                  
+				  
+				  
+				  
+				  
+				  <ul class="listview image-listview text flush transparent pt-1">
+                        <li>
+                            <div class="items">
+  
+				  
+				  
+<form action="" onsubmit="return writeMeSubmit(this);">
+
+<div class="image-upload">
+  <label for="file" class="image33" data-toggle="modal" data-target="#actionS">
+ <img src="./images/bgfon.png" class="img-responsive lk33" id="output">
+  </label>
+</div>
+				  
+				
+
+
+<div class="modal fade action-sheet" id="actionS" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Загрузка фото</h5>
+						
+                    </div>
+                    <div class="modal-body">
+                      
+	
+					  
+<div class="wide-block pt-2 pb-2">
+                <div class="row">
+                    <div class="col-6" style="text-align: center;">
+                     <button type="button" class="btn btn-outline-dark mr-1 mb-1" id="cameraTakePicture">
+				<i class="fal fa-camera fa-2x"></i>&nbsp;&nbsp;Сделать фото</button>
+                    </div>
+                    <div class="col-6" style="text-align: center;">
+                <button type="button" class="btn btn-outline-dark mr-1 mb-1" id="cameraGetPicture">
+				<i class="far fa-image fa-2x"></i>&nbsp;Выбрать фото</button>
+                    </div>
+					<div class="col-12">
+                  <br/><br/><br/>
+				  <a href="javascript:;" data-dismiss="modal" id="closem" style="display:none;"></a>
+                    </div>
+                </div>
+            </div>
+					  <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+				
+				  
+<div id="message_form"></div>
+
+
+
+
+
+
+        <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <input type="text" class="form-control" id="ffamilia" placeholder="Фамилия" onkeydown="doChange()">
+                            <i class="clear-input">
+                                <i class="fal fa-times-circle"></i>
+                            </i>
+                        </div>
+                    </div>
+
+
+
+  <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <input type="text" class="form-control" id="fname" placeholder="Имя" onkeydown="doChange()">
+                            <i class="clear-input">
+                                <i class="fal fa-times-circle"></i>
+                            </i>
+                        </div>
+                    </div>
+
+            
+	
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <input type="text" class="form-control" id="fotchestvo" placeholder="Отчество" onkeydown="doChange()">
+                            <i class="clear-input">
+                                <i class="fal fa-times-circle"></i>
+                            </i>
+                        </div>
+                    </div>
+					
+					
+					
+					
+					   <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <input type="text" class="form-control" id="agedate" placeholder="Дата рождения" onChange="showAge()" >
+                            <i class="clear-input">
+                              <i class="fal fa-times-circle"></i>
+                            </i>
+                        </div>
+						
+						 <input type="hidden" id="age">
+
+                    </div>
+
+					
+					 <!--
+		                   <div class="form-group boxed">
+                        <div class="input-wrapper">
+   <input type="text" class="form-control" name="tel" id="ftel" required onkeydown="doChange()">
+                        </div>
+                    </div>-->
+
+
+ <br/> 
+                            
+                            <button class="btn btn-text-primary btn-block shadowed" type="sumbit" id="bsnow" style="display:none">Обновить</button>
+                        </form>
+				  
+				  
+				  
+				    <a href="javascript:;" id="delprof">Удалить профиль</a>
+				  
+				   </div>
+				      </li>
+                    </ul>
+				  
+				  
+                </div>
+                <!-- * settings -->
+            </div>
+        </div>
+        <!-- * tab content -->
+
+    </div>
+    <!-- * App Capsule -->
+
+
+ <!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="home.html" class="item active" id="ba">
+            <div class="col">
+<i class="fal fa-home-lg-alt fa-2x"></i>
+            </div>
+        </a>
+        <a href="#" class="item">
+            <div class="col">
+            </div>
+        </a>
+
+        <a href="balance.html" class="item" id="bc">
+            <div class="col">
+              <i class="fal fa-credit-card fa-2x"></i>
+            </div>
+        </a>
+		
+		        <a href="#" class="item">
+            <div class="col">
+            </div>
+        </a>
+		
+        <a href="page-profile.html" class="item" id="bd">
+            <div class="col">
+			<i class="fal fa-user fa-2x"></i>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
+
+
+
+
+
+
+
+
+
+
+
+<div id="notific" class="notific-box">
+                    <div class="notification-dialog ios-style">
+                        <div class="notification-header">
+                            <div class="in">
+                            </div>
+                            <div class="right">
+                                <span></span>
+                                <a href="#" class="close-button">
+                                   <i class="far fa-times-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="notification-content">
+                            <div class="in" style="margin: 0 auto;">
+                                <h3 class="subtitle">Удалить ваш профиль</h3>
+                                <div class="text">
+   Это действие не обратимо!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="#" class="notification-button spis" onclick="delprofile();">
+                                <i class="fas fa-check"></i>&nbsp;Подтвердить
+                            </a>
+                            <a href="#" class="notification-button close-button">
+                               <i class="fas fa-times"></i>&nbsp;Отменить
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+ <!-- Jquery -->
+    <!-- ///////////// Js Files ////////////////////  -->
+    <!-- Jquery -->
+    <script src="js/lib/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap-->
+    <script src="js/lib/popper.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <!-- Owl Carousel -->
+    <script src="js/plugins/owl-carousel/owl.carousel.min.js"></script>
+    <!-- jQuery Circle Progress -->
+    <script src="js/plugins/jquery-circle-progress/circle-progress.min.js"></script>
+    <!-- Base Js File -->
+    <script src="js/base.js"></script>
+<script src="js/pulltorefresh.js"></script>
+	
+	
+<script type="text/javascript" src="js/jquery.maskedinput.min.js"></script>
+
+
+<script type='text/javascript'>
+
+
+
+
+
+PullToRefresh.init({
+ mainElement: 'body',
+ onRefresh: function(){ window.location.reload(); }
+});
+
+
+
+$(function($){
+   $("#ftel").mask("+7 (999) 999-9999");
+      $("#agedate").mask("99.99.9999");
+});
+
+
+
+
+var id_user = window.localStorage.getItem("id_user");
+var mycit = window.localStorage.getItem("mycity");	
+var mycity = encodeURI(mycit);
+var mycord = window.localStorage.getItem("mycord");
+
+
+
+ function adressTemplate(p) {
+return `
+<li>
+<div class="item">
+<div class="in">
+<div>${p.title}</div>
+<div>
+<a href="#" data-toggle="modal" data-target="#addadres" onclick="showadr(${p.id});"><i class="far fa-edit"></i></a> 
+<a href="#" data-toggle="modal" data-target="#addadres" onclick="sdeladr(${p.id});"><i class="fal fa-minus-circle"></i></a>
+</div>
+ </div>
+</div>
+</li>
+`;
+}
+
+      function showAdress()  
+        {   
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/adress-list.php?id_user="+id_user, 
+dataType:"json",
+cache: false,  
+success: function(data){  
+document.getElementById("adress-list").innerHTML = `${data.map(adressTemplate).join("")}`; 
+}  
+});  
+        }  
+
+
+
+
+
+	
+		function showa()  
+{  
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/user-info.php?id_user="+id_user, 
+dataType:"json", 
+cache: false,  
+success: function(data){   
+
+$("#myname").text(data.familia+' '+data.name+' '+data.otchestvo);
+window.localStorage.setItem("nameuser", data.name);
+
+
+$("#output").attr("src", "https://clicaid.ru/"+data.avatar);
+$("#fname").val(data.name);
+$("#ffamilia").val(data.familia);
+$("#fotchestvo").val(data.otchestvo);
+$("#ftel").val(data.tel);
+$("#agedate").val(data.agedate);
+$("#age").val(data.age);
+
+}  
+});  
+}
+		
+		
+		
+		
+		
+		
+$(document).ready(function(){	
+showa();
+showAdress();
+}); 	
+		
+		
+
+
+
+
+
+
+
+
+
+function doChange()  
+{  
+document.getElementById('bsnow').style.display="block";
+}
+
+
+function writeMeSubmit(form){
+
+$("#message_form").html('<img src="images/loader.gif">');
+
+
+	//создаем экземпляр класс FormData, тут будем хранить всю информацию для отправки
+	var formData = new FormData();
+	//присоединяем наш файл
+	//jQuery.each($('#file_v')[0].files, function(i, file) {formData.append('file_v', file);});
+	
+var imgUrl=$('.image-upload img').attr('src');
+
+	
+
+	//присоединяем остальные поля
+	formData.append('name', $('#fname').val());
+	formData.append('agedate', $('#agedate').val());
+	formData.append('age', $('#age').val());
+	formData.append('tel', $('#ftel').val());
+	formData.append('familia', $('#ffamilia').val());
+	formData.append('otchestvo', $('#fotchestvo').val());
+	formData.append('edit', 1);
+
+	//отправляем через ajax
+	$.ajax({
+		url: "https://clicaid.ru/api-mobile/user-page.php?id_user="+id_user,
+		type: "POST",
+		dataType : "text", 
+		cache: false,
+		contentType: false,
+		processData: false,			
+		data: formData, //указываем что отправляем
+		success: function(data){
+
+$("#message_form").html('<i class="far fa-check"></i>').show('slow');
+
+		}
+	});
+	
+	return false;	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function sdeladr(ids)  
+{   
+$("#adrForm").hide();
+$("#adrt").text('Удаление адреса');
+$("#message_f").text('Вы уверены?');
+$("#deladr").show();
+$("#adrids").val(ids);
+}  
+
+
+function formatadr()  
+{   
+$("#adrForm").show();
+$("#deladr").hide();
+
+$("#adrt").text('Добавление адреса');
+$("#adrb").text('Добавить');
+$('#adrForm')[0].reset();
+
+
+}  
+
+
+
+function showadr(ids)  
+{   
+$("#adrForm").show();
+$("#deladr").hide();
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/adress-list.php?id="+ids, 
+dataType:"json", 
+cache: false,  
+success: function(data){ 
+
+$("#adrt").text('Редактирование адреса');
+$("#adrb").text('Обновить');
+$("#aname").val(data.name);
+$("#city").val(data.city);
+$("#street").val(data.street);
+$("#dom").val(data.dom);
+$("#kv").val(data.kv);
+$("#korp").val(data.korp);
+$("#adrid").val(ids);
+$("#acord").val(data.cord);
+}  
+});  
+}  
+
+
+
+
+
+function clocem(){
+$('#closem').click();
+}
+
+
+$("#adrForm").submit(function(e) {
+
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+	
+	
+$("#message_f").html('<img src="images/loader.gif">');
+
+    $.ajax({
+           type: "POST",
+           url: "https://clicaid.ru/api-mobile/adress-list.php?id_user="+id_user,
+           data: $('#adrForm').serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+$("#message_f").html('<i class="far fa-check"></i>').show('slow');
+showAdress();
+setTimeout(clocem,2000);
+           }
+         });
+
+    
+});
+
+
+$("#adrdelForm").submit(function(e) {
+
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+	
+	
+$("#message_f").html('<img src="images/loader.gif">');
+
+    $.ajax({
+           type: "POST",
+           url: "https://clicaid.ru/api-mobile/adress-list.php?id_user="+id_user,
+           data: $('#adrdelForm').serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+$("#message_f").html('<i class="far fa-check"></i>').show('slow');
+showAdress();
+setTimeout(clocem,2000);
+           }
+         });
+
+    
+});
+
+
+
+
+
+</script>
+
+
+
+<script src="./js/jquery.min.js"></script>
+<!--<script src="./js/jquery-ui.min.js"></script>-->
+<script src="js/jquery-ui.js"></script>
+<script src="js/jquery-ui-lang.min.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDqmF1kw4GLZbDGg3PxtVS9eTXlKF90kBY&language=ru&region=RU"></script>
+<script src="./js/gmaphack.js"></script>
+<script src="./js/autoadres.js"></script>
+
+
+<script type="text/javascript">
+
+
+function gregorianAge(dateString) {
+
+ var dates = dateString.split(".");
+    var d = new Date();
+
+    var userday = dates[0];
+    var usermonth = dates[1];
+    var useryear = dates[2];
+
+    var curday = d.getDate();
+    var curmonth = d.getMonth()+1;
+    var curyear = d.getFullYear();
+
+    var age = curyear - useryear;
+
+    if((curmonth < usermonth) || ( (curmonth == usermonth) && curday < userday   )){
+
+        age--;
+
+    }
+
+    return age;
+
+}
+
+// Below is for the attached snippet
+
+function showAge() {
+  $('#age').val(gregorianAge($('#agedate').val()))
+  doChange()
+}
+
+
+
+
+
+
+
+
+
+function delprofile()  
+{  
+var nameuser = window.localStorage.getItem("nameuser");
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/user-info.php?del=1&id_user="+id_user+"&name="+name, 
+cache: false,  
+success: function(data){   
+
+if(data=="1"){
+window.localStorage.removeItem("id_user");	
+window.localStorage.removeItem("user_prava");			   
+window.location.href = "login.html";
+}
+
+}  
+});  
+}
+
+$("#delfrof").click(function(){   
+ $(".notific-box").addClass("show");
+});
+
+
+// close button notification
+$(".notific-box .close-button").click(function (event) {
+    event.preventDefault();
+    $(".notific-box").removeClass("show");
+});
+
+
+</script>
+
+
+
+
+
+
+
+
+
+    <!-- ///////////// Js Files ////////////////////  -->
+<script src="cordova.js"></script>
+   <script src="js/camera.js"></script>
+
+
+</body>
+</html>

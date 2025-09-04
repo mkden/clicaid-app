@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <title>Clicaid</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-white">
+    <!-- loader -->
+    <div id="loader">
+	  <span class="icon-logo fa-2x ring"></span>
+    </div>
+    <!-- * loader -->
+
+
+
+<div class="appHeader no-border transparent position-absolute">
+        <div class="left">
+            <a href="javascript:;" class="headerButton goBack">
+                	<i class="fas fa-chevron-left md hydrated" aria-label="chevron back outline"></i>
+            </a>
+        </div>
+        <div class="pageTitle"></div>
+        <div class="right">
+            <a href="#" class="headerButton">
+     <i class="fal fa-credit-card fa-2x"></i>
+            </a>
+        </div>
+    </div>
+
+
+    <!-- App Capsule -->
+    <div id="appCapsule" class="pt-0">
+   <div class="login-form mt-1">
+            <div class="mt-1 mb-5">
+            </div>
+            <div class="section mt-1">
+                <h1>Баланс</h1>
+                <h4>Ваш баланс&nbsp;<span id="bal"></span>&#8381;</h4>
+            </div>
+            <div class="section mt-1 mb-5">
+			
+			
+			
+			
+<form method="post" action="https://merchant.intellectmoney.ru/ru/" id="pay" name="pay">
+<input id="orderId" type="hidden" value="" name="orderId">
+<input id="eshopId" type="hidden" value="459518" name="eshopId">
+<input id="serviceName" type="hidden" value="" name="serviceName">
+<input type="hidden" value="RUB" name="recipientCurrency">
+<input type="hidden" value="https://clicaid.ru/mkmoney/success.php?n=android" name="successUrl">
+<input type="hidden" value="https://clicaid.ru/mkmoney/mkmoney/fail.php" name="failUrl">
+<input id="userName" type="hidden" value="" name="userName">
+<input id="userEmail" type="hidden" value="" name="user_email">
+<input id="userField_1" type="hidden" value="mob" name="userField_1">
+<br/>Пополнить баланс на сумму:<br/>
+
+
+
+<div class="form-group boxed">
+<div class="input-wrapper">
+<input type="number" name="recipientAmount" id="recipientAmount" value="2000" class="form-control">
+</div>
+</div>
+
+
+       <div>
+                        <button type="submit" class="btn btn-primary btn-block btn-lg">Пополнить</button>
+                    </div>
+
+	</form>
+				
+				
+            </div>
+        </div>
+
+
+    </div>
+    <!-- * App Capsule -->
+
+
+
+ <!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="home.html" class="item active" id="ba">
+            <div class="col">
+<i class="fal fa-home-lg-alt fa-2x"></i>
+            </div>
+        </a>
+        <a href="#" class="item">
+            <div class="col">
+            </div>
+        </a>
+
+        <a href="balance.html" class="item" id="bc">
+            <div class="col">
+              <i class="fal fa-credit-card fa-2x"></i>
+            </div>
+        </a>
+		
+		        <a href="#" class="item">
+            <div class="col">
+            </div>
+        </a>
+		
+        <a href="page-profile.html" class="item" id="bd">
+            <div class="col">
+			<i class="fal fa-user fa-2x"></i>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
+
+
+
+
+
+    <!-- ///////////// Js Files ////////////////////  -->
+    <!-- Jquery -->
+    <script src="js/lib/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap-->
+    <script src="js/lib/popper.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <!-- Owl Carousel -->
+    <script src="js/plugins/owl-carousel/owl.carousel.min.js"></script>
+    <!-- jQuery Circle Progress -->
+    <script src="js/plugins/jquery-circle-progress/circle-progress.min.js"></script>
+    <!-- Base Js File -->
+    <script src="js/base.js"></script>
+	
+<script type="text/javascript" > 
+var id_user = window.localStorage.getItem("id_user");
+
+
+$("#userName").val(id_user);
+
+
+function showa()  
+{  
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/user-info.php?id_user="+id_user, 
+dataType:"json", 
+cache: false,  
+success: function(data){   
+$("#bal").text(data.balance);
+$("#userEmail").val(data.tel);
+}  
+});  
+}
+		
+		
+		
+$(document).ready(function(){	
+showa();
+}); 
+
+var datet=Math.floor(Date.now() / 1000);
+$("#orderId").val(datet);
+$("#serviceName").val('Пополнение баланса по счету #'+datet);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1086 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <link rel="stylesheet" href="css/style.css">
+ <link rel="stylesheet" href="./css/jquery-ui.css">
+
+
+
+
+
+<script type="text/javascript">
+
+document.addEventListener("deviceready",onDeviceReady,false); 
+
+
+function onDeviceReady() {
+    checkConnection();
+}
+
+
+
+ 
+function checkConnection() {
+        if(navigator.connection.type==0)
+        {
+            window.location.href = "offline.html";
+        }
+        else if(navigator.connection.type=='none')
+        {
+            window.location.href = "offline.html";
+
+        }
+        else
+        {
+
+
+        }
+    }
+
+
+
+
+</script>
+
+
+
+
+
+
+    </head>
+
+
+
+<body class="bg-white">
+
+
+    <!-- loader -->
+    <div id="loader">
+	  <span class="icon-logo fa-2x ring"></span>
+    </div>
+    <!-- * loader -->
+
+
+
+    <!-- App Header -->
+<div class="appHeader no-border transparent position-absolute">
+        <div class="left">
+            <a href="javascript:;" class="headerButton goBack">
+					<i class="fas fa-chevron-left md hydrated" aria-label="chevron back outline"></i>
+            </a>
+        </div>
+        <div class="pageTitle"></div>
+        <div class="right">
+            <a href="#" class="headerButton">
+   <span class="icon-logo fa-2x"></span>
+            </a>
+        </div>
+    </div>
+    <!-- * App Header -->
+
+
+
+
+
+
+
+
+    <!-- App Capsule -->
+    <div id="appCapsule">
+
+
+
+        <div class="section full">
+            <div class="wide-block transparent p-0">
+                <ul class="nav nav-tabs lined iconed" role="tablist">
+      <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#geo" role="tab">
+                         <i class="far fa-location-arrow"></i>&nbsp; Гео
+                        </a>
+                    </li>
+ 
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#adress" role="tab">
+                        <i class="far fa-address-card"></i>&nbsp;  Мои адреса
+                        </a>
+                    </li>
+              
+                </ul>
+            </div>
+        </div>
+
+
+
+
+
+
+        <!-- tab content -->
+        <div class="section full mb-2">
+            <div class="tab-content">
+
+         
+
+                <!--  bookmarks -->
+                <div class="tab-pane fade  show active" id="geo" role="tabpanel">
+
+
+
+	 <div class="header header-up">
+                               
+                <div class="nav-bar">
+                	<div class="container-fluid">
+                    	<div class="row">
+
+                            
+                        	<div class="col-xs-12 col-sm-12">
+                                <div class="header-logo f-none text-center">
+								
+					<div class="searchf">
+                               <input type="search" id="search_location" placeholder="Введите адрес для поиска">
+                            
+						<button class="get_map" type="submit">
+               <i class="fas fa-search"></i>
+                        </button>
+						</div>
+</div><!-- end header-logo -->			
+                            </div><!-- end columns -->
+</div><!-- end row -->
+						
+						
+<div class="badress">					
+<h4 class="adress" style="color:green;">Ищем вас...</h4>
+</div>	
+						
+						
+						
+                    </div><!-- end container-fluid -->
+                </div><!-- end nav-bar -->
+            </div>
+	 
+	 
+
+	<div id="geomap"></div>	
+
+
+   
+            
+				<input type="hidden" id="locality" name="city">
+				   
+				<input type="hidden" id="route" name="street">
+				   
+				<input type="hidden" id="street_number" name="dom">
+						  
+						  
+	
+					 <div class="form-button-group">
+							 <a href="#" class="btn btn-primary btn-block btn-lg vizov">Вызов</a>
+					
+                    </div>	
+
+
+
+
+
+	
+		</div>
+		
+		
+		
+		<input id="cord" class="form-control" type="hidden" name="cord">
+		
+		
+<div class="tab-pane fade " id="adress" role="tabpanel">
+
+<div class="wide-block pb-1 pt-2">
+<form>
+
+<div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <label class="label" for="adress-list">Сохраненные адреса</label>
+<select id="adress-list" class="form-control custom-select" onchange="changea();">
+</select>
+
+
+                        </div>
+                    </div>
+
+<div class="form-group boxed">
+
+
+<div id="textadress"></div>
+
+ </div>
+ <div class="form-button-group">		
+ 
+  <a href="#" class="btn btn-primary btn-block btn-lg vizov">Вызов</a>
+
+
+</div>	
+
+</form>
+
+</div>
+
+       
+</div>
+	
+	
+	
+	
+	</div>
+	
+	
+	
+	
+	
+ <!-- android style -->
+                <div id="notification" class="notification-box">
+                    <div class="notification-dialog android-style">
+                        <div class="notification-header">
+                            <div class="in">
+                                <strong>Ошибка!</strong>
+                            </div>
+                            <a href="#" class="close-button">
+                                <ion-icon name="close"></ion-icon>
+                            </a>
+                        </div>
+                        <div class="notification-content">
+                            <div class="in">
+                                <h3 class="subtitle error" style="color:red;"></h3>
+                                <div class="text">
+                           
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+	
+	
+	
+	
+
+   <script src="cordova.js"></script>
+
+
+
+ <!-- Jquery -->
+    <!-- ///////////// Js Files ////////////////////  -->
+    <!-- Jquery -->
+    <script src="js/lib/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap-->
+    <script src="js/lib/popper.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <!-- Owl Carousel -->
+    <script src="js/plugins/owl-carousel/owl.carousel.min.js"></script>
+    <!-- jQuery Circle Progress -->
+    <script src="js/plugins/jquery-circle-progress/circle-progress.min.js"></script>
+    <!-- Base Js File -->
+    <script src="js/base.js"></script>
+<script src="js/pulltorefresh.js"></script>
+
+
+
+<script type='text/javascript'>
+
+
+
+var id_user=window.localStorage.getItem("id_user");	
+
+let mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
+console.log('Is matchMedia Available? ->',!!mediaQueryList);
+
+let isDarkMode = mediaQueryList && mediaQueryList.matches;
+console.log('Is it dark mode? ->',isDarkMode);
+
+
+
+function adressTemplate(p) {
+return `<option value="${p.cord}">${p.title}</option>`;
+}
+
+
+
+      function showAdress()  
+        {   
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/adress-list.php?id_user="+id_user, 
+dataType:"json",
+cache: false,  
+success: function(data){  
+
+document.getElementById("adress-list").innerHTML = `<option value=0>Выберите место</option>${data.map(adressTemplate).join("")}`;
+
+}  
+});  
+        }  
+
+
+
+
+
+
+
+function changea() {
+    select = document.getElementById("adress-list"); // Выбираем  select по 
+	idvalue = select.options[select.selectedIndex].value; // Значение value для выбранного option
+	text = select.options[select.selectedIndex].text;
+document.getElementById("cord").value = idvalue;
+
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/adress-list.php?id_user="+id_user+"&text="+text,
+dataType:"text",
+cache: false,  
+success: function(data){  
+$("#textadress").text(data);
+
+}  
+});  
+}
+
+
+
+
+
+
+
+
+
+
+showAdress();
+
+</script>
+
+
+
+
+
+
+
+
+		   		<!-- Page Scripts Starts -->
+		<script src="js/jquery.min1.11.1.js"></script>
+		<script src="js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDqmF1kw4GLZbDGg3PxtVS9eTXlKF90kBY&language=ru&region=RU"></script>
+<script src="js/gmaphack.js"></script>
+<script type="text/javascript">
+
+
+function initialize(){
+
+	
+var lat = window.localStorage.getItem("lat1");
+var lon = window.localStorage.getItem("lon1");	
+
+
+if(lon>0){
+initialLat = lat;
+initialLong = lon;
+}
+else{
+var initialLat = '59.93983170000001';
+var initialLong = '30.3145597';
+}
+
+
+var latlng = new google.maps.LatLng(initialLat, initialLong);
+		var options = {
+			zoom: 17,
+			center: latlng,
+			componentRestrictions: { country: "ru" },
+			mapTypeControl: false,
+			streetViewControl: false,
+			fullscreenControl: false,
+			gestureHandling: 'greedy',
+			myLocationEnabled: true,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+
+		var map = new google.maps.Map(document.getElementById("geomap"), options);
+
+
+		var geocoder = new google.maps.Geocoder();
+
+		
+
+
+					geocoder.geocode({'latLng': latlng}, function (results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					map.setCenter(results[0].geometry.location);
+					//marker.setPosition(results[0].geometry.location);
+					
+		 // Get address_components
+          for (var i = 0; i < results[0].address_components.length; i++)
+          {
+            var addr = results[0].address_components[i];
+			
+for (var j in addr.types) {  // Some types are ["country", "political"]
+      var type_element = document.getElementById(addr.types[j]);
+if (type_element) {
+type_element.value = addr.long_name;
+}
+ }	
+            var getCity;
+			 var getStret;
+			  var getDom;
+            if (addr.types[0] == 'locality') 
+              getCity = addr.long_name;
+			if (addr.types[0] == 'route') 
+			getStret = addr.long_name;
+			if (addr.types[0] == 'street_number') 
+			getDom = addr.long_name;
+          }
+   // Get address_components
+		  
+var adress1 = getCity+', '+getStret+', '+getDom;	
+var adress2 = adress1.replace(", undefined, undefined","");  
+var adress = adress2.replace("undefined",""); 
+var adress = adress.replace("Unnamed Road","Улица без имени");
+		  
+
+var g = map.getCenter();
+$('#cord').val(g.lat()+','+g.lng());
+
+				}
+			});
+			
+			
+
+
+
+		google.maps.event.addListener(map, "dragend", function () {
+
+			//var point = marker.getPosition();
+	
+var g = map.getCenter();
+var latlngs=g.lat()+','+g.lng();
+
+			//var point = map.setCenter();
+			//map.panTo(point);
+			
+        var latlng = new google.maps.LatLng(g.lat(), g.lng());
+
+			
+			geocoder.geocode({'latLng': latlng}, function (results, status) {
+
+			
+				if (status == google.maps.GeocoderStatus.OK) {
+					map.setCenter(results[0].geometry.location);
+					//marker.setPosition(results[0].geometry.location);
+					  // Get address_components
+          for (var i = 0; i < results[0].address_components.length; i++)
+          {
+            var addr = results[0].address_components[i];
+for (var j in addr.types) {  // Some types are ["country", "political"]
+      var type_element = document.getElementById(addr.types[j]);
+if (type_element) {
+type_element.value = addr.long_name;
+}
+ }	
+            var getCity;
+			 var getStret;
+			  var getDom;
+            if (addr.types[0] == 'locality') 
+              getCity = addr.long_name;
+			if (addr.types[0] == 'route') 
+			getStret = addr.long_name;
+			if (addr.types[0] == 'street_number') 
+			getDom = addr.long_name;
+          }
+   // Get address_components
+		
+		
+var adress1 = getCity+', '+getStret+', '+getDom;	
+var adress2 = adress1.replace(", undefined, undefined","");  
+var adress = adress2.replace("undefined",""); 
+var adress = adress.replace("Unnamed Road","Улица без имени");
+		  
+
+$('.adress').text(adress);
+$('#cord').val(g.lat()+','+g.lng());
+
+				}
+			});
+		});
+		
+	
+	
+	
+	
+
+
+	
+	
+	
+	
+/////////////////
+	
+	
+/*
+		 * autocomplete location search
+		 */
+		var PostCodeid = '#search_location';
+		$(function () {
+			$(PostCodeid).autocomplete({
+				source: function (request, response) {
+					geocoder.geocode({
+						'address': request.term,
+						//componentRestrictions: {country: "ua"}
+					}, function (results, status) {
+						response($.map(results, function (item) {
+							
+		$('#locality').val('');
+        $('#route').val('');
+		$('#street_number').val('');
+		
+	         // Get address_components
+          for (var i = 0; i < item.address_components.length; i++)
+          {
+            var addr = item.address_components[i];
+   var type_element1 = document.getElementById('locality');
+	var type_element2 = document.getElementById('route');
+	var type_element3 = document.getElementById('street_number');
+		
+            var getCity;
+			 var getStret;
+			  var getDom;
+			  
+			  if (addr.types[0] == 'postal_code'){
+               item.formatted_address=item.formatted_address.replace(addr.long_name,'');
+			   }
+            if (addr.types[0] == 'locality'){
+              getCity = addr.long_name;
+			  type_element1.value = addr.long_name;}
+			if (addr.types[0] == 'route'){
+			getStret = addr.long_name;
+			type_element2.value = addr.long_name;}
+			if (addr.types[0] == 'street_number'){ 
+			getDom = addr.long_name;
+			type_element3.value = addr.long_name;}
+          }
+   // Get address_components
+   
+   var adress1 = getCity+', '+getStret+', '+getDom;	
+var adress2 = adress1.replace(", undefined, undefined","");  
+var adress = adress2.replace("undefined",""); 
+var adres = adress.replace("Unnamed Road","Улица без имени");
+							
+							
+							
+							return {
+								label: item.formatted_address,
+								value: item.formatted_address,
+								adress: adres,
+								lat: item.geometry.location.lat(),
+								lon: item.geometry.location.lng()
+							};
+						}));
+					});
+				},
+				select: function (event, ui) {
+				
+				$('#cord').val(ui.item.lat+','+ui.item.lon);
+					$('.adress').text(ui.item.adress);
+					var latlng = new google.maps.LatLng(ui.item.lat, ui.item.lon);
+					//marker.setPosition(latlng);
+					map.setCenter(latlng);
+				}
+			});
+		});
+
+		
+		
+		/*
+		 * Point location on google map
+		 */
+		$('.get_map').click(function (e) {
+		
+		var g = map.getCenter();
+		
+			var address = $(PostCodeid).val();
+			geocoder.geocode({'address': address}, function (results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					map.setCenter(results[0].geometry.location);
+					//marker.setPosition(results[0].geometry.location);
+					    // Get address_components
+          for (var i = 0; i < results[0].address_components.length; i++)
+          {
+            var addr = results[0].address_components[i];
+			
+for (var j in addr.types) {  // Some types are ["country", "political"]
+      var type_element = document.getElementById(addr.types[j]);
+if (type_element) {
+type_element.value = addr.long_name;
+}
+ }	
+            var getCity;
+			 var getStret;
+			  var getDom;
+            if (addr.types[0] == 'locality') 
+              getCity = addr.long_name;
+			if (addr.types[0] == 'route') 
+			getStret = addr.long_name;
+			if (addr.types[0] == 'street_number') 
+			getDom = addr.long_name;
+          }
+   // Get address_components
+		  
+var adress1 = getCity+', '+getStret+', '+getDom;	
+var adress2 = adress1.replace(", undefined, undefined","");  
+var adress = adress2.replace("undefined",""); 
+var adress = adress.replace("Unnamed Road","Улица без имени");
+
+$('.adress').text(adress);
+$('#cord').val(g.lat()+','+g.lng());
+
+				} else {
+					alert("Geocode was not successful for the following reason: " + status);
+				}
+			});
+			e.preventDefault();
+		});
+
+	
+	
+	
+////////////////////
+	
+	
+	
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	var app = {
+    // Application Constructor
+    initialize: function() {
+        this.bindEvents();
+    },
+    // Bind Event Listeners
+    //
+    // Bind any events that are required on startup. Common events are:
+    // 'load', 'deviceready', 'offline', and 'online'.
+    bindEvents: function() {
+        document.addEventListener('deviceready', this.onDeviceReady, false);
+    },
+    // deviceready Event Handler
+    //
+    // The scope of 'this' is the event. In order to call the 'receivedEvent'
+    // function, we must explicitly call 'app.receivedEvent(...);'
+    onDeviceReady: function() {
+       // app.receivedEvent('deviceready');
+	 var option = {enableHighAccuracy:true, maximumAge:Infinity, timeout:20000};
+	  //var option = {enableHighAccuracy: true, timeout: 20000, maximumAge: 0};
+       navigator.geolocation.getCurrentPosition(app.onSuccess, app.onError, option);
+    },
+
+	
+	
+
+	
+    onSuccess: function(position){
+	
+	var str = $('#cord').val();
+	var arr = str.split(',');
+	
+	
+		var initialLat = arr[0];
+		var initialLong = arr[1];
+		initialLat = initialLat?initialLat:position.coords.latitude;
+		initialLong = initialLong?initialLong:position.coords.longitude;
+	
+	
+	
+var latlng = new google.maps.LatLng(initialLat, initialLong);
+		var options = {
+			zoom: 17,
+			center: latlng,
+			componentRestrictions: { country: "ru" },
+			radius: 20000,
+			mapTypeControl: false,
+			streetViewControl: false,
+			fullscreenControl: false,
+			gestureHandling: 'greedy',
+			myLocationEnabled: true,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+
+		var map = new google.maps.Map(document.getElementById("geomap"), options);
+
+		var geocoder = new google.maps.Geocoder();
+
+
+		
+					geocoder.geocode({'latLng': latlng}, function (results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					map.setCenter(results[0].geometry.location);
+					//marker.setPosition(results[0].geometry.location);
+					
+		 // Get address_components
+          for (var i = 0; i < results[0].address_components.length; i++)
+          {
+            var addr = results[0].address_components[i];
+			
+for (var j in addr.types) {  // Some types are ["country", "political"]
+      var type_element = document.getElementById(addr.types[j]);
+if (type_element) {
+type_element.value = addr.long_name;
+}
+ }	
+            var getCity;
+			 var getStret;
+			  var getDom;
+            if (addr.types[0] == 'locality') 
+              getCity = addr.long_name;
+			if (addr.types[0] == 'route') 
+			getStret = addr.long_name;
+			if (addr.types[0] == 'street_number') 
+			getDom = addr.long_name;
+          }
+   // Get address_components
+		  
+var adress1 = getCity+', '+getStret+', '+getDom;	
+var adress2 = adress1.replace(", undefined, undefined","");  
+var adress = adress2.replace("undefined",""); 
+var adress = adress.replace("Unnamed Road","Улица без имени");
+		  
+var g = map.getCenter();	  
+$('.adress').text(adress);
+$('#cord').val(g.lat()+','+g.lng());
+
+
+
+
+				}
+			});
+			
+			
+
+
+		google.maps.event.addListener(map, "dragend", function () {
+
+			//var point = marker.getPosition();
+	
+var g = map.getCenter();
+var latlngs=g.lat()+','+g.lng();
+
+			//var point = map.setCenter();
+			//map.panTo(point);
+			
+        var latlng = new google.maps.LatLng(g.lat(), g.lng());
+
+			
+			geocoder.geocode({'latLng': latlng}, function (results, status) {
+
+			
+				if (status == google.maps.GeocoderStatus.OK) {
+					map.setCenter(results[0].geometry.location);
+					//marker.setPosition(results[0].geometry.location);
+					  // Get address_components
+          for (var i = 0; i < results[0].address_components.length; i++)
+          {
+            var addr = results[0].address_components[i];
+for (var j in addr.types) {  // Some types are ["country", "political"]
+      var type_element = document.getElementById(addr.types[j]);
+if (type_element) {
+type_element.value = addr.long_name;
+}
+ }	
+            var getCity;
+			 var getStret;
+			  var getDom;
+            if (addr.types[0] == 'locality') 
+              getCity = addr.long_name;
+			if (addr.types[0] == 'route') 
+			getStret = addr.long_name;
+			if (addr.types[0] == 'street_number') 
+			getDom = addr.long_name;
+          }
+   // Get address_components
+		
+		
+var adress1 = getCity+', '+getStret+', '+getDom;	
+var adress2 = adress1.replace(", undefined, undefined","");  
+var adress = adress2.replace("undefined",""); 
+var adress = adress.replace("Unnamed Road","Улица без имени");
+		  
+
+$('.adress').text(adress);
+$('#cord').val(g.lat()+','+g.lng());
+
+				}
+			});
+		});
+		
+	
+	
+
+	
+	
+
+
+////////////////////
+	
+	
+	
+/////////////////
+	
+	
+/*
+		 * autocomplete location search
+		 */
+		var PostCodeid = '#search_location';
+		$(function () {
+			$(PostCodeid).autocomplete({
+				source: function (request, response) {
+					geocoder.geocode({
+						'address': request.term,
+						//componentRestrictions: {country: "ua"}
+					}, function (results, status) {
+						response($.map(results, function (item) {
+							
+		$('#locality').val('');
+        $('#route').val('');
+		$('#street_number').val('');
+		
+	         // Get address_components
+          for (var i = 0; i < item.address_components.length; i++)
+          {
+            var addr = item.address_components[i];
+   var type_element1 = document.getElementById('locality');
+	var type_element2 = document.getElementById('route');
+	var type_element3 = document.getElementById('street_number');
+		
+            var getCity;
+			 var getStret;
+			  var getDom;
+			  
+			  if (addr.types[0] == 'postal_code'){
+               item.formatted_address=item.formatted_address.replace(addr.long_name,'');
+			   }
+            if (addr.types[0] == 'locality'){
+              getCity = addr.long_name;
+			  type_element1.value = addr.long_name;}
+			if (addr.types[0] == 'route'){
+			getStret = addr.long_name;
+			type_element2.value = addr.long_name;}
+			if (addr.types[0] == 'street_number'){ 
+			getDom = addr.long_name;
+			type_element3.value = addr.long_name;}
+          }
+   // Get address_components
+   
+   var adress1 = getCity+', '+getStret+', '+getDom;	
+var adress2 = adress1.replace(", undefined, undefined","");  
+var adress = adress2.replace("undefined",""); 
+var adres = adress.replace("Unnamed Road","Улица без имени");
+							
+							
+							return {
+								label: item.formatted_address,
+								value: item.formatted_address,
+								adress: adres,
+								lat: item.geometry.location.lat(),
+								lon: item.geometry.location.lng()
+							};
+						}));
+					});
+				},
+				select: function (event, ui) {
+				$('#cord').val(ui.item.lat+','+ui.item.lon);
+					$('.adress').text(ui.item.adress);
+					var latlng = new google.maps.LatLng(ui.item.lat, ui.item.lon);
+					//marker.setPosition(latlng);
+					map.setCenter(latlng);
+				}
+			});
+		});
+
+		
+		
+		/*
+		 * Point location on google map
+		 */
+		$('.get_map').click(function (e) {
+		
+		var g = map.getCenter();
+		
+			var address = $(PostCodeid).val();
+			geocoder.geocode({'address': address}, function (results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					map.setCenter(results[0].geometry.location);
+					//marker.setPosition(results[0].geometry.location);
+					    // Get address_components
+          for (var i = 0; i < results[0].address_components.length; i++)
+          {
+            var addr = results[0].address_components[i];
+			
+for (var j in addr.types) {  // Some types are ["country", "political"]
+      var type_element = document.getElementById(addr.types[j]);
+if (type_element) {
+type_element.value = addr.long_name;
+}
+ }	
+            var getCity;
+			 var getStret;
+			  var getDom;
+            if (addr.types[0] == 'locality') 
+              getCity = addr.long_name;
+			if (addr.types[0] == 'route') 
+			getStret = addr.long_name;
+			if (addr.types[0] == 'street_number') 
+			getDom = addr.long_name;
+          }
+   // Get address_components
+		  
+var adress1 = getCity+', '+getStret+', '+getDom;	
+var adress2 = adress1.replace(", undefined, undefined","");  
+var adress = adress2.replace("undefined",""); 
+var adress = adress.replace("Unnamed Road","Улица без имени");
+
+$('.adress').text(adress);
+$('#cord').val(g.lat()+','+g.lng());
+
+				} else {
+					alert("Geocode was not successful for the following reason: " + status);
+				}
+			});
+			e.preventDefault();
+		});
+
+	
+	
+	
+////////////////////	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+},
+    
+    onError: function(error){
+	
+$('.adress').html('Нет сигнала GPS.<br/>Включите GPS или воспользуйтесь поиском.');
+initialize();
+
+    },
+
+	
+}
+
+
+
+app.initialize();
+ 
+ 
+
+</script>
+
+
+<script type="text/javascript">
+
+	 $(".vizov").click(function(){
+	 var textadress = $('#textadress').text();
+	 
+	 	if(textadress==""){
+  var pcity = $("#locality").val();
+  var pstreet = $("#route").val();
+  var pdom = $("#street_number").val();
+	 }
+	 else{
+	  var adr = textadress.split(","); 
+	   var pcity = adr[0];
+  var pstreet = adr[1];
+  var pdom = adr[2];
+  }
+  
+  
+  
+var adress = pcity +', '+pstreet+', '+pdom;
+  
+var mycord = $('#cord').val();
+
+		if(mycord=="" || mycord=="undefined"){
+		notification('notification', 3000);
+		$('.error').text('Не найдены координаты попробуйте передвитуть метку.');
+		}
+		else{
+		
+
+		
+		            $.ajax({
+                url:'https://clicaid.ru/api-mobile/order.php?id_user='+id_user,
+                type:'post',
+                data:{adress:adress,cord:mycord},
+				     success:function(data){
+if (data == '1')  {
+window.localStorage.setItem("mycity", pcity);
+window.localStorage.setItem("mystreet", pstreet);	
+window.localStorage.setItem("mydom", pdom);	
+window.localStorage.setItem("mycord", mycord);
+window.location.href = "home.html";
+  }
+else{
+notification('notification', 3000);
+$(".error").text("Сервиса Clicaid пока здесь нет.");
+}	
+}				 
+});
+				
+	
+
+	
+}
+});
+
+
+
+
+
+</script>
+
+
+    
+</body>
+</html>

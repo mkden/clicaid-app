@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <title>Clicaid</title>
+    <link rel="stylesheet" href="css/style.css">
+	   <!-- Jquery -->
+    <script src="js/lib/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap-->
+    <script src="js/lib/popper.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <!-- Owl Carousel -->
+    <script src="js/plugins/owl-carousel/owl.carousel.min.js"></script>
+    <!-- jQuery Circle Progress -->
+    <script src="js/plugins/jquery-circle-progress/circle-progress.min.js"></script>
+    <!-- Base Js File -->
+    <script src="js/base.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+	<style>
+.ui-button {
+  background-color: #fff;
+  border: 0;
+  border-radius: 50px;
+  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+  font: 400 18px Roboto, Arial, sans-serif;
+  overflow: hidden;
+  height: 40px;
+  cursor: pointer;
+  margin-bottom:130px;
+}
+</style>
+
+	
+	
+ <script type="text/javascript">
+ 
+        function showSettings()
+        {
+        $.ajax({
+        url: "https://clicaid.ru/api-mobile/checkSettings.php",
+        dataType:"json",
+        cache: false,
+        success: function(data){
+        $("#callcenter").attr("href", "tel:"+data.callcenter);
+      //$('#pricev').val(data.pricev);
+	   window.localStorage.setItem("callcenter", data.callcenter);
+        }
+        });
+        }
+
+var callcenter = window.localStorage.getItem("callcenter");
+$("#callcenter").attr("href", "tel:"+callcenter);
+ 
+ 
+$(document).ready(function(){
+show();
+showb();
+showsmena();
+});
+
+ 
+ 
+
+function Successgeo(position) {
+var lat = position.coords.latitude;
+var lng = position.coords.longitude;
+$.ajax({
+url: "https://clicaid.ru/api-mobile/kur-zakazi.php?id_user="+id_user+"&lat="+lat+"&lng="+lng, 
+cache: false
+}).done(function(data) {
+});
+}
+
+function Errorgeo(error) {
+$('.error').text('Включите GPS');
+notification('notification', 3000);
+}
+
+
+
+setInterval(function(){
+navigator.geolocation.getCurrentPosition( Successgeo, Errorgeo, {
+    enableHighAccuracy : true,
+    maximumAge: Infinity, // should be default, just in case
+    timeout: 10000
+});
+}, 4000);
+</script>
+</head>
+
+<body class="bg-white">
+
+
+    <!-- loader -->
+    <div id="loader">
+	  <span class="icon-logo fa-2x ring"></span>
+    </div>
+    <!-- * loader -->
+	
+	
+
+	
+	
+	
+		
+<div class="appHeader no-border transparent position-absolute">
+        <div class="left">
+            <a href="javascript:;" class="headerButton goBack">
+                	<i class="fas fa-chevron-left md hydrated" aria-label="chevron back outline"></i>
+            </a>
+        </div>
+        <div class="pageTitle">
+
+		<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#DialogBlockButton" id="dannie" style="display:none;">
+              Данные
+       </button>
+
+		</div>
+        <div class="right">
+		<a href="#" id="exit"><i class="fa fa-sign-out-alt"></i></a>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!-- App Capsule -->
+    <div id="appCapsule">
+	
+	
+	
+	
+
+ <div class="section mt-2 kyrn">
+             <div class="row">
+                    <div class="col-6">
+                       <h3 id="fname"></h3>
+                    </div>
+                    <div class="col-6" style="text-align: right;">
+					<h3 id="status"></h3>
+                    </div>
+                </div>
+</div>
+
+
+
+
+
+
+
+<div class="error-page" style="padding-top:0;">
+<div class="addgeo">
+<div class="greenb vizov"></div>
+
+              <div class="row">
+                    <div class="col-12" id="smena">
+                       
+                    </div>
+                </div>
+
+</div>
+</div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+<div id="geomaps" style="display:none;"></div>	
+<div id="new"></div>	 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 		   <div class="modal fade dialogbox" id="DialogBlockButton" data-backdrop="static" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Данные заказчика</h5>
+                    </div>
+                    <div class="modal-body">
+                    <h3 id="name"></h3>
+					<img src="" class="img-responsive lk33" id="avatar">
+					<br/><br/>
+					<h4 id="adress"></h4>
+					<a href="#" onclick="copy_data()" style="color:red;">Скопировать координаты</a>
+					<div id="ucord" style="display:none;"></div><br/><br/>
+					<div id="telu"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="btn-list">
+						<a href='' class='btn btn-danger btn-lg btn-block' id="callcenter">Позвонить диспетчеру</a><br/>
+                        <a href="#" class="btn btn-text-secondary btn-block" data-dismiss="modal">ЗАКРЫТЬ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+</div>
+    <!-- App Capsule -->     
+
+        
+        
+
+		
+	
+		
+		
+		
+		
+		
+
+ <script type="text/javascript" > 
+
+var id_user = window.localStorage.getItem("id_user");
+
+
+function getcorduser() {
+var text=$("#usercord").text();
+cordova.plugins.clipboard.copy(text);
+notification('notification-cord', 3000);
+}
+	
+	
+	
+	
+function copy_data() {
+var text=$("#ucord").text();
+cordova.plugins.clipboard.copy(text);
+notification('notification-cord', 3000);
+}
+	
+	
+	
+
+	
+	
+	
+function pTemplate(p) {
+
+var adr = p.cord.split(","); 
+var endcord1 = adr[0];
+var endcord2 = adr[1];
+
+var uadr = p.ucord.split(","); 
+var mycord1 = uadr[0];
+var mycord2 = uadr[1];
+
+
+$("#avatar").attr("src", "https://clicaid.ru/"+p.avatar);
+$("#name").text(p.uname);
+$("#adress").text(p.adress);
+$("#ucord").text(p.ucord);
+$("#telu").html(`<a href="tel:${p.tel}" class="btn btn-outline-dark">Позвонить заказчику</a>`);
+
+
+
+ if (p.kurier_id == id_user && p.status == 2 ){
+ map(this,p.id,p.avatar,mycord1,mycord2,mycord1,mycord2,endcord1,endcord2);
+ }
+else{
+
+getkm(mycord1,mycord2,endcord1,endcord2);
+
+
+return `
+<div class="modal dialogbox" style="display: block;">
+            <div class="modal-dialog">
+                <div class="modal-content" style="background-color: rgb(255,255,255,0.6)">
+                    <div class="modal-icon">
+                        <img src="https://clicaid.ru/${p.avatar}" class="img-responsive lk33">
+                    </div>
+                    <div style="padding: 1rem 1rem;text-align: center;">
+                        <h1 class="">${p.uname}</h1>
+						<h2 style="color:red;"><b id="km"></b> км от вас</h2>
+						<h2 style="color:green;">Время в пути <b id="time"></b> мин</h2>
+                    </div>
+                    <div class="modal-body">
+<div id="usercord" style="display:none;">${p.ucord}</div>
+<button onclick="getcorduser()" class="btn btn-outline-dark">Скопировать координаты</button>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="btn-inline">
+             <button type="button" class="kyrbut" onclick="clickz(this,${p.id},'${p.avatar}',${mycord1},${mycord2},${mycord1},${mycord2},${endcord1},${endcord2});">ПОСТРОИТЬ МАРШРУТ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+					
+ `;
+ }
+
+ 
+}
+	
+
+</script> 
+		
+		
+		
+
+<script type="text/javascript" > 
+
+if (id_user > '0'){
+}
+else{
+window.location.href = "index.html";
+}
+
+
+var refreshIntervalId = setInterval(function(){show();}, 3000);
+
+function show()  
+{  
+
+$('#DialogBlockButton').hide();
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/kur-zakazi.php?id_user="+id_user+"&page=2", 
+dataType:"json",
+cache: false,  
+success: function(data){
+if (data == null){	
+$('.error-page').show(); 
+$('#geomaps').hide();						 
+}
+else{
+$('.error-page').hide(); 
+$('#geomaps').show();
+document.getElementById("new").innerHTML = `${data.map(pTemplate).join("")}`;
+clearTimeout(refreshIntervalId);
+}
+
+}  
+});  
+}  
+
+
+
+
+function showb()  
+{  
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/user-info.php?id_user="+id_user, 
+dataType:"json", 
+cache: false,  
+success: function(data){ 
+$("#uava").attr("src", "https://clicaid.ru/"+data.avatar);
+$("#fname").text(data.name);
+}  
+});  
+}
+
+
+
+function showsmena()  
+{  
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/smena-kur.php?id_user="+id_user, 
+dataType:"text", 
+cache: false,  
+success: function(data){ 
+
+if (data=="1"){
+$('#smena').html('<a href="#" class="btn btn-text-primary btn-block shadowed" onclick="endsmena();">Завершить работу</a>');
+$('#status').html('<span style="color:green">Активен <i class="fas fa-circle"></i></span>');
+$('.redb').attr("class", "greenb");
+}
+else{
+$('#smena').html('<a href="#" class="btn btn-text-primary btn-block shadowed" onclick="startsmena();">Приступить к работе</a>');
+$('#status').html('<span style="color:red">Неактивен <i class="fas fa-circle"></i></span>');
+$('.greenb').attr("class", "redb");
+}
+
+
+
+}  
+});  
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+		function startsmena(){
+		$.post("https://clicaid.ru/api-mobile/smena-kur.php?id_user="+id_user, { start:1 }).done(function(data) {
+$('.error').text('Смена открыта!');
+notification('notification', 3000);		
+$('#smena').html('<a href="#" class="btn btn-text-primary btn-block shadowed" onclick="endsmena();">Завершить работу</a>');
+$('#status').html('<span style="color:green">Активен <i class="fas fa-circle"></i></span>');
+$('.redb').attr("class", "greenb");
+        }); 
+ }
+
+
+		function endsmena(){
+		$.post("https://clicaid.ru/api-mobile/smena-kur.php?id_user="+id_user, { end:1 }).done(function(data) {
+$('.error').text('Смена закрыта!');
+notification('notification', 3000);
+$('#smena').html('<a href="#" class="btn btn-text-primary btn-block shadowed" onclick="startsmena();">Приступить к работе</a>');
+$('#status').html('<span style="color:red">Неактивен <i class="fas fa-circle"></i></span>');
+$('.greenb').attr("class", "redb");
+        }); 
+ }
+
+
+
+//////////////////////////////////////////////////////////////////
+
+function clickz(self,id,avatar,kurcord1,kurcord2,start1,start2,endcord1,endcord2)  
+{  
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/kur-zakazi.php?id_user="+id_user+"&checkz=1&odrer="+id, 
+dataType:"text",
+cache: false,  
+success: function(data){
+if (data == ''){	
+map(self,id,avatar,kurcord1,kurcord2,start1,start2,endcord1,endcord2);					 
+}
+else{
+$('.error').text('Другой экипаж принял заказ быстрее!');
+notification('notification', 3000);	
+setTimeout("location.href = 'kurerpage.html';",3000);
+}
+}  
+});  
+}  
+
+
+				   
+				   
+$("#exit").click(function(){   
+window.localStorage.removeItem("id_user");	
+window.localStorage.removeItem("user_prava");			   
+window.location.href = "login.html";
+});		   
+				   
+
+
+
+
+</script>
+	
+	
+	
+	
+	
+	
+ </div>
+    <!-- * App Capsule -->
+
+
+
+
+
+	
+ <!-- android style -->
+                <div id="notification" class="notification-box">
+                    <div class="notification-dialog android-style">
+                        <div class="notification-header">
+                            <div class="in">
+                            </div>
+                            <a href="#" class="close-button">
+                                <ion-icon name="close"></ion-icon>
+                            </a>
+                        </div>
+                        <div class="notification-content">
+                            <div class="in">
+                                <h3 class="subtitle error" style="color:red;"></h3>
+                                <div class="text">
+                           
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+	
+
+
+
+
+<div id="notification-cord" class="notification-box">
+                    <div class="notification-dialog android-style">
+                        <div class="notification-header">
+                            <div class="in">
+                                <strong>Сообщение</strong>
+                                <span></span>
+                            </div>
+                            <a href="#" class="close-button">
+							<i name="close" class="fal fa-times md hydrated" aria-label="close"></i>
+                            </a>
+                        </div>
+                        <div class="notification-content">
+                            <div class="in">
+                                <h3 class="subtitle">Текст скопирован!</h3>
+                                <div class="text">
+                                   Координаты в буфере обмена.
+                                </div>
+                            </div>
+                            <div class="icon-box text-success">
+							<i class="fal fa-check-circle md hydrated"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+<div id="notification-ok" class="notification-box">
+                    <div class="notification-dialog android-style">
+                        <div class="notification-header">
+                            <div class="in">
+                                <strong>Сообщение</strong>
+                                <span></span>
+                            </div>
+                            <a href="#" class="close-button">
+							<i name="close" class="fal fa-times md hydrated" aria-label="close"></i>
+                            </a>
+                        </div>
+                        <div class="notification-content">
+                            <div class="in">
+                                <h3 class="subtitle">Заказ завершен!</h3>
+                                <div class="text">
+                                   Вы успешно выполнили заказ.
+                                </div>
+                            </div>
+                            <div class="icon-box text-success">
+							<i class="fal fa-check-circle md hydrated"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+   <!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="kurerpage.html" class="item active">
+            <div class="col">
+<i class="fal fa-home-lg-alt fa-2x"></i>
+            </div>
+        </a>
+
+
+
+        <a href="#" class="item">
+            <div class="col">
+            </div>
+        </a>
+
+
+
+        <a href="#" class="item">
+            <div class="col">
+	 <input type="hidden" id="orderid">
+	<button type="button" class="btn rounded kyrbutok" onclick="end();" id="end" style="display:none;">ГОТОВО</button>
+            </div>
+        </a>
+
+
+        <a href="#" class="item">
+            <div class="col">
+            </div>
+        </a>
+
+
+
+        <a href="kurzakazi.html" class="item">
+            <div class="col">
+			<i class="fad fa-chart-bar fa-2x"></i>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
+
+
+
+
+	
+
+
+
+<script src="cordova.js"></script>
+
+
+
+<script src="js/jquery.min1.11.1.js"></script>
+
+
+<script type="text/javascript">
+
+
+function getkm(kurcord1,kurcord2,endcord1,endcord2){
+
+	
+var directionsService = new google.maps.DirectionsService;
+//var directionsDisplay = new google.maps.DirectionsRenderer;
+
+  var request = {
+    origin: new google.maps.LatLng(kurcord1,kurcord2), //точка старта
+    destination: new google.maps.LatLng(endcord1,endcord2), //точка финиша
+    optimizeWaypoints: true, 
+    travelMode: google.maps.DirectionsTravelMode.DRIVING //режим прокладки маршрута
+  };
+  directionsService.route(request, function(response, status){
+    if (status == google.maps.DirectionsStatus.OK){
+
+
+	  			var randNum=response.routes[0].legs[0].duration.value/60;
+					var time = parseFloat(randNum.toFixed(1));
+					var des=response.routes[0].legs[0].distance.value/1000;
+					var km = parseFloat(des.toFixed(1));
+					
+					$('#km').text(km);
+					$('#time').text(time);
+					
+    }
+  });
+	
+	
+	
+	
+}
+
+
+
+
+
+
+function map(self,id,avatar,kurcord1,kurcord2,start1,start2,endcord1,endcord2){
+
+$('.error-page').hide(); 
+$('#geomaps').show();
+$('.modal').hide(); 
+$('#end').show();
+$('#dannie').show();
+$('#orderid').val(id);
+
+
+
+
+
+
+
+
+
+
+self.map = new google.maps.Map(document.getElementById("geomaps"), {
+	  zoomControl:true,
+			mapTypeControl: false,
+			fullscreenControl:  false,
+			streetViewControl: false,
+			gestureHandling: 'greedy',
+			zoom: 16,
+    heading: 320,
+    tilt: 47.5,
+    mapId: "90f87356969d889c",
+      center: {lat: kurcord1, lng: kurcord2 },
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+	
+	
+
+	
+const buttons = [
+    ["◄", "rotate", 20, google.maps.ControlPosition.LEFT_CENTER],
+    ["►", "rotate", -20, google.maps.ControlPosition.RIGHT_CENTER],
+    ["▲", "tilt", 20, google.maps.ControlPosition.TOP_CENTER],
+    ["▼", "tilt", -20, google.maps.ControlPosition.BOTTOM_CENTER],
+  ];
+
+  buttons.forEach(([text, mode, amount, position]) => {
+    const controlDiv = document.createElement("div");
+    const controlUI = document.createElement("button");
+
+    controlUI.classList.add("ui-button");
+    controlUI.innerText = `${text}`;
+    controlUI.addEventListener("click", () => {
+      adjustMap(mode, amount);
+    });
+    controlDiv.appendChild(controlUI);
+    self.map.controls[position].push(controlDiv);
+  });
+
+  const adjustMap = function (mode, amount) {
+    switch (mode) {
+      case "tilt":
+        self.map.setTilt(self.map.getTilt() + amount);
+        break;
+      case "rotate":
+        self.map.setHeading(self.map.getHeading() + amount);
+        break;
+      default:
+        break;
+    }
+  };
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+self.markers = new Array;
+
+
+var point1 = new google.maps.LatLng(kurcord1, kurcord2);
+var point2 = new google.maps.LatLng(endcord1, endcord2);
+var heading = google.maps.geometry.spherical.computeHeading(point1,point2);
+
+
+    self.markers[0] = new google.maps.Marker({
+      position: new google.maps.LatLng(kurcord1,kurcord2), 
+	  map: self.map, title: 'Я',
+	  icon: {
+	path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+    scale: 5,
+    rotation: heading
+	}
+    });
+
+
+	
+		  self.markers[1] = new google.maps.Marker({
+      position: new google.maps.LatLng(endcord1,endcord2),
+	  map: self.map, title: 'Конец',
+	  	  icon: {
+		url: "https://clicaid.ru/"+avatar,
+		scaledSize: new google.maps.Size(32, 32)
+	}
+    });
+	
+	
+    self.moveMapTo = function(lat,lng) {
+        return function(e) {
+          self.map.panTo(new google.maps.LatLng(lat,lng));
+        }
+    }
+
+	
+
+
+var directionsService = new google.maps.DirectionsService;
+  var directionsDisplay = new google.maps.DirectionsRenderer;
+directionsDisplay.setOptions({suppressMarkers: true});
+directionsDisplay.setMap(self.map);
+
+  var request = {
+    origin: new google.maps.LatLng(start1,start2), //точка старта
+    destination: new google.maps.LatLng(endcord1,endcord2), //точка финиша
+    optimizeWaypoints: true, 
+    travelMode: google.maps.DirectionsTravelMode.DRIVING //режим прокладки маршрута
+  };
+  directionsService.route(request, function(response, status){
+    if (status == google.maps.DirectionsStatus.OK){
+      directionsDisplay.setDirections(response);
+
+	  			var randNum=response.routes[0].legs[0].duration.value/60;
+					var time = parseFloat(randNum.toFixed(1));
+					var des=response.routes[0].legs[0].distance.value/1000;
+					var km = parseFloat(des.toFixed(1));
+					
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/kur-zakazi.php?status=2&odrer="+id+"&id_user="+id_user+"&time="+time+"&km="+km, 
+dataType:"text", 
+cache: false,  
+success: function(data){ 
+}  
+});
+
+    }
+  });
+  directionsDisplay.setMap(self.map);
+
+
+
+var directionsRenderer = new google.maps.DirectionsRenderer({map:self.map,preserveViewport: true,suppressMarkers: true});
+google.maps.event.addListener(directionsRenderer, 'directions_changed', function() {  
+directionsDisplay.setMap(null);
+});
+
+
+
+
+
+
+	
+	
+var renderObjects = [];
+
+function clearRenderObjects() {
+  for(var i in renderObjects) {
+    renderObjects[i].setMap(null);
+  }
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+// создаем таймер, который устанавливает новую позицию маркера
+    setInterval(function() {
+	
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/getcordkur.php?order_number="+id, 
+dataType:"json", 
+cache: false,  
+success: function(data){ 
+var lat=data.lat;
+var lon=data.lon;
+var ulat=data.ulat;
+var ulon=data.ulon;
+var currentlatlng = lat+','+lon;
+var endlatlng = ulat+','+ulon;
+var point1 = new google.maps.LatLng(lat, lon);
+var points2 = new google.maps.LatLng(endlatlng);
+var heading = google.maps.geometry.spherical.computeHeading(point1,points2);
+
+
+if (lat > "0") {
+	
+self.markers[0].setMap(null);
+self.markers[0] = new google.maps.Marker({position: new google.maps.LatLng(kurcord1,kurcord2),
+ map: self.map, title: 'Я', 
+ icon: {path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+ scale: 5,
+ rotation: heading}});
+self.markers[0].setPosition(new google.maps.LatLng(lat,lon));
+directionsDisplay.setMap(null);
+clearRenderObjects();
+  
+//let directionsService = new google.maps.DirectionsService();
+// always pass the `preserveViewport` to maintain the zoom ratio when using directionsRenderer
+var directionsRenderer = new google.maps.DirectionsRenderer({map:self.map,preserveViewport: true,suppressMarkers: true});
+var request = {
+origin: new google.maps.LatLng(lat,lon), //точка старта
+ destination: new google.maps.LatLng(ulat,ulon), //точка финиша
+ travelMode: google.maps.TravelMode.DRIVING,
+        };
+        directionsService.route(request, function (response, status) {
+
+directionsRenderer.setDirections(response); 
+var route = request.routes;
+
+renderObjects.push(directionsRenderer);
+       })
+  
+
+}
+}  
+});  
+	
+},600000); // таймер срабатывает каждые 6 с
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+function end(){
+
+$('.error-page').show(); 
+$('#geomaps').hide();
+$('.modal').hide(); 
+$('#end').hide();
+$('#dannie').hide();
+var id = $('#orderid').val();
+
+
+
+notification('notification-ok', 3000);
+
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/kur-zakazi.php?status=3&odrer="+id+"&id_user="+id_user, 
+dataType:"text", 
+cache: false,  
+success: function(data){ 
+setTimeout("location.href = 'kurerpage.html';",3000);
+}  
+}); 
+
+
+}
+
+
+
+
+</script>   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&language=ru&region=RU&v=beta" async></script>
+<script src="./js/gmaphack.js"></script>
+
+
+
+
+</body>
+</html>

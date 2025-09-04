@@ -1,0 +1,1318 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Clicaid</title>
+    <link rel="stylesheet" href="css/style.css">
+	<link href="css/enjoyhint.css" rel="stylesheet">
+	<script>	
+	function checkConnection() {
+        if(navigator.connection.type==0)
+        {
+            window.location.href = "offline.html";
+        }
+        else if(navigator.connection.type=='none')
+        {
+            window.location.href = "offline.html";
+
+        }
+        else
+        {
+
+        }
+    }	
+	
+setInterval(function(){
+var c = checkConnection();
+}, 2000); // 10000 = 10 seconds, check for connection every 10 seconds
+
+
+
+
+
+function Successgeo(position) {
+var lat = position.coords.latitude;
+var lng = position.coords.longitude;
+$.ajax({
+url: "https://clicaid.ru/api-mobile/adv-zakazi.php?id_user="+id_user+"&lat="+lat+"&lng="+lng, 
+cache: false
+}).done(function(data) {
+});
+window.localStorage.setItem("latu", lat);
+window.localStorage.setItem("lngu", lng);
+}
+
+function Errorgeo(error) {
+$('.error').text('Включите GPS');
+notification('notification', 3000);
+}
+
+
+
+setInterval(function(){
+navigator.geolocation.getCurrentPosition( Successgeo, Errorgeo, {
+    enableHighAccuracy : true,
+    maximumAge: Infinity, // should be default, just in case
+    timeout: 10000
+});
+}, 4000);
+</script>		
+	
+	
+	
+	
+	
+	
+</head>
+
+<body>
+
+    <!-- loader -->
+    <div id="loader">
+	  <span class="icon-logo fa-2x ring"></span>
+    </div>
+    <!-- * loader -->
+ 
+
+
+
+
+
+
+    <!-- App Header -->
+    <div class="appHeader bg-primary scrolled">
+        <div class="left">
+            <a href="#" id="ab" class="headerButton" data-toggle="modal" data-target="#sidebarPanel">
+              <i class="far fa-bars"></i>
+            </a>
+        </div>
+        <div class="pageTitle">
+        </div>
+        <div class="right">
+		 <a href="zakazi.html" id="aa" class="headerButton">
+		<i class="fas fa-clock"></i>
+		 </a>
+        </div>
+    </div>
+    <!-- * App Header -->
+
+
+
+
+
+
+
+<div id="gdatadv" style="display:none;">
+<div class="endad">
+<h4 style="color:red;">Адвокат в пути. Ожидайте звонка</h4>
+</div>
+<div class="adv-bg sectadv">
+
+<div class="redb vizov sectadvb"></div>
+
+
+<div class="otzv">
+ <h4>Все прошло удачно?</h4>
+ <br/>
+ 
+<div class="wrapper">
+  <label for="yes_radio" id="yes-lbl" style="left:0;">Да</label><input type="radio" value="0" name="choice_radio" id="yes_radio">
+  <label for="maybe_radio" id="maybe-lbl">?</label><input type="radio" value="" name="choice_radio" id="maybe_radio" checked="checked">
+  <label for="no_radio" id="no-lbl">Нет</label><input type="radio" value="1" name="choice_radio" id="no_radio">
+  <div class="toggle"></div>
+</div>
+ 
+<br/>
+ <a href="#" class="btn btn-primary btn-block btn-lg" id="otz">Подтвердить</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<div id="endv" style="display:none;">
+<div class="endad">
+<h4>Заявка получена.</h4>
+</div>
+<div class="endab">
+В Течении <b>10 мин.</b> <br/>
+с Вами свяжется наш специалист 
+</div>
+<div class="form-button-group bniz">
+<a href="home.html" class="btn btn-primary btn-block btn-lg">Вернутся</a>
+</div>
+</div>
+
+
+
+
+<!-- App Capsule -->
+    <div id="appCapsule" class="pt-0">
+   <div class="login-form mt-1">
+
+            <div class="section mtop60">
+                <h4>Экстреный вызов адвоката по адресу или по геолокации</h4>
+            </div>
+            <div class="mt-1 mb-5">
+			
+			
+<div class="adv-bg">
+
+
+<div class="greenb vizov mincircle" id="vizov"></div>
+
+
+         <div class="row section nizp">
+         
+                    <div class="col-12">
+                        <div class="aBox" data-toggle="modal" data-target="#Modalc" >
+						<i class="atel"></i>
+						<span>Бесплатная консультация</span>
+						</div>
+                    </div>
+      
+
+                </div>
+
+
+	</div>
+
+                <div class="row section nizpp" id="urcat">
+                    <div class="col-4" data-toggle="modal" data-target="#ModalBasic" onclick="clicka(1)">
+                        <div class="abBox">
+						<i class="fal fa-user-headset"></i>
+						</div>
+						<div class="abBoxt"><br/>Консультация<br/>адвоката</div>
+                    </div>
+                    <div class="col-4" data-toggle="modal" data-target="#ModalBasic" onclick="clicka(2)">
+                        <div class="abBox">
+						<i class="fas fa-user-tie"></i>
+						</div>
+						<div class="abBoxt"><br/>Нанять<br/>адвоката</div>
+                    </div>
+                    <div class="col-4" data-toggle="modal" data-target="#ModalBasic" onclick="clicka(3)">
+                        <div class="abBox">
+						<i class="fas fa-briefcase"></i>
+						</div>
+						<div class="abBoxt"><br/>Юридическая<br/>помощь</div>
+                    </div>
+                </div>
+
+
+			
+		
+			
+					 <!-- Modal Basic -->
+        <div class="modal fade modalbox" id="Modalc" data-backdrop="static" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"> </h5>
+                        <a href="javascript:;" data-dismiss="modal">X</a>
+                    </div>
+                    <div class="modal-body" id="contact">
+					
+					
+					<div class="row">
+                    <div class="col-8">
+					Бесплатная юридическая консультация
+					</div>
+					<div class="col-4">
+					<i class='fas fa-briefcase fa-2x'></i>
+					</div>
+					 </div>
+					
+	 <br/>
+
+<label for="textcon" class="atextlabel">Опишите ситуацию вкратце</label>
+<textarea class="atextaria" id="textcon" rows="8"></textarea>
+
+
+ <div class="form-button-group bniz">	
+<button type="submit" class="btn btn-primary btn-block btn-lg" onclick="contact();">Отправить</button>
+</div>
+
+</div>
+</div>
+	</div>		
+		</div>	
+			
+			
+			
+			
+			
+			
+			
+			
+<div id="notific" class="notific-box">
+                    <div class="notification-dialog ios-style">
+                        <div class="notification-header">
+                            <div class="in">
+                            </div>
+                            <div class="right">
+                                <span></span>
+                                <a href="#" class="close-button">
+                                   <i class="far fa-times-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="notification-content">
+                            <div class="in" style="margin: 0 auto;">
+                                <h3 class="subtitle">Подтверждение об оплате</h3>
+                                <div class="text">
+                                  <h4 id="priceadv" style="color:#fff"></h4> руб
+                                </div>
+                            </div>
+                        </div>
+			<input type="hidden" id="a"><input type="hidden" id="b">
+                        <div class="notification-footer">
+                            <a href="#" class="notification-button spis">
+                                <i class="fas fa-check"></i>&nbsp;Подтвердить
+                            </a>
+                            <a href="#" class="notification-button close-button">
+                               <i class="fas fa-times"></i>&nbsp;Отменить
+                            </a>
+                        </div>
+                    </div>
+                </div>
+			
+			
+			
+			
+			
+			
+			
+			 <!-- Modal Basic -->
+        <div class="modal fade modalbox" id="ModalBasic" data-backdrop="static" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="title"></h5>
+                        <a href="javascript:;" data-dismiss="modal">X</a>
+                    </div>
+                    <div class="modal-body">
+					
+					
+					<div class="row">
+                    <div class="col-8" id="atext">
+					</div>
+					<div class="col-4" id="aimage">
+					</div>
+					 </div>
+					
+					<div id="atxt">
+
+<label for="textpost" class="atextlabel">Опишите ситуацию вкратце</label>
+<textarea class="atextaria" id="textpost" rows="8"></textarea>
+
+
+ <div class="form-button-group bniz">	
+<button type="submit" class="btn btn-primary btn-block btn-lg" onclick="notific('notific', 3 , 0)">Отправить</button>
+</div>
+			
+			
+			
+					</div>
+				 <div id="abuton">
+                        <p>
+                           <button type="button" onclick="notific('notific', 1 , 1)" class="btn btn-outline-dark mr-1 mb-1 aBaton"> Административные</button>
+                        </p>
+                        <p>
+                           <button type="button" onclick="notific('notific', 1 , 2)" class="btn btn-outline-dark mr-1 mb-1 aBaton">Гражданские</button>
+                        </p>
+                        <p>
+                            <button type="button" onclick="notific('notific', 1 , 3)" class="btn btn-outline-dark mr-1 mb-1 aBaton">Уголовные</button>
+                        </p>
+				</div>
+				
+				
+						 <div id="bbuton">
+                        <p>
+                            <button type="button" onclick="notific('notific', 2 , 1);" class="btn btn-outline-dark mr-1 mb-1 aBaton"> Административные</button>
+                        </p>
+                        <p>
+                           <button type="button" onclick="notific('notific', 2 , 2);" class="btn btn-outline-dark mr-1 mb-1 aBaton">Гражданские</button>
+                        </p>
+                        <p>
+                            <button type="button" onclick="notific('notific', 2 , 3);" class="btn btn-outline-dark mr-1 mb-1 aBaton">Уголовные</button>
+                        </p>
+				</div>
+				
+				
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- * Modal Basic -->
+			
+			
+			
+			
+			
+			
+			
+				
+            </div>
+        </div>
+
+
+
+  <div id="skip"></div>
+    </div>
+    <!-- * App Capsule -->
+
+
+
+
+
+
+
+
+
+
+
+
+ <!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="home.html" class="item active" id="ba">
+            <div class="col">
+<i class="fal fa-home-lg-alt fa-2x"></i>
+            </div>
+        </a>
+        <a href="#" class="item">
+            <div class="col">
+            </div>
+        </a>
+
+        <a href="balance.html" class="item" id="bc">
+            <div class="col">
+              <i class="fal fa-credit-card fa-2x"></i>
+            </div>
+        </a>
+		
+		        <a href="#" class="item">
+            <div class="col">
+            </div>
+        </a>
+		
+        <a href="page-profile.html" class="item" id="bd">
+            <div class="col">
+			<i class="fal fa-user fa-2x"></i>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
+
+
+
+
+
+
+    <!-- App Sidebar -->
+    <div class="modal fade panelbox panelbox-left" id="sidebarPanel" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+
+
+
+
+
+                    <!-- profile box -->
+                    <div class="profileBox">
+                        <div class="image-wrapper">
+                            <img src="" alt="image" class="imaged rounded" id="uava">
+                        </div>
+                        <div class="in">
+                            <strong id="fname"></strong>
+                            <div class="text-muted">
+Баланс <span id="balance"> </span>&#8381;
+                            </div>
+                        </div>
+                        <a href="javascript:;" class="close-sidebar-button" data-dismiss="modal">
+                           <i class="fal fa-times"></i>
+                        </a>
+                    </div>
+                    <!-- * profile box -->
+
+                    <ul class="listview flush transparent no-line image-listview mt-2">
+                        <li>
+                            <a href="home.html" class="item">
+<div class="icon-box bg-primary">
+<i class="fal fa-home-lg-alt"></i>
+</div>
+                                <div class="in">
+                                    Главная
+                                </div>
+                            </a>
+                        </li>
+
+						 <li>
+                            <a href="balance.html" class="item">
+<div class="icon-box bg-primary">
+      <i class="fal fa-credit-card"></i>
+</div>
+                                <div class="in">
+                                    Баланс
+                                </div>
+                            </a>
+                        </li>
+						 <li>
+                            <a href="page-profile.html" class="item">
+<div class="icon-box bg-primary">
+<i class="fal fa-user"></i>
+</div>
+                                <div class="in">
+                                   Настройки
+                                </div>
+                            </a>
+                        </li>
+						 <li>
+                            <a href="zakazi.html" class="item">
+<div class="icon-box bg-primary">
+   <span class="icon-logo"></span>
+</div>
+                                <div class="in">
+                                    Заказы
+                                </div>
+                            </a>
+                        </li>
+    
+                        <li>
+                            <div class="item">
+                                <div class="icon-box bg-primary">
+                                   <i class="fas fa-moon"></i>
+                                </div>
+                                <div class="in">
+                                    <div>Тема</div>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input dark-mode-switch"
+                                            id="darkmodesidebar">
+                                        <label class="custom-control-label" for="darkmodesidebar"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                
+
+                </div>
+
+
+ <div class="zb">
+<a href="http://prozakon.pro/" target="_blank">
+<div class="zlogo"></div>
+Генеральный партнёр ООО "Прозакон"
+ </a>
+ </div>
+
+                <!-- sidebar buttons -->
+                <div class="sidebar-buttons">
+                    <a href="javascript:;" class="button">
+                        <ion-icon name="person-outline"></ion-icon>
+                    </a>
+                    <a href="#" class="button" id="callcenter">
+                        <i class="fal fa-user-headset"></i>
+                    </a>
+                    <a href="politika.html" class="button">
+                        <i class="fal fa-book-reader"></i>
+                    </a>
+                    <a href="javascript:;" id="exit" class="button">
+                        <i class="fal fa-sign-out-alt"></i>
+                    </a>
+                </div>
+                <!-- * sidebar buttons -->
+            </div>
+        </div>
+    </div>
+    <!-- * App Sidebar -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+               <div id="notification" class="notification-box">
+                    <div class="notification-dialog android-style">
+                        <div class="notification-header">
+                            <div class="in">
+                                <strong>Ошибка!</strong>
+                            </div>
+                            <a href="#" class="close-button">
+                                <ion-icon name="close"></ion-icon>
+                            </a>
+                        </div>
+                        <div class="notification-content">
+                            <div class="in">
+                                <h3 class="subtitle error" style="color:red;"></h3>
+                                <div class="text">
+                           
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+<div id="notification-ok" class="notification-box">
+                    <div class="notification-dialog android-style">
+                        <div class="notification-header">
+                            <div class="in">
+                                <strong>Сообщение</strong>
+                                <span></span>
+                            </div>
+                            <a href="#" class="close-button">
+							<i name="close" class="fal fa-times md hydrated" aria-label="close"></i>
+                            </a>
+                        </div>
+                        <div class="notification-content">
+                            <div class="in">
+                                <h3 class="subtitle">Заказ завершен!</h3>
+                                <div class="text">
+                                   Спасибо за оценку.
+                                </div>
+                            </div>
+                            <div class="icon-box text-success">
+							<i class="fal fa-check-circle md hydrated"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+ <!-- welcome notification  -->
+ 
+ 
+      <div class="modal fade modalbox" id="ModalListview" data-backdrop="static" tabindex="-1" role="dialog" style="overflow-y: auto;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Политика конфиденциальности</h4>
+                    </div>
+                    <div class="modal-body section">
+
+   
+
+      <div id="pol"></div>
+	  
+  <div class="custom-control custom-checkbox" style="margin-bottom: 80px;">
+                    <input type="checkbox" class="custom-control-input" id="customCheckb1">
+                    <label class="custom-control-label" for="customCheckb1">Я согласен(на)</label>
+                </div>
+
+
+ 
+
+ <div class="form-button-group">		
+
+ <button  type="button" class="btn btn-primary btn-block btn-lg" id="first" disabled="disabled">Дальше</button>
+
+</div>	
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+    <!-- * welcome notification -->
+
+
+
+
+   <input type="hidden" id="pricev">
+
+
+
+			   <!-- Jquery -->
+    <script src="js/lib/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap-->
+    <script src="js/lib/popper.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <!-- Owl Carousel -->
+    <script src="js/plugins/owl-carousel/owl.carousel.min.js"></script>
+    <!-- jQuery Circle Progress -->
+    <script src="js/plugins/jquery-circle-progress/circle-progress.min.js"></script>
+    <!-- Base Js File -->
+    <script src="js/base.js"></script>
+	<script src="js/pulltorefresh.js"></script>
+<!-- подсказки 
+<script src="js/kinetic.js"></script>
+<script src="js/enjoyhint.js"></script>
+<script src="js/start.js"></script>
+-->
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyDqmF1kw4GLZbDGg3PxtVS9eTXlKF90kBY&language=ru"></script>
+
+	
+	
+	
+<script type="text/javascript" > 
+var id_user = window.localStorage.getItem("id_user");
+var callcenter = window.localStorage.getItem("callcenter");
+
+
+function showpol()  {
+$.ajax({
+url:'https://clicaid.ru/api-mobile/politika.php',
+dataType:"json", 
+cache: false, 
+ success:function(data){
+$("#pol").html(data.pol);    
+                }
+            });
+}
+
+
+function showst()  
+{  
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/user-info.php?z=a&id_user="+id_user, 
+dataType:"json", 
+cache: false,  
+success: function(data){
+if(data.status=='3'){
+$('.otzv').show();
+$('.redb').hide();
+	 }
+else if(data.status>'0'){
+$("#appCapsule").hide();
+$("#endv").hide();
+$('#gdatadv').show();
+$(".vizov").addClass("disabledbutton");
+}
+
+}  
+});  
+}	
+		
+		
+		
+		
+setInterval(function(){
+var c = showst();
+}, 10000);
+
+
+
+
+function GetAddress(lat,lng) {
+		
+//old reference
+const appendChild = Element.prototype.appendChild;
+const urlCatchers = [
+  "/AuthenticationService.Authenticate?",
+  "/QuotaService.RecordEvent?"
+];
+Element.prototype.appendChild = function (element) {
+  const isGMapScript = element.tagName === 'SCRIPT' && /maps\.googleapis\.com/i.test(element.src);
+  const isGMapAccessScript = isGMapScript && urlCatchers.some(url => element.src.includes(url));
+  if (!isGMapAccessScript) {
+    return appendChild.call(this, element);
+  }
+const callback = element.src.split(/.*callback=([^\&]+)/, 2).pop();
+const [a, b] = callback.split('.');
+window[a][b]([1, null, 0, null, null, [1]]);
+  return element;
+};
+//old reference		
+		
+
+		
+            var lat = parseFloat(lat);
+            var lng = parseFloat(lng);
+            var latlng = new google.maps.LatLng(lat, lng);
+            var geocoder = geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[1]) {
+					window.localStorage.setItem("myadress", results[1].formatted_address);
+					
+                   // alert("Location: " + results[1].formatted_address);
+					
+                    }
+                }
+            });
+        }
+
+
+
+
+
+
+function endadv(a,b)  
+{
+var balance = window.localStorage.getItem("balance");
+var pricea=window.localStorage.getItem("pricea");
+var priceza=window.localStorage.getItem("priceza");
+var pricezk=window.localStorage.getItem("pricezk");
+var pricezu=window.localStorage.getItem("pricezu");
+var balance = Math.round(balance);
+var latu=window.localStorage.getItem("latu");
+var lngu=window.localStorage.getItem("lngu");	
+var mycord = latu+','+lngu;
+GetAddress(latu,lngu);
+var myadress=window.localStorage.getItem("myadress");
+
+if(a==1){var price=priceza;}
+else if(a==2){var price=pricezk;}
+else if(a==3){var price=pricezu;}
+else {var price=pricea;}
+
+if(balance<price){
+    notification('notification', 3000);
+    $('.error').text('Стоимость вызова '+price+'р, пополните баланс!');
+     }
+     else{
+if(a==0 && latu>0){
+$.ajax({
+url:'https://clicaid.ru/api-mobile/order.php?z=a&za='+a+'&id_user='+id_user,
+type:'post',
+data:{adress:myadress,cord:mycord},
+success:function(data){
+if (data == '1')  {
+	$("#endv").show();
+	$("#appCapsule").hide();
+  }
+else{
+notification('notification', 3000);
+$(".error").text("Сервиса Clicaid пока здесь нет.");
+}	
+}				 
+});
+
+}
+else if(a==1 && latu>0){
+$('#ModalBasic').modal('toggle');
+$.ajax({
+url:'https://clicaid.ru/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
+type:'post',
+data:{adress:myadress,cord:mycord},
+success:function(data){
+if (data == '1')  {
+	$("#endv").show();
+	$("#appCapsule").hide();
+  }
+else{
+notification('notification', 3000);
+$(".error").text("Сервиса Clicaid пока здесь нет.");
+}	
+}				 
+});
+
+}
+else if(a==2 && latu>0){
+$('#ModalBasic').modal('toggle');
+$.ajax({
+url:'https://clicaid.ru/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
+type:'post',
+data:{adress:myadress,cord:mycord},
+success:function(data){
+if (data == '1')  {
+	$("#endv").show();
+	$("#appCapsule").hide();
+  }
+else{
+notification('notification', 3000);
+$(".error").text("Сервиса Clicaid пока здесь нет.");
+}	
+}				 
+});
+
+}
+else if(a==3 && latu>0){
+var textpost =  $('#textpost').val();
+$('#ModalBasic').modal('toggle');
+$.ajax({
+url:'https://clicaid.ru/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
+type:'post',
+data:{adress:myadress,cord:mycord,textpost:textpost},
+success:function(data){
+if (data == '1')  {
+	$("#endv").show();
+	$("#appCapsule").hide();
+  }
+else{
+notification('notification', 3000);
+$(".error").text("Сервиса Clicaid пока здесь нет.");
+}	
+}				 
+});
+
+}
+
+
+
+}
+}
+
+function clicka(a)  
+{  
+if(a==1){
+$("#atext").text('По какому делу вам необходима консультация');
+$("#aimage").html("<i class='fal fa-user-headset'></i>");
+$("#atxt").hide();
+$("#bbuton").hide();
+$("#abuton").show();
+}
+else if(a==2){
+$("#atext").text('Выберите по какому делу Вам необходим адвокат');
+$("#aimage").html("<i class='fas fa-user-tie'></i>");
+$("#atxt").hide();
+$("#bbuton").show();
+$("#abuton").hide();
+}
+else if(a==3){
+$("#atext").text('Опишите ситуацию и с Вами свяжется юрист');
+$("#aimage").html("<i class='fas fa-briefcase'></i>");
+$("#atxt").show();
+$("#abuton").hide();
+$("#bbuton").hide();
+}
+
+}
+
+
+
+    $(".vizov").click(function(){
+var balance = window.localStorage.getItem("balance");
+var pricea=window.localStorage.getItem("pricea");
+var balance = Math.round(balance);
+
+if(balance<pricea){
+    notification('notification', 3000);
+    $('.error').text('Стоимость вызова '+pricea+'р, пополните баланс!');
+     }
+     else{
+
+
+if(this.classList.contains('vizov')){
+window.localStorage.setItem("z", "a");
+window.location.href = "geo.html";
+}
+
+}
+        
+});
+
+
+
+
+
+
+
+		function showa()  
+{  
+$("#callcenter").attr("href", "tel:"+callcenter);
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/user-info.php?z=a&id_user="+id_user, 
+dataType:"json", 
+cache: false,  
+success: function(data){   
+$("#uava").attr("src", "https://clicaid.ru/"+data.avatar);
+$("#fname").text(data.name);
+$("#balance").text(data.balance);
+window.localStorage.setItem("balance", data.balance);
+if(data.status>'0'){
+$("#appCapsule").hide();
+$("#endv").hide();
+$('#gdatadv').show();
+$(".vizov").addClass("disabledbutton");
+}
+
+}  
+});  
+}
+
+
+
+		
+		
+$(document).ready(function(){	
+
+showa();
+
+
+var HoverListener = {
+  addElem: function( elem, callback, delay )
+  {
+    if ( delay === undefined )
+    {
+      delay = 1000;
+    }
+
+    var hoverTimer;
+
+    addEvent( elem, 'mouseover', function()
+    {
+      hoverTimer = setTimeout( callback, delay );
+    } );
+
+    addEvent( elem, 'mouseout', function()
+    {
+      clearTimeout( hoverTimer );
+    } );
+  }
+}
+
+
+//  Generic event abstractor
+function addEvent( obj, evt, fn )
+{
+  if ( 'undefined' != typeof obj.addEventListener )
+  {
+    obj.addEventListener( evt, fn, false );
+  }
+  else if ( 'undefined' != typeof obj.attachEvent )
+  {
+    obj.attachEvent( "on" + evt, fn );
+  }
+}
+
+addEvent( window, 'load', function()
+{
+  HoverListener.addElem(
+      document.getElementById('vizov')
+    , function()
+      {
+endadv(0,0);	   
+      }
+    , 4000
+  );
+} );
+
+}); 
+
+
+
+
+
+
+
+
+function evizov() {
+var latu=window.localStorage.getItem("latu");
+var lngu=window.localStorage.getItem("lngu");	
+GetAddress(latu,lngu);
+var myadress=window.localStorage.getItem("myadress");
+var mycord = latu+','+lngu;
+var balance = window.localStorage.getItem("balance");
+var pricev=window.localStorage.getItem("pricev");
+var balance = Math.round(balance);
+
+if(balance<pricev){
+    notification('notification', 3000);
+    $('.error').text('Стоимость вызова '+pricev+'р, пополните баланс!');
+     }
+     else{
+
+if (latu > 0)  {	
+$.ajax({
+url:'https://clicaid.ru/api-mobile/order.php?id_user='+id_user,
+type:'post',
+data:{adress:myadress,cord:mycord},
+success:function(data){
+if (data == '1')  {
+	$("#endv").show();
+	$("#appCapsule").hide();
+  }
+else{
+notification('notification', 3000);
+$(".error").text("Сервиса Clicaid пока здесь нет.");
+}	
+}				 
+});
+}
+}
+}
+
+
+
+
+
+if(window.localStorage.getItem("loggedIn") == 1) {
+showpol();
+$('.appBottomMenu').hide();
+$('#ModalListview').modal('show');
+}
+
+
+
+
+
+
+
+PullToRefresh.init({
+ mainElement: 'body',
+ onRefresh: function(){ window.location.reload(); }
+});
+
+
+var id_user = window.localStorage.getItem("id_user");
+var mycit = window.localStorage.getItem("mycity");	
+var mycity = encodeURI(mycit);
+
+	
+
+		
+  
+        function showSettings()
+        {
+        $.ajax({
+        url: "https://clicaid.ru/api-mobile/checkSettings.php",
+        dataType:"json",
+        cache: false,
+        success: function(data){
+        $("#callcenter").attr("href", "tel:"+data.callcenter);
+       $('#pricev').val(data.pricev);
+	   window.localStorage.setItem("callcenter", data.callcenter);
+	   window.localStorage.setItem("pricev", data.pricev);
+	   window.localStorage.setItem("pricea", data.pricea);
+	   window.localStorage.setItem("pricezk", data.zk);
+	   window.localStorage.setItem("priceza", data.za);
+	   window.localStorage.setItem("pricezu", data.zu);
+	   window.localStorage.setItem("pricem", data.pricem);
+        }
+        });
+        }
+
+        
+        
+        
+        
+    $(".vizov").click(function(){
+var balance = window.localStorage.getItem("balance");
+var pricev=$('#pricev').val();
+var balance = Math.round(balance);
+
+if(balance<pricev){
+    notification('notification', 3000);
+    $('.error').text('Стоимость вызова '+pricev+'р, пополните баланс!');
+     }
+     else{
+
+
+if(this.classList.contains('vizov')){
+window.localStorage.setItem("z", "a");
+window.location.href = "geo.html";
+}
+
+}
+        
+});
+        
+
+
+		
+function contact()
+{
+var message=$('#textcon').val();
+var dt = new Date().toDateString();
+if(dt != localStorage.getItem('date')) {
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/vopros.php?id_user="+id_user, 
+dataType:"text", 
+type: "post",
+data:{message:message},
+cache: false,  
+success: function(data){ 
+$('#contact').html('Ваша заявка успешно отправлена.<br/>Ожидайте звонка, мы свяжемся с вами в ближайшее время.');		
+}  
+}); 
+localStorage.setItem('date', dt);
+}
+else{
+$('#contact').html('Лимит заявок исчерпан.<br/>Новый лимит откроется через сутки.');		
+
+}
+
+}
+
+$(document).ready(function(){	
+showSettings();
+}); 	
+		
+		
+		
+$("#otz").click(function(){ 
+ 	
+notification('notification-ok', 3000);	
+setTimeout(function(){location.href="home.html"} , 5000);
+
+var otz = $("input[type='radio'][name='choice_radio']:checked").val();
+
+
+$.ajax({  
+url: "https://clicaid.ru/api-mobile/adv-zakazi.php?status=0&id_user="+id_user+"&z=a&otz="+otz, 
+dataType:"text", 
+cache: false,  
+success: function(data){ 
+}  
+}); 
+
+
+		
+});		
+		
+		
+	
+		
+$("#exit").click(function(){   
+window.localStorage.removeItem("id_user");	
+window.localStorage.removeItem("user_prava");			   
+window.location.href = "login.html";
+});
+
+		
+		
+		
+		
+		
+		
+		
+
+$('#customCheckb1').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+            $('#first').removeAttr('disabled'); //enable input
+        } else {
+            $('#first').attr('disabled', true); //disable input
+        }
+    });
+	
+	
+	
+$('#first').click(function () {
+$('.appBottomMenu').show();
+$('#ModalListview').modal('hide');
+window.localStorage.setItem("loggedIn", 0);
+enjoyhint_instance.run();
+$("#vizov,#aa,#ab,#ba,#bb,#bc,#bd,#calla,#urcat").addClass("disabledbutton");
+});	
+	
+	
+	
+$('.enjoyhint_skip_btn').click(function () {
+$("#vizov,#aa,#ab,#ba,#bb,#bc,#bd,#calla,#urcat").removeClass("disabledbutton");
+});		
+	
+	
+	
+</script>
+
+
+<script src="cordova.js"></script>
+
+
+<script>
+document.addEventListener('deviceready', onDeviceReady, false);
+//onDeviceReady: function () {
+function onDeviceReady() {
+    // Example #1: WITHOUT API URL
+    AppUpdate.needsUpdate(function(appUpdateObj) {
+        if(appUpdateObj.update_available == 1) {
+            // App Update Detected
+            var appUpdateMsg = "Обновите приложение!";
+            if (appUpdateObj.force_update == 1) {
+                appUpdateMsg = `FORCE! ${appUpdateMsg}`;
+            }
+            
+            alert(appUpdateMsg);
+        } else {
+            // NO App Update Detected
+            //alert("No App Update Available");
+        }
+    }, function(error){
+        //alert("App Update ERROR:",error);
+    });
+}
+
+
+
+
+
+function notific(target, a , b) {
+  //var a = "#" + target;
+    $(".notific-box").addClass("show");
+var pricea=window.localStorage.getItem("pricea");
+var priceza=window.localStorage.getItem("priceza");
+var pricezk=window.localStorage.getItem("pricezk");
+var pricezu=window.localStorage.getItem("pricezu");
+if(a==1){var price=priceza;}
+else if(a==2){var price=pricezk;}
+else if(a==3){var price=pricezu;}
+else {var price=pricea;}
+$('#priceadv').text(price);
+$('#a').val(a);
+$('#b').val(b);
+
+
+};
+
+// close button notification
+$(".notific-box .close-button").click(function (event) {
+    event.preventDefault();
+    $(".notific-box").removeClass("show");
+});
+
+
+
+
+$(".spis").click(function () { 
+var a=$('#a').val();
+var b=$('#b').val();
+$(".notific-box").removeClass("show");
+endadv(a,b);
+ });
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+</html>
