@@ -3,9 +3,13 @@
   xmlns="http://www.w3.org/ns/widgets"
   xmlns:cdv="http://cordova.apache.org/ns/1.0">
 
-  <name>Clicaid Прозакон</name>
+  <name>Clicaid Prozakon</name>
   <description>С нами Ваша жизнь будет в безопасности</description>
   <author email="info@clicaid.ru" href="https://clicaid.ru">Clicaid</author>
+
+<edit-config file="*-Info.plist" mode="merge" target="CFBundleDisplayName">
+  <string>Clicaid Прозакон</string>
+</edit-config>
 
   <content src="index.html" />
 
