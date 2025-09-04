@@ -11,5 +11,17 @@ git push -u origin main
 
 git add config.xml
 git add package.json
-git commit -m "fix: change app name to latin and pin ios platform version"
+git add package-lock.json
+git add .nvmrc
+git commit -m "fix"
 git push origin main
+
+
+
+git add config.xml
+git commit -m "chore: minimal valid config.xml (fix parse error)"
+git push
+
+cd C:\Users\User\clicaid
+openssl x509 -in development.cer -inform DER -out certificate.pem -outform PEM
+openssl pkcs12 -export -inkey private.key -in certificate.pem -out certificate.p12
