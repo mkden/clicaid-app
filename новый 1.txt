@@ -1,0 +1,15 @@
+git config user.email "mkden@yandex.ru"
+git config user.name "mkden"
+
+
+
+git remote add origin https://github.com/mkden/clicaid-app.git
+git branch -M main
+git push -u origin main
+
+
+
+git add config.xml
+git add package.json
+git commit -m "fix: change app name to latin and pin ios platform version"
+git push origin main
