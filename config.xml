@@ -57,14 +57,11 @@
     </edit-config>
 
     <!-- Удаляем дублирующиеся пермишены -->
-    <edit-config file="app/src/main/AndroidManifest.xml"
-                 target="/manifest"
-                 mode="merge"
-                 xmlns:android="http://schemas.android.com/apk/res/android"
-                 xmlns:tools="http://schemas.android.com/tools">
-      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:node="remove" />
-      <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"  tools:node="remove" />
-    </edit-config>
+<config-file parent="/manifest" target="AndroidManifest.xml" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:node="remove" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" tools:node="remove" />
+</config-file>
+
 
     <!-- Android 12+: экспортируем MainActivity -->
     <edit-config file="app/src/main/AndroidManifest.xml"
