@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="mk.clicaid.app" version="1.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Clicaid</name>
+<widget id="mk.clicaid.app" version="1.8.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Clicaid Prozakon</name>
     <description>С нами Ваша жизнь будет в безопасности</description>
     <author email="info@clicaid.ru" href="https://clicaid.ru">Clicaid</author>
     <content src="index.html" />
@@ -34,10 +34,6 @@
         <preference name="AutoHideSplashScreen" value="true" />
         <preference name="FadeSplashScreen" value="true" />
         <preference name="FadeSplashScreenDuration" value="2000" />
-        <config-file parent="/manifest" target="AndroidManifest.xml" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
-            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:node="remove" />
-            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" tools:node="remove" />
-        </config-file>
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application/activity" xmlns:android="http://schemas.android.com/apk/res/android">
             <activity android:exported="true" />
         </edit-config>
@@ -47,6 +43,6 @@
         <variable name="GPS_REQUIRED" value="true" />
     </plugin>
     <preference name="android-minSdkVersion" value="24" />
-    <preference name="android-targetSdkVersion" value="33" />
-    <preference name="android-compileSdkVersion" value="33" />
+    <preference name="android-targetSdkVersion" value="34" />
+    <preference name="android-compileSdkVersion" value="34" />
 </widget>
