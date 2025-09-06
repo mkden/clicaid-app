@@ -22,6 +22,19 @@ git add config.xml
 git commit -m "chore: minimal valid config.xml (fix parse error)"
 git push
 
+
+
+//обновить все
+git add .
+git commit -m "Обновление всех файлов"
+git push
+
+
+
+
+
+
+
 cd C:\Users\User\clicaid
 openssl x509 -in distribution.cer -inform DER -out certificate.pem -outform PEM
 openssl pkcs12 -export -inkey private.key -in certificate.pem -out certificate.p12

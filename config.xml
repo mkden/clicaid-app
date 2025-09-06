@@ -34,11 +34,8 @@
 <splash height="2208" src="Default-Portrait-736h@3x.png" width="1242"/>
 <splash height="1024" src="Default-Portrait.png" width="768"/>
 <splash height="2048" src="Default-Portrait@2x.png" width="1536"/>
-<splash src="Default@2x~iphone~comany.png"/>
-<splash src="Default@2x~iphone~comcom.png"/>
-<splash src="Default@3x~iphone~anyany.png"/>
-<splash src="Default@3x~iphone~anycom.png"/>
-<splash src="Default@3x~iphone~comany.png"/>
+<splash src="Default~iphone.png"/>
+<splash src="Default@2x~iphone.png"/>
         <edit-config file="*-Info.plist" mode="merge" target="CFBundleDisplayName">
             <string>Clicaid Прозакон</string>
         </edit-config>
