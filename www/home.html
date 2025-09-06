@@ -87,7 +87,7 @@ navigator.geolocation.getCurrentPosition( Successgeo, Errorgeo, {
 
 
     <!-- App Header -->
-    <div class="appHeader bg-primary scrolled">
+    <div class="appHeader no-border transparent position-absolute">
         <div class="left">
             <a href="#" id="ab" class="headerButton" data-toggle="modal" data-target="#sidebarPanel">
               <i class="far fa-bars"></i>
@@ -454,36 +454,7 @@ navigator.geolocation.getCurrentPosition( Successgeo, Errorgeo, {
 
 
 
- <!-- App Bottom Menu -->
-    <div class="appBottomMenu">
-        <a href="home.html" class="item active" id="ba">
-            <div class="col">
-<i class="fal fa-home-lg-alt fa-2x"></i>
-            </div>
-        </a>
-        <a href="#" class="item">
-            <div class="col">
-            </div>
-        </a>
-
-        <a href="balance.html" class="item" id="bc">
-            <div class="col">
-              <i class="fal fa-credit-card fa-2x"></i>
-            </div>
-        </a>
-		
-		        <a href="#" class="item">
-            <div class="col">
-            </div>
-        </a>
-		
-        <a href="page-profile.html" class="item" id="bd">
-            <div class="col">
-			<i class="fal fa-user fa-2x"></i>
-            </div>
-        </a>
-    </div>
-    <!-- * App Bottom Menu -->
+ 
 
 
 
@@ -724,7 +695,36 @@ navigator.geolocation.getCurrentPosition( Successgeo, Errorgeo, {
  
  
 
-    <!-- * welcome notification -->
+<!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="home.html" class="item active" id="ba">
+            <div class="col">
+<i class="fal fa-home-lg-alt fa-2x"></i>
+            </div>
+        </a>
+        <a href="#" class="item">
+            <div class="col">
+            </div>
+        </a>
+
+        <a href="balance.html" class="item" id="bc">
+            <div class="col">
+              <i class="fal fa-credit-card fa-2x"></i>
+            </div>
+        </a>
+		
+		        <a href="#" class="item">
+            <div class="col">
+            </div>
+        </a>
+		
+        <a href="page-profile.html" class="item" id="bd">
+            <div class="col">
+			<i class="fal fa-user fa-2x"></i>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
 
 
 
@@ -751,9 +751,6 @@ navigator.geolocation.getCurrentPosition( Successgeo, Errorgeo, {
 <script src="js/start.js"></script>
 -->
 
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyDqmF1kw4GLZbDGg3PxtVS9eTXlKF90kBY&language=ru"></script>
-
-	
 	
 	
 <script type="text/javascript" > 
@@ -806,42 +803,28 @@ var c = showst();
 
 
 function GetAddress(lat,lng) {
-		
-//old reference
-const appendChild = Element.prototype.appendChild;
-const urlCatchers = [
-  "/AuthenticationService.Authenticate?",
-  "/QuotaService.RecordEvent?"
-];
-Element.prototype.appendChild = function (element) {
-  const isGMapScript = element.tagName === 'SCRIPT' && /maps\.googleapis\.com/i.test(element.src);
-  const isGMapAccessScript = isGMapScript && urlCatchers.some(url => element.src.includes(url));
-  if (!isGMapAccessScript) {
-    return appendChild.call(this, element);
-  }
-const callback = element.src.split(/.*callback=([^\&]+)/, 2).pop();
-const [a, b] = callback.split('.');
-window[a][b]([1, null, 0, null, null, [1]]);
-  return element;
-};
-//old reference		
-		
 
-		
-            var lat = parseFloat(lat);
-            var lng = parseFloat(lng);
-            var latlng = new google.maps.LatLng(lat, lng);
-            var geocoder = geocoder = new google.maps.Geocoder();
-            geocoder.geocode({ 'latLng': latlng }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[1]) {
-					window.localStorage.setItem("myadress", results[1].formatted_address);
-					
-                   // alert("Location: " + results[1].formatted_address);
-					
-                    }
-                }
-            });
+const DADATA_API_KEY = "0f0b26f9be6377b19e8f9fa5c464e7bcd8663354"; 
+const DADATA_SECRET = "4f8444ae8dddf933e314ed310fe59a2b0d0065a5";
+
+
+fetch('https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Token ' + DADATA_API_KEY
+    },
+    body: JSON.stringify({
+      lat: lat,
+      lon: lon,
+      radius_meters: 100,
+      count: 1
+    })
+  })
+  .then(response => response.json())
+  .then(data => data.suggestions ? window.localStorage.setItem("myadress", data.suggestions[0]) : null);
+
         }
 
 

@@ -1,0 +1,11 @@
+{
+  "android": {
+    "release": {
+      "keystore": "clicaid.keystore",
+      "storePassword": "mortal32323",
+      "alias": "aliasf",
+      "password": "mortal32323",
+      "packageType": "apk"
+    }
+  }
+}

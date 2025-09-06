@@ -1,5 +1,8 @@
 {
   "name": "Clicaid",
-  "type": "cordova",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular",
   "id": "mk.clicaid.app"
 }

@@ -7988,6 +7988,7 @@ and (max-device-width : 4in) {
     background: url('../images/marker-user.png');
     background-size: 60px 60px; 
     pointer-events: none;
+	z-index: 1111;
 }
 
 

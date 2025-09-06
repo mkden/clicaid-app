@@ -5,7 +5,10 @@
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "ionic serve",
+    "serve:lab": "ionic serve --lab",
+    "serve:external": "ionic serve --external",
+    "cordova:browser": "ionic cordova run browser"
   },
   "keywords": [
     "ecosystem:cordova"
@@ -13,6 +16,7 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@angular/cli": "^20.2.2",
     "cordova-android": "^12.0.1",
     "cordova-browser": "^7.0.0",
     "cordova-ios": "^7.1.1",
@@ -26,9 +30,9 @@
   },
   "cordova": {
     "platforms": [
-      "android",
       "browser",
-      "ios"
+      "ios",
+      "android"
     ],
     "plugins": {
       "onesignal-cordova-plugin": {},

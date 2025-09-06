@@ -1,0 +1,7 @@
+{
+  "name": "clicaid",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

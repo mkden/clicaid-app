@@ -290,7 +290,6 @@ function checkConnection() {
 <script type='text/javascript'>
 
 
-
 var id_user=window.localStorage.getItem("id_user");	
 
 let mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
@@ -306,55 +305,6 @@ return `<option value="${p.cord}">${p.title}</option>`;
 }
 
 
-
-      function showAdress()  
-        {   
-$.ajax({  
-url: "https://clicaid.ru/api-mobile/adress-list.php?id_user="+id_user, 
-dataType:"json",
-cache: false,  
-success: function(data){  
-
-document.getElementById("adress-list").innerHTML = `<option value=0>Выберите место</option>${data.map(adressTemplate).join("")}`;
-
-}  
-});  
-        }  
-
-
-
-
-
-
-
-function changea() {
-    select = document.getElementById("adress-list"); // Выбираем  select по 
-	idvalue = select.options[select.selectedIndex].value; // Значение value для выбранного option
-	text = select.options[select.selectedIndex].text;
-document.getElementById("cord").value = idvalue;
-
-$.ajax({  
-url: "https://clicaid.ru/api-mobile/adress-list.php?id_user="+id_user+"&text="+text,
-dataType:"text",
-cache: false,  
-success: function(data){  
-$("#textadress").text(data);
-
-}  
-});  
-}
-
-
-
-
-
-
-
-
-
-
-showAdress();
-
 </script>
 
 
@@ -367,717 +317,495 @@ showAdress();
 		   		<!-- Page Scripts Starts -->
 		<script src="js/jquery.min1.11.1.js"></script>
 		<script src="js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDqmF1kw4GLZbDGg3PxtVS9eTXlKF90kBY&language=ru&region=RU"></script>
-<script src="js/gmaphack.js"></script>
-<script type="text/javascript">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
+<script>
+// ---------- данные пользователя ----------
+var id_user = window.localStorage.getItem("id_user") || "";
 
-function initialize(){
+function adressTemplate(p){ return `<option value="${p.cord}">${p.title}</option>`; }
 
-	
-var lat = window.localStorage.getItem("lat1");
-var lon = window.localStorage.getItem("lon1");	
-
-
-if(lon>0){
-initialLat = lat;
-initialLong = lon;
-}
-else{
-var initialLat = '59.93983170000001';
-var initialLong = '30.3145597';
-}
-
-
-var latlng = new google.maps.LatLng(initialLat, initialLong);
-		var options = {
-			zoom: 17,
-			center: latlng,
-			componentRestrictions: { country: "ru" },
-			mapTypeControl: false,
-			streetViewControl: false,
-			fullscreenControl: false,
-			gestureHandling: 'greedy',
-			myLocationEnabled: true,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
-
-		var map = new google.maps.Map(document.getElementById("geomap"), options);
-
-
-		var geocoder = new google.maps.Geocoder();
-
-		
-
-
-					geocoder.geocode({'latLng': latlng}, function (results, status) {
-				if (status == google.maps.GeocoderStatus.OK) {
-					map.setCenter(results[0].geometry.location);
-					//marker.setPosition(results[0].geometry.location);
-					
-		 // Get address_components
-          for (var i = 0; i < results[0].address_components.length; i++)
-          {
-            var addr = results[0].address_components[i];
-			
-for (var j in addr.types) {  // Some types are ["country", "political"]
-      var type_element = document.getElementById(addr.types[j]);
-if (type_element) {
-type_element.value = addr.long_name;
-}
- }	
-            var getCity;
-			 var getStret;
-			  var getDom;
-            if (addr.types[0] == 'locality') 
-              getCity = addr.long_name;
-			if (addr.types[0] == 'route') 
-			getStret = addr.long_name;
-			if (addr.types[0] == 'street_number') 
-			getDom = addr.long_name;
-          }
-   // Get address_components
-		  
-var adress1 = getCity+', '+getStret+', '+getDom;	
-var adress2 = adress1.replace(", undefined, undefined","");  
-var adress = adress2.replace("undefined",""); 
-var adress = adress.replace("Unnamed Road","Улица без имени");
-		  
-
-var g = map.getCenter();
-$('#cord').val(g.lat()+','+g.lng());
-
-				}
-			});
-			
-			
-
-
-
-		google.maps.event.addListener(map, "dragend", function () {
-
-			//var point = marker.getPosition();
-	
-var g = map.getCenter();
-var latlngs=g.lat()+','+g.lng();
-
-			//var point = map.setCenter();
-			//map.panTo(point);
-			
-        var latlng = new google.maps.LatLng(g.lat(), g.lng());
-
-			
-			geocoder.geocode({'latLng': latlng}, function (results, status) {
-
-			
-				if (status == google.maps.GeocoderStatus.OK) {
-					map.setCenter(results[0].geometry.location);
-					//marker.setPosition(results[0].geometry.location);
-					  // Get address_components
-          for (var i = 0; i < results[0].address_components.length; i++)
-          {
-            var addr = results[0].address_components[i];
-for (var j in addr.types) {  // Some types are ["country", "political"]
-      var type_element = document.getElementById(addr.types[j]);
-if (type_element) {
-type_element.value = addr.long_name;
-}
- }	
-            var getCity;
-			 var getStret;
-			  var getDom;
-            if (addr.types[0] == 'locality') 
-              getCity = addr.long_name;
-			if (addr.types[0] == 'route') 
-			getStret = addr.long_name;
-			if (addr.types[0] == 'street_number') 
-			getDom = addr.long_name;
-          }
-   // Get address_components
-		
-		
-var adress1 = getCity+', '+getStret+', '+getDom;	
-var adress2 = adress1.replace(", undefined, undefined","");  
-var adress = adress2.replace("undefined",""); 
-var adress = adress.replace("Unnamed Road","Улица без имени");
-		  
-
-$('.adress').text(adress);
-$('#cord').val(g.lat()+','+g.lng());
-
-				}
-			});
-		});
-		
-	
-	
-	
-	
-
-
-	
-	
-	
-	
-/////////////////
-	
-	
-/*
-		 * autocomplete location search
-		 */
-		var PostCodeid = '#search_location';
-		$(function () {
-			$(PostCodeid).autocomplete({
-				source: function (request, response) {
-					geocoder.geocode({
-						'address': request.term,
-						//componentRestrictions: {country: "ua"}
-					}, function (results, status) {
-						response($.map(results, function (item) {
-							
-		$('#locality').val('');
-        $('#route').val('');
-		$('#street_number').val('');
-		
-	         // Get address_components
-          for (var i = 0; i < item.address_components.length; i++)
-          {
-            var addr = item.address_components[i];
-   var type_element1 = document.getElementById('locality');
-	var type_element2 = document.getElementById('route');
-	var type_element3 = document.getElementById('street_number');
-		
-            var getCity;
-			 var getStret;
-			  var getDom;
-			  
-			  if (addr.types[0] == 'postal_code'){
-               item.formatted_address=item.formatted_address.replace(addr.long_name,'');
-			   }
-            if (addr.types[0] == 'locality'){
-              getCity = addr.long_name;
-			  type_element1.value = addr.long_name;}
-			if (addr.types[0] == 'route'){
-			getStret = addr.long_name;
-			type_element2.value = addr.long_name;}
-			if (addr.types[0] == 'street_number'){ 
-			getDom = addr.long_name;
-			type_element3.value = addr.long_name;}
-          }
-   // Get address_components
-   
-   var adress1 = getCity+', '+getStret+', '+getDom;	
-var adress2 = adress1.replace(", undefined, undefined","");  
-var adress = adress2.replace("undefined",""); 
-var adres = adress.replace("Unnamed Road","Улица без имени");
-							
-							
-							
-							return {
-								label: item.formatted_address,
-								value: item.formatted_address,
-								adress: adres,
-								lat: item.geometry.location.lat(),
-								lon: item.geometry.location.lng()
-							};
-						}));
-					});
-				},
-				select: function (event, ui) {
-				
-				$('#cord').val(ui.item.lat+','+ui.item.lon);
-					$('.adress').text(ui.item.adress);
-					var latlng = new google.maps.LatLng(ui.item.lat, ui.item.lon);
-					//marker.setPosition(latlng);
-					map.setCenter(latlng);
-				}
-			});
-		});
-
-		
-		
-		/*
-		 * Point location on google map
-		 */
-		$('.get_map').click(function (e) {
-		
-		var g = map.getCenter();
-		
-			var address = $(PostCodeid).val();
-			geocoder.geocode({'address': address}, function (results, status) {
-				if (status == google.maps.GeocoderStatus.OK) {
-					map.setCenter(results[0].geometry.location);
-					//marker.setPosition(results[0].geometry.location);
-					    // Get address_components
-          for (var i = 0; i < results[0].address_components.length; i++)
-          {
-            var addr = results[0].address_components[i];
-			
-for (var j in addr.types) {  // Some types are ["country", "political"]
-      var type_element = document.getElementById(addr.types[j]);
-if (type_element) {
-type_element.value = addr.long_name;
-}
- }	
-            var getCity;
-			 var getStret;
-			  var getDom;
-            if (addr.types[0] == 'locality') 
-              getCity = addr.long_name;
-			if (addr.types[0] == 'route') 
-			getStret = addr.long_name;
-			if (addr.types[0] == 'street_number') 
-			getDom = addr.long_name;
-          }
-   // Get address_components
-		  
-var adress1 = getCity+', '+getStret+', '+getDom;	
-var adress2 = adress1.replace(", undefined, undefined","");  
-var adress = adress2.replace("undefined",""); 
-var adress = adress.replace("Unnamed Road","Улица без имени");
-
-$('.adress').text(adress);
-$('#cord').val(g.lat()+','+g.lng());
-
-				} else {
-					alert("Geocode was not successful for the following reason: " + status);
-				}
-			});
-			e.preventDefault();
-		});
-
-	
-	
-	
-////////////////////
-	
-	
-	
-	
-	
+function showAdress(){
+  $.ajax({
+    url: "https://clicaid.ru/api-mobile/adress-list.php?id_user=" + id_user,
+    dataType: "json", 
+    cache: false
+  }).done(function(data){
+    if (Array.isArray(data)){
+      $("#adress-list").html(`<option value="0">Выберите место</option>${data.map(adressTemplate).join("")}`);
+    } else {
+      $("#adress-list").html(`<option value="0">Адреса не найдены</option>`);
+    }
+  }).fail(function(){
+    $("#adress-list").html(`<option value="0">Ошибка загрузки</option>`);
+  });
 }
 
+function changea(){
+  var select = document.getElementById("adress-list");
+  var idvalue = select.options[select.selectedIndex].value;
+  var text = select.options[select.selectedIndex].text;
+  $("#cord").val(idvalue);
+  $.ajax({
+    url: "https://clicaid.ru/api-mobile/adress-list.php?id_user="+id_user+"&text="+encodeURIComponent(text),
+    dataType: "text", 
+    cache: false
+  }).done(function(data){ 
+    $("#textadress").text(data); 
+  });
+}
 
+showAdress();
 
+// ---------- Геокодинг через DaData (лучший для России) ----------
+const DADATA_API_KEY = "0f0b26f9be6377b19e8f9fa5c464e7bcd8663354"; 
+const DADATA_SECRET = "4f8444ae8dddf933e314ed310fe59a2b0d0065a5";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	var app = {
-    // Application Constructor
-    initialize: function() {
-        this.bindEvents();
+// Поиск адресов через DaData
+function dadataSearch(query, limit = 6) {
+  return fetch('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Token ' + DADATA_API_KEY
     },
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
+    body: JSON.stringify({
+      query: query,
+      count: limit,
+      locations: [{ country: 'Россия' }],
+      restrict_value: true
+    })
+  })
+  .then(response => response.json())
+  .then(data => data.suggestions || []);
+}
+
+// Обратное геокодирование через DaData
+function dadataReverse(lat, lon) {
+  return fetch('https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Token ' + DADATA_API_KEY
     },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
-       // app.receivedEvent('deviceready');
-	 var option = {enableHighAccuracy:true, maximumAge:Infinity, timeout:20000};
-	  //var option = {enableHighAccuracy: true, timeout: 20000, maximumAge: 0};
-       navigator.geolocation.getCurrentPosition(app.onSuccess, app.onError, option);
-    },
-
-	
-	
-
-	
-    onSuccess: function(position){
-	
-	var str = $('#cord').val();
-	var arr = str.split(',');
-	
-	
-		var initialLat = arr[0];
-		var initialLong = arr[1];
-		initialLat = initialLat?initialLat:position.coords.latitude;
-		initialLong = initialLong?initialLong:position.coords.longitude;
-	
-	
-	
-var latlng = new google.maps.LatLng(initialLat, initialLong);
-		var options = {
-			zoom: 17,
-			center: latlng,
-			componentRestrictions: { country: "ru" },
-			radius: 20000,
-			mapTypeControl: false,
-			streetViewControl: false,
-			fullscreenControl: false,
-			gestureHandling: 'greedy',
-			myLocationEnabled: true,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
-
-		var map = new google.maps.Map(document.getElementById("geomap"), options);
-
-		var geocoder = new google.maps.Geocoder();
-
-
-		
-					geocoder.geocode({'latLng': latlng}, function (results, status) {
-				if (status == google.maps.GeocoderStatus.OK) {
-					map.setCenter(results[0].geometry.location);
-					//marker.setPosition(results[0].geometry.location);
-					
-		 // Get address_components
-          for (var i = 0; i < results[0].address_components.length; i++)
-          {
-            var addr = results[0].address_components[i];
-			
-for (var j in addr.types) {  // Some types are ["country", "political"]
-      var type_element = document.getElementById(addr.types[j]);
-if (type_element) {
-type_element.value = addr.long_name;
+    body: JSON.stringify({
+      lat: lat,
+      lon: lon,
+      radius_meters: 100,
+      count: 1
+    })
+  })
+  .then(response => response.json())
+  .then(data => data.suggestions ? data.suggestions[0] : null);
 }
- }	
-            var getCity;
-			 var getStret;
-			  var getDom;
-            if (addr.types[0] == 'locality') 
-              getCity = addr.long_name;
-			if (addr.types[0] == 'route') 
-			getStret = addr.long_name;
-			if (addr.types[0] == 'street_number') 
-			getDom = addr.long_name;
-          }
-   // Get address_components
-		  
-var adress1 = getCity+', '+getStret+', '+getDom;	
-var adress2 = adress1.replace(", undefined, undefined","");  
-var adress = adress2.replace("undefined",""); 
-var adress = adress.replace("Unnamed Road","Улица без имени");
-		  
-var g = map.getCenter();	  
-$('.adress').text(adress);
-$('#cord').val(g.lat()+','+g.lng());
 
-
-
-
-				}
-			});
-			
-			
-
-
-		google.maps.event.addListener(map, "dragend", function () {
-
-			//var point = marker.getPosition();
-	
-var g = map.getCenter();
-var latlngs=g.lat()+','+g.lng();
-
-			//var point = map.setCenter();
-			//map.panTo(point);
-			
-        var latlng = new google.maps.LatLng(g.lat(), g.lng());
-
-			
-			geocoder.geocode({'latLng': latlng}, function (results, status) {
-
-			
-				if (status == google.maps.GeocoderStatus.OK) {
-					map.setCenter(results[0].geometry.location);
-					//marker.setPosition(results[0].geometry.location);
-					  // Get address_components
-          for (var i = 0; i < results[0].address_components.length; i++)
-          {
-            var addr = results[0].address_components[i];
-for (var j in addr.types) {  // Some types are ["country", "political"]
-      var type_element = document.getElementById(addr.types[j]);
-if (type_element) {
-type_element.value = addr.long_name;
+// Fallback: Яндекс Геокодер (тоже хорош для России)
+function yandexGeocode(query) {
+  const YANDEX_API_KEY = "ваш_yandex_api_ключ"; // Получите на developer.tech.yandex.ru
+  return fetch(`https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${YANDEX_API_KEY}&geocode=${encodeURIComponent(query)}&results=5`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.response && data.response.GeoObjectCollection) {
+        return data.response.GeoObjectCollection.featureMember.map(item => ({
+          display_name: item.GeoObject.name,
+          lat: parseFloat(item.GeoObject.Point.pos.split(' ')[1]),
+          lon: parseFloat(item.GeoObject.Point.pos.split(' ')[0]),
+          address: item.GeoObject.description
+        }));
+      }
+      return [];
+    });
 }
- }	
-            var getCity;
-			 var getStret;
-			  var getDom;
-            if (addr.types[0] == 'locality') 
-              getCity = addr.long_name;
-			if (addr.types[0] == 'route') 
-			getStret = addr.long_name;
-			if (addr.types[0] == 'street_number') 
-			getDom = addr.long_name;
-          }
-   // Get address_components
-		
-		
-var adress1 = getCity+', '+getStret+', '+getDom;	
-var adress2 = adress1.replace(", undefined, undefined","");  
-var adress = adress2.replace("undefined",""); 
-var adress = adress.replace("Unnamed Road","Улица без имени");
-		  
 
-$('.adress').text(adress);
-$('#cord').val(g.lat()+','+g.lng());
-
-				}
-			});
-		});
-		
-	
-	
-
-	
-	
-
-
-////////////////////
-	
-	
-	
-/////////////////
-	
-	
-/*
-		 * autocomplete location search
-		 */
-		var PostCodeid = '#search_location';
-		$(function () {
-			$(PostCodeid).autocomplete({
-				source: function (request, response) {
-					geocoder.geocode({
-						'address': request.term,
-						//componentRestrictions: {country: "ua"}
-					}, function (results, status) {
-						response($.map(results, function (item) {
-							
-		$('#locality').val('');
-        $('#route').val('');
-		$('#street_number').val('');
-		
-	         // Get address_components
-          for (var i = 0; i < item.address_components.length; i++)
-          {
-            var addr = item.address_components[i];
-   var type_element1 = document.getElementById('locality');
-	var type_element2 = document.getElementById('route');
-	var type_element3 = document.getElementById('street_number');
-		
-            var getCity;
-			 var getStret;
-			  var getDom;
-			  
-			  if (addr.types[0] == 'postal_code'){
-               item.formatted_address=item.formatted_address.replace(addr.long_name,'');
-			   }
-            if (addr.types[0] == 'locality'){
-              getCity = addr.long_name;
-			  type_element1.value = addr.long_name;}
-			if (addr.types[0] == 'route'){
-			getStret = addr.long_name;
-			type_element2.value = addr.long_name;}
-			if (addr.types[0] == 'street_number'){ 
-			getDom = addr.long_name;
-			type_element3.value = addr.long_name;}
-          }
-   // Get address_components
-   
-   var adress1 = getCity+', '+getStret+', '+getDom;	
-var adress2 = adress1.replace(", undefined, undefined","");  
-var adress = adress2.replace("undefined",""); 
-var adres = adress.replace("Unnamed Road","Улица без имени");
-							
-							
-							return {
-								label: item.formatted_address,
-								value: item.formatted_address,
-								adress: adres,
-								lat: item.geometry.location.lat(),
-								lon: item.geometry.location.lng()
-							};
-						}));
-					});
-				},
-				select: function (event, ui) {
-				$('#cord').val(ui.item.lat+','+ui.item.lon);
-					$('.adress').text(ui.item.adress);
-					var latlng = new google.maps.LatLng(ui.item.lat, ui.item.lon);
-					//marker.setPosition(latlng);
-					map.setCenter(latlng);
-				}
-			});
-		});
-
-		
-		
-		/*
-		 * Point location on google map
-		 */
-		$('.get_map').click(function (e) {
-		
-		var g = map.getCenter();
-		
-			var address = $(PostCodeid).val();
-			geocoder.geocode({'address': address}, function (results, status) {
-				if (status == google.maps.GeocoderStatus.OK) {
-					map.setCenter(results[0].geometry.location);
-					//marker.setPosition(results[0].geometry.location);
-					    // Get address_components
-          for (var i = 0; i < results[0].address_components.length; i++)
-          {
-            var addr = results[0].address_components[i];
-			
-for (var j in addr.types) {  // Some types are ["country", "political"]
-      var type_element = document.getElementById(addr.types[j]);
-if (type_element) {
-type_element.value = addr.long_name;
+function parseDadataAddress(suggestion) {
+  const data = suggestion.data || {};
+  return {
+    city: data.city || data.settlement || data.region_with_type || '',
+    route: data.street_with_type || '',
+    house: data.house || '',
+    full_address: suggestion.value || '',
+    lat: data.geo_lat ? parseFloat(data.geo_lat) : null,
+    lon: data.geo_lon ? parseFloat(data.geo_lon) : null
+  };
 }
- }	
-            var getCity;
-			 var getStret;
-			  var getDom;
-            if (addr.types[0] == 'locality') 
-              getCity = addr.long_name;
-			if (addr.types[0] == 'route') 
-			getStret = addr.long_name;
-			if (addr.types[0] == 'street_number') 
-			getDom = addr.long_name;
-          }
-   // Get address_components
-		  
-var adress1 = getCity+', '+getStret+', '+getDom;	
-var adress2 = adress1.replace(", undefined, undefined","");  
-var adress = adress2.replace("undefined",""); 
-var adress = adress.replace("Unnamed Road","Улица без имени");
 
-$('.adress').text(adress);
-$('#cord').val(g.lat()+','+g.lng());
+function setAddressFields(address) {
+  $("#locality").val(address.city || "");
+  $("#route").val(address.route || "");
+  $("#street_number").val(address.house || "");
+  
+  let adr = address.full_address || [address.city, address.route, address.house].filter(Boolean).join(", ");
+  if (!adr) adr = "Улица без имени";
+  
+  $(".adress").text(adr).css("color", "green");
+}
 
-				} else {
-					alert("Geocode was not successful for the following reason: " + status);
-				}
-			});
-			e.preventDefault();
-		});
+// ---------- Leaflet карта ----------
+let map;
 
-	
-	
-	
-////////////////////	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-},
+function initMap(lat, lon) {
+  const initLat = lat || 55.7558; // Москва
+  const initLon = lon || 37.6173;
+
+  const mapElement = document.getElementById('geomap');
+  if (!mapElement) return;
+
+  mapElement.style.minHeight = '400px';
+  mapElement.style.height = '400px';
+
+  map = L.map('geomap', { 
+    zoomControl: true, 
+    attributionControl: false 
+  }).setView([initLat, initLon], 17);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 20,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  updateCenterFields();
+
+  map.on('move', () => {
+    const center = map.getCenter();
+    $('#cord').val(`${center.lat},${center.lng}`);
+  });
+
+  map.on('moveend', updateCenterFields);
+
+  setTimeout(() => {
+    if (map) map.invalidateSize();
+  }, 300);
+}
+
+function updateCenterFields() {
+  if (!map) return;
+  
+  const center = map.getCenter();
+  $('#cord').val(`${center.lat},${center.lng}`);
+  
+  // Используем DaData для обратного геокодирования
+  dadataReverse(center.lat, center.lng)
+    .then(suggestion => {
+      if (suggestion) {
+        const address = parseDadataAddress(suggestion);
+        setAddressFields(address);
+        
+        // Обновляем координаты если они есть в ответе
+        if (address.lat && address.lon) {
+          $('#cord').val(`${address.lat},${address.lon}`);
+        }
+      } else {
+        // Fallback на Nominatim если DaData не вернул результат
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${center.lat}&lon=${center.lng}&zoom=18&addressdetails=1&accept-language=ru`)
+          .then(r => r.json())
+          .then(data => {
+            if (data && data.address) {
+              const address = {
+                city: data.address.city || data.address.town || '',
+                route: data.address.road || '',
+                house: data.address.house_number || '',
+                full_address: data.display_name || ''
+              };
+              setAddressFields(address);
+            }
+          });
+      }
+    })
+    .catch(error => {
+      console.error('Ошибка геокодирования:', error);
+      $(".adress").text("Не удалось определить адрес").css("color", "orange");
+    });
+}
+
+// ---------- Автокомплит с DaData ----------
+(function(){
+  const input = document.getElementById('search_location');
+  const box = document.createElement('div');
+  box.id = 'ac-list';
+  box.className = 'autocomplete-suggestions';
+  box.style.cssText = 'position:absolute; background:white; border:1px solid #ccc; max-height:200px; overflow-y:auto; z-index:9999; display:none; width:' + input.offsetWidth + 'px;';
+  input.parentNode.appendChild(box);
+
+  let lastQ = "";
+  let timer = null;
+
+  function clearList() { 
+    box.style.display = 'none'; 
+    box.innerHTML = ''; 
+  }
+
+  function fillList(suggestions) {
+    if (!suggestions.length) { 
+      clearList(); 
+      return; 
+    }
     
-    onError: function(error){
-	
-$('.adress').html('Нет сигнала GPS.<br/>Включите GPS или воспользуйтесь поиском.');
-initialize();
+    box.innerHTML = suggestions.map(suggestion => {
+      const address = parseDadataAddress(suggestion);
+      return `<div class="ac-item" data-lat="${address.lat || ''}" data-lon="${address.lon || ''}" data-address="${address.full_address}">${address.full_address}</div>`;
+    }).join("");
+    
+    box.style.display = 'block';
+  }
 
-    },
-
-	
+  input.addEventListener('input', function() {
+    const q = this.value.trim();
+    if (q.length < 2) { 
+      clearList(); 
+      return; 
+    }
+    
+    if (q === lastQ) return;
+    lastQ = q;
+    
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      // Пробуем DaData сначала
+      dadataSearch(q, 8)
+        .then(suggestions => {
+          if (suggestions && suggestions.length > 0) {
+            fillList(suggestions);
 }
+        })
+        .catch(error => {
+          console.error('Ошибка поиска:', error);
+          clearList();
+        });
+    }, 300);
+  });
 
+  box.addEventListener('click', function(e) {
+    const item = e.target.closest('.ac-item');
+    if (!item) return;
+    
+    const lat = parseFloat(item.dataset.lat);
+    const lon = parseFloat(item.dataset.lon);
+    const addressText = item.dataset.address;
+    
+    input.value = addressText;
+    clearList();
+    
+    if (map && !isNaN(lat) && !isNaN(lon)) {
+      map.setView([lat, lon], 17);
+      $("#cord").val(`${lat},${lon}`);
+    }
+    
+    $(".adress").text(addressText);
+    
+    // Заполняем поля адреса
+    const addressParts = addressText.split(',');
+    if (addressParts.length >= 3) {
+      $("#locality").val(addressParts[0].trim());
+      $("#route").val(addressParts[1].trim());
+      $("#street_number").val(addressParts[2].trim());
+    }
+  });
 
+  document.querySelector('.get_map').addEventListener('click', function() {
+    const q = input.value.trim();
+    if (!q) return;
+    
+    dadataSearch(q, 1)
+      .then(suggestions => {
+        if (!suggestions.length) {
+          return yandexGeocode(q).then(results => {
+            if (!results.length) {
+              alert("Адрес не найден");
+              return;
+            }
+            const result = results[0];
+            if (map) {
+              map.setView([result.lat, result.lon], 17);
+            }
+            $(".adress").text(result.display_name);
+            $("#cord").val(`${result.lat},${result.lon}`);
+          });
+        }
+        
+        const suggestion = suggestions[0];
+        const address = parseDadataAddress(suggestion);
+        
+        if (map && address.lat && address.lon) {
+          map.setView([address.lat, address.lon], 17);
+        }
+        
+        setAddressFields(address);
+        clearList();
+      })
+      .catch(() => {
+        alert("Ошибка поиска");
+      });
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.autocomplete-suggestions') && e.target !== input) {
+      clearList();
+    }
+  });
+})();
+
+// ---------- Инициализация ----------
+const app = {
+  started: false,
+  
+  initialize() {
+    if (typeof document.addEventListener === 'function') {
+      document.addEventListener('deviceready', this.onDeviceReady, false);
+    }
+    
+    setTimeout(() => {
+      if (!this.started) {
+        this.webInit();
+      }
+    }, 1000);
+  },
+  
+  onDeviceReady() {
+    const options = { 
+      enableHighAccuracy: true, 
+      maximumAge: 30000, 
+      timeout: 27000 
+    };
+    
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        this.onSuccess.bind(this),
+        this.onError.bind(this),
+        options
+      );
+    } else {
+      this.onError();
+    }
+  },
+  
+  webInit() {
+    this.started = true;
+    
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        pos => initMap(pos.coords.latitude, pos.coords.longitude),
+        () => initMap(),
+        { enableHighAccuracy: true, timeout: 5000 }
+      );
+    } else {
+      initMap();
+    }
+  },
+  
+  onSuccess(position) {
+    this.started = true;
+    
+    const cordValue = $('#cord').val();
+    let lat, lon;
+    
+    if (cordValue) {
+      const coords = cordValue.split(',');
+      lat = parseFloat(coords[0]) || position.coords.latitude;
+      lon = parseFloat(coords[1]) || position.coords.longitude;
+    } else {
+      lat = position.coords.latitude;
+      lon = position.coords.longitude;
+    }
+    
+    initMap(lat, lon);
+  },
+  
+  onError() {
+    this.started = true;
+    $('.adress').html('Нет сигнала GPS.<br/>Включите GPS или воспользуйтесь поиском.').css('color', 'red');
+    initMap();
+  }
+};
 
 app.initialize();
- 
- 
 
-</script>
-
-
-<script type="text/javascript">
-
-	 $(".vizov").click(function(){
-	 var textadress = $('#textadress').text();
-	 
-	 	if(textadress==""){
-  var pcity = $("#locality").val();
-  var pstreet = $("#route").val();
-  var pdom = $("#street_number").val();
-	 }
-	 else{
-	  var adr = textadress.split(","); 
-	   var pcity = adr[0];
-  var pstreet = adr[1];
-  var pdom = adr[2];
+$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function(e) {
+  if (e.target.getAttribute('href') === '#geo' && map) {
+    setTimeout(() => map.invalidateSize(), 100);
   }
-  
-  
-  
-var adress = pcity +', '+pstreet+', '+pdom;
-  
-var mycord = $('#cord').val();
-
-		if(mycord=="" || mycord=="undefined"){
-		notification('notification', 3000);
-		$('.error').text('Не найдены координаты попробуйте передвитуть метку.');
-		}
-		else{
-		
-
-		
-		            $.ajax({
-                url:'https://clicaid.ru/api-mobile/order.php?id_user='+id_user,
-                type:'post',
-                data:{adress:adress,cord:mycord},
-				     success:function(data){
-if (data == '1')  {
-window.localStorage.setItem("mycity", pcity);
-window.localStorage.setItem("mystreet", pstreet);	
-window.localStorage.setItem("mydom", pdom);	
-window.localStorage.setItem("mycord", mycord);
-window.location.href = "home.html";
-  }
-else{
-notification('notification', 3000);
-$(".error").text("Сервиса Clicaid пока здесь нет.");
-}	
-}				 
-});
-				
-	
-
-	
-}
 });
 
+// ---------- Вызов ----------
+$(".vizov").on('click', function(e){
+  e.preventDefault();
+  
+  var textadress = $('#textadress').text();
+  var pcity, pstreet, pdom;
+  
+  if (!textadress) {
+    pcity = $("#locality").val();
+    pstreet = $("#route").val();
+    pdom = $("#street_number").val();
+  } else {
+    var adr = textadress.split(",");
+    pcity = (adr[0] || "").trim();
+    pstreet = (adr[1] || "").trim();
+    pdom = (adr[2] || "").trim();
+  }
+  
+  var adress = [pcity, pstreet, pdom].filter(Boolean).join(', ');
+  var mycord = $('#cord').val();
 
+  if (!mycord || mycord === "undefined") {
+    notification('notification', 3000);
+    $('.error').text('Не найдены координаты, попробуйте передвинуть карту.');
+    return;
+  }
 
+  $.ajax({
+    url: 'https://clicaid.ru/api-mobile/order.php?id_user=' + encodeURIComponent(id_user),
+    type: 'post',
+    data: { adress: adress, cord: mycord }
+  }).done(function(data){
+    if (data == '1') {
+      window.localStorage.setItem("mycity", pcity || "");
+      window.localStorage.setItem("mystreet", pstreet || "");
+      window.localStorage.setItem("mydom", pdom || "");
+      window.localStorage.setItem("mycord", mycord || "");
+      window.location.href = "home.html";
+    } else {
+      notification('notification', 3000);
+      $(".error").text("Сервиса Clicaid пока здесь нет.");
+    }
+  }).fail(function() {
+    notification('notification', 3000);
+    $(".error").text("Ошибка соединения с сервером.");
+  });
+});
 
-
+// Стили для автокомплита
+const style = document.createElement('style');
+style.textContent = `
+  .autocomplete-suggestions {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 9999;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  
+  .ac-item {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  
+  .ac-item:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .ac-item:last-child {
+    border-bottom: none;
+  }
+`;
+document.head.appendChild(style);
 </script>
 
 

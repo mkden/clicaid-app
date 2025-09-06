@@ -23,5 +23,14 @@ git commit -m "chore: minimal valid config.xml (fix parse error)"
 git push
 
 cd C:\Users\User\clicaid
-openssl x509 -in development.cer -inform DER -out certificate.pem -outform PEM
+openssl x509 -in distribution.cer -inform DER -out certificate.pem -outform PEM
 openssl pkcs12 -export -inkey private.key -in certificate.pem -out certificate.p12
+
+
+
+
+cordova build android --release -- --keystore=android.keystore --storePassword=mortal32323 --alias=aliasf --password=mortal32323
+
+
+//apk
+cordova build android --release --buildConfig=build.json

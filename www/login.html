@@ -240,7 +240,7 @@ plugins.OneSignal.enableInAppAlertNotification(true);
 
  <div class="form-group boxed">
  <div class="input-wrapper" style="font-size:25px;">
-+7 000 000 <b>XX-XX</b>
+<b>XXXX</b>
 </div>
 </div>
 
@@ -356,8 +356,8 @@ if (keyCode == 13){
                 data:{tel:tel,type:'log'},
 				     success:function(data){
                     if(data > 0){
-//$("#message3").html("<b>На номер "+tel+" отправленно СМС с кодом.</b>");
-					$("#message3").html("<b>Последние 4 цифры входящего номера телефона - Ваш код.</b>");                    code();
+$("#message3").html("<b>На номер "+tel+" отправленно СМС с кодом.</b>");
+                  code();
                     }
 					else{
 						$("#message2").html("<b style='color:red'>Вы не зарегистрированны!</b>");
@@ -387,8 +387,7 @@ if (keyCode == 13){
                 data:{tel:tel,type:'log'},
 				     success:function(data){
                     if(data > 0){
-					//$("#message3").html("<b>На номер "+tel+" отправленно СМС с кодом.</b>");
-					$("#message3").html("<b>Последние 4 цифры входящего номера телефона - Ваш код.</b>");
+					$("#message3").html("<b>На номер "+tel+" отправленно СМС с кодом.</b>");
                     code();
                     }
 					else{
@@ -445,8 +444,8 @@ else{
                 data:{name:name,otchestvo:otchestvo,familia:familia,tel:tel,agedate:agedate,age:age,type:'reg'},
  success:function(data){  
                  if(data > '0'){
-//$("#message3").html("<b>На номер "+tel+" отправленно СМС с кодом.</b>");
-					$("#message3").html("<b>Последние 4 цифры входящего номера телефона - Ваш код.</b>");                    code();
+$("#message3").html("<b>На номер "+tel+" отправленно СМС с кодом.</b>");
+    code();
                     }
 				 else{
 					$("#message2").html("<b style='color:red'>Вы уже зарегистрированны!</b>");
