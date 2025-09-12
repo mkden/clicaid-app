@@ -746,9 +746,9 @@ navigator.geolocation.getCurrentPosition( Successgeo, Errorgeo, {
     <script src="js/base.js"></script>
 	<script src="js/pulltorefresh.js"></script>
 <!-- подсказки 
-<script src="js/kinetic.js"></script>
-<script src="js/enjoyhint.js"></script>
-<script src="js/start.js"></script>
+<script src="./js/kinetic.js"></script>
+<script src="./js/enjoyhint.js"></script>
+<script src="./js/start.js"></script>
 -->
 
 	
@@ -770,34 +770,49 @@ $("#pol").html(data.pol);
 }
 
 
-function showst()  
-{  
-$.ajax({  
-url: "https://clicaid.ru/api-mobile/user-info.php?z=a&id_user="+id_user, 
-dataType:"json", 
-cache: false,  
-success: function(data){
-if(data.status=='3'){
-$('.otzv').show();
-$('.redb').hide();
-	 }
-else if(data.status>'0'){
-$("#appCapsule").hide();
-$("#endv").hide();
-$('#gdatadv').show();
-$(".vizov").addClass("disabledbutton");
+function checkUser() {
+  $.ajax({
+    url: "https://clicaid.ru/api-mobile/user-info.php?z=a&id_user=" + id_user,
+    dataType: "json",
+    cache: false,
+    success: function(data) {
+      if (data.status == '3') {
+        $('.otzv').show();
+        $('.redb').hide();
+      } else if (data.status > '0') {
+        $("#appCapsule").hide();
+        $("#endv").hide();
+        $('#gdatadv').show();
+        $(".vizov").addClass("disabledbutton");
+      } else if (data.status == '0') {
+        // если вернуло 0 → проверяем второй запрос
+        $.ajax({
+          url: "https://clicaid.ru/api-mobile/user-info.php?z=&id_user=" + id_user,
+          dataType: "json",
+          cache: false,
+          success: function(data2) {
+            if (data2.status == '3') {
+              $('.otzv').show();
+              $('.redb').hide();
+            } else if (data2.status > '0') {
+              $("#appCapsule").hide();
+              $("#endv").hide();
+              $('#gdatadv').show();
+              $(".vizov").addClass("disabledbutton");
+            }
+          }
+        });
+      }
+    }
+  });
 }
 
-}  
-});  
-}	
-		
-		
-		
-		
-setInterval(function(){
-var c = showst();
-}, 10000);
+// первый запуск сразу
+checkUser();
+
+// потом каждые 10 секунд
+setInterval(checkUser, 10000);
+
 
 
 
@@ -817,7 +832,7 @@ fetch('https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address', 
     },
     body: JSON.stringify({
       lat: lat,
-      lon: lon,
+      lon: lng,
       radius_meters: 100,
       count: 1
     })

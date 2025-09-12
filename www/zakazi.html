@@ -191,7 +191,7 @@ cache: false,
 success: function(data){
 
 if (data == null){		 
-document.getElementById("list").innerHTML = `нет заказов`;							 
+document.getElementById("list").innerHTML = `нет завершенных заказов`;							 
 }
 else{	
 document.getElementById("list").innerHTML = `${data.map(pTemplate).join("")}`;
