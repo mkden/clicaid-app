@@ -8878,3 +8878,12 @@ font-size: 14px !important;
 
 
 .bg.pb-5.nizpp { padding-bottom: 0 !important; }
+
+
+
+/*ios*/
+
+.scrollb {
+    height:80vh;
+overflow-y: scroll;
+}
