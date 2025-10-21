@@ -340,19 +340,20 @@ button:hover, button:active, button:focus {
 }
 
 .appBottomMenu {
-  min-height: 56px;
-  position: fixed;
-  z-index: 999999;
-  left: 0; right: 0; bottom: 0;
-  background: #fff;
-  border-top: 1px solid #E1E1E1;
-  display: flex; align-items: center; justify-content: center;
-  padding: 0 4px;
-  padding-bottom: env(safe-area-inset-bottom);
-  padding-bottom: max(env(safe-area-inset-bottom), constant(safe-area-inset-bottom));
-  box-sizing: border-box;
-}
+    position:fixed;
+    min-height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: env(safe-area-inset-bottom);
+    left: 0;
+    right: 0;
+    z-index: 999999;
+    background: #FFF;
+    border-top: 1px solid #E1E1E1;
 
+}
 
 .appBottomMenu.no-border {
   border: 0 !important;
@@ -420,7 +421,7 @@ button:hover, button:active, button:focus {
   align-items: center;
   justify-content: center;
   border-radius: 200px;
-  background: #0B152D000;
+  background: #0B152D;
 }
 
 .appBottomMenu .item .action-button.large {
@@ -457,7 +458,7 @@ button:hover, button:active, button:focus {
 .appBottomMenu .item.active i.icon,
 .appBottomMenu .item.active ion-icon,
 .appBottomMenu .item.active strong {
-  color: #0B152D000 !important;
+  color: #0B152D !important;
   font-weight: 500;
 }
 
@@ -500,33 +501,19 @@ button:hover, button:active, button:focus {
   display: none;
 }
 
-/* контентная область */
 #appCapsule {
-  /* если верхний header ~56px — учитываем его + safe-area */
-  padding-top: calc(56px + env(safe-area-inset-top));
-  /* если нижний таббар ~56px — учитываем его + safe-area */
-  padding-bottom: calc(56px + env(safe-area-inset-bottom));
-  padding-left: 0;
-  padding-right: 0;
+    margin-bottom: env(safe-area-inset-bottom);
+    margin-top: env(safe-area-inset-top);
+  }
 
-  /* удаляем это — оно и даёт лишний отступ снизу/сверху */
-  /* margin-bottom: env(safe-area-inset-bottom); */
-  /* margin-top: env(safe-area-inset-top); */
-}
+  #appCapsule.extra-header-active {
+    padding-top: 112px;
+  }
 
-/* fallback для старого iOS 11 */
-#appCapsule {
-  padding-top: calc(56px + max(env(safe-area-inset-top), constant(safe-area-inset-top)));
-  padding-bottom: calc(56px + max(env(safe-area-inset-bottom), constant(safe-area-inset-bottom)));
-}
+  #appCapsule.full-height {
+    min-height: 100vh;
+  }
 
-#appCapsule.extra-header-active {
-  padding-top: 112px;
-}
-
-#appCapsule.full-height {
-  min-height: 100vh;
-}
 
 .section {
   padding: 0 16px;
