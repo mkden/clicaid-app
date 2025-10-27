@@ -31,7 +31,7 @@ margin: 0; height: 100%;
 
 a {
   transition: 0.2s all;
-  color: #0B152D000;
+  color: #B152D0;
   outline: 0 !important;
 }
 
@@ -41,7 +41,7 @@ hr{
 
 a:hover, a:active, a:focus {
   outline: 0 !important;
-  color: #0B152D000;
+  color: #B152D0;
   text-decoration: none;
 }
 
@@ -77,7 +77,7 @@ button:hover, button:active, button:focus {
   right: 0;
   width: 100%;
   z-index: 99999;
-  background: #0B152D000;
+  background: #B152D0;
 }
 
 .appHeader.no-border {
@@ -228,11 +228,11 @@ button:hover, button:active, button:focus {
 }
 
 .appHeader.scrolled.bg-primary .headerButton {
-  color: #0B152D000;
+  color: #B152D0;
 }
 
 .appHeader.scrolled.bg-primary.is-active {
-  background: #0B152D000 !important;
+  background: #B152D0 !important;
 }
 
 
@@ -502,9 +502,10 @@ button:hover, button:active, button:focus {
 }
 
 #appCapsule {
-    margin-bottom: env(safe-area-inset-bottom);
-    margin-top: env(safe-area-inset-top);
-  }
+  min-height: 100vh;
+  padding-top: calc(56px + env(safe-area-inset-top));
+  padding-bottom: calc(56px + env(safe-area-inset-bottom) + 56px);
+}
 
   #appCapsule.extra-header-active {
     padding-top: 112px;
@@ -593,7 +594,7 @@ button:hover, button:active, button:focus {
   display: flex;
   align-items: center;
   position: relative;
-  background: #0B152D000;
+  background: #B152D0;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.08);
   position: fixed;
   z-index: 100;
@@ -604,7 +605,7 @@ button:hover, button:active, button:focus {
 }
 
 .profileBox:before {
-  background: #0B152D000;
+  background: #B152D0;
   content: '';
   height: env(safe-area-inset-top);
   display: block;
@@ -696,7 +697,7 @@ button:hover, button:active, button:focus {
   align-items: flex-start;
   justify-content: space-between;
   padding: 0px 16px 10px 16px;
-  background: #0B152D000;
+  background: #B152D0;
 }
 
 .action-group .action-button {
@@ -1362,7 +1363,7 @@ b {
 }
 
 code {
-  color: #0B152D000;
+  color: #B152D0;
 }
 
 figure.codebox {
@@ -1550,7 +1551,7 @@ i.icon {
 
 .badge-primary,
 a.badge-primary {
-  background: #0B152D000 !important;
+  background: #B152D0 !important;
 }
 
 .badge-secondary,
@@ -2078,7 +2079,7 @@ a.badge-dark {
   display: block;
   font-size: 15px;
   font-weight: 500;
-  color: #0B152D000;
+  color: #B152D0;
 }
 
 .btn {
@@ -2177,8 +2178,8 @@ a.badge-dark {
 }
 
 .btn-primary {
-  background: #0B152D000 !important;
-  border-color: #0B152D000 !important;
+  background: #B152D0 !important;
+  border-color: #B152D0 !important;
   color: #ffffff !important;
 }
 
@@ -2188,8 +2189,8 @@ a.badge-dark {
 }
 
 .btn-primary.disabled, .btn-primary:disabled {
-  background: #0B152D000;
-  border-color: #0B152D000;
+  background: #B152D0;
+  border-color: #B152D0;
   opacity: 0.5;
 }
 
@@ -2263,7 +2264,7 @@ a.badge-dark {
 }
 
 .btn-link {
-  color: #0B152D000 !important;
+  color: #B152D0 !important;
 }
 
 .btn-info {
@@ -2320,27 +2321,27 @@ a.badge-dark {
 
 .btn-outline-primary {
   background: transparent;
-  border-color: #0B152D000;
+  border-color: #B152D0;
   border-width: 1px;
-  color: #0B152D000;
+  color: #B152D0;
   transition: 0.2s all;
 }
 
 .btn-outline-primary:hover, .btn-outline-primary:active {
   background: rgba(30, 116, 253, 0.15) !important;
-  border-color: #0B152D000 !important;
-  color: #0B152D000 !important;
+  border-color: #B152D0 !important;
+  color: #B152D0 !important;
 }
 
 .btn-outline-primary.active {
-  background: #0B152D000 !important;
+  background: #B152D0 !important;
   color: #fff !important;
-  border-color: #0B152D000 !important;
+  border-color: #B152D0 !important;
 }
 
 .btn-outline-primary.disabled, .btn-outline-primary:disabled {
-  color: #0B152D000 !important;
-  border-color: #0B152D000 !important;
+  color: #B152D0 !important;
+  border-color: #B152D0 !important;
   background: transparent !important;
   opacity: 0.5;
 }
@@ -2514,7 +2515,7 @@ a.badge-dark {
 .btn-text-primary {
   background: transparent;
   border-color: transparent;
-  color: #0B152D000 !important;
+  color: #B152D0 !important;
   transition: 0.2s all;
 }
 
@@ -2525,12 +2526,12 @@ a.badge-dark {
 .btn-text-primary:active, .btn-text-primary.active {
   background: rgba(30, 116, 253, 0.15) !important;
   border-color: transparent !important;
-  color: #0B152D000 !important;
+  color: #B152D0 !important;
 }
 
 .btn-text-primary.disabled, .btn-text-primary:disabled {
-  color: #0B152D000 !important;
-  border-color: #0B152D000 !important;
+  color: #B152D0 !important;
+  border-color: #B152D0 !important;
   background: transparent !important;
   opacity: 0.5;
 }
@@ -3111,7 +3112,7 @@ a.badge-dark {
 }
 
 .action-button-list > li .btn.text-primary {
-  color: #0B152D000 !important;
+  color: #B152D0 !important;
 }
 
 .action-button-list > li .btn.text-secondary {
@@ -3293,7 +3294,7 @@ a.badge-dark {
   line-height: 1em;
   margin-top: 30px;
   margin-bottom: -10px;
-  color: #0B152D000;
+  color: #B152D0;
   text-align: center;
 }
 
@@ -3392,7 +3393,7 @@ a.badge-dark {
 }
 
 .panelbox .modal-dialog .modal-content .modal-header .panel-close {
-  color: #0B152D000;
+  color: #B152D0;
 }
 
 .panelbox .modal-dialog .modal-content .modal-header .panel-close i.icon,
@@ -3498,7 +3499,7 @@ a.badge-dark {
 }
 
 .bg-primary {
-  background: #0B152D000 !important;
+  background: #B152D0 !important;
   color: #FFF;
 }
 
@@ -3537,7 +3538,7 @@ a.badge-dark {
 }
 
 a.bg-primary {
-  background: #0B152D000 !important;
+  background: #B152D0 !important;
   color: #FFF !important;
 }
 
@@ -3609,7 +3610,7 @@ a.bg-dark:hover, a.bg-dark:active {
 
 .text-primary,
 a.text-primary {
-  color: #0B152D000 !important;
+  color: #B152D0 !important;
 }
 
 .text-secondary,
@@ -3648,7 +3649,7 @@ a.text-dark {
 }
 
 .border-primary {
-  border-color: #0B152D000 !important;
+  border-color: #B152D0 !important;
 }
 
 .border-secondary {
@@ -3708,9 +3709,9 @@ a.text-dark {
 }
 
 .alert-primary {
-  background: #0B152D000;
+  background: #B152D0;
   color: #fff;
-  border: 1px solid #0B152D000;
+  border: 1px solid #B152D0;
 }
 
 .alert-primary a {
@@ -3728,21 +3729,21 @@ a.text-dark {
 
 .alert-outline-primary {
   background: transparent;
-  color: #0B152D000;
-  border: 1px solid #0B152D000;
+  color: #B152D0;
+  border: 1px solid #B152D0;
 }
 
 .alert-outline-primary a {
-  color: #0B152D000 !important;
+  color: #B152D0 !important;
   text-decoration: underline !important;
 }
 
 .alert-outline-primary .alert-title {
-  color: #0B152D000;
+  color: #B152D0;
 }
 
 .alert-outline-primary .close {
-  color: #0B152D000;
+  color: #B152D0;
 }
 
 .alert-secondary {
@@ -4063,7 +4064,7 @@ textarea,
 }
 
 .form-group .input-wrapper.active .label {
-  color: #0B152D000;
+  color: #B152D0;
 }
 
 .form-group.basic {
@@ -4085,8 +4086,8 @@ textarea,
 
 .form-group.basic .form-control:focus,
 .form-group.basic .custom-select:focus {
-  border-bottom-color: #0B152D000;
-  box-shadow: inset 0 -1px 0 0 #0B152D000;
+  border-bottom-color: #B152D0;
+  box-shadow: inset 0 -1px 0 0 #B152D0;
 }
 
 .form-group.basic textarea.form-control {
@@ -4125,7 +4126,7 @@ textarea,
 }
 
 .form-group.boxed .form-control:focus {
-  border-color: #0B152D000;
+  border-color: #B152D0;
 }
 
 .form-group.boxed textarea.form-control {
@@ -4368,9 +4369,9 @@ textarea,
 }
 
 .nav-tabs.lined .nav-item .nav-link.active {
-  color: #0B152D000;
+  color: #B152D0;
   background: transparent;
-  border-bottom-color: #0B152D000 !important;
+  border-bottom-color: #B152D0 !important;
 }
 
 .nav-tabs.iconed i.icon,
@@ -4408,8 +4409,8 @@ textarea,
 }
 
 .custom-control .custom-control-input:checked ~ .custom-control-label:before {
-  background: #0B152D000 !important;
-  border-color: #0B152D000 !important;
+  background: #B152D0 !important;
+  border-color: #B152D0 !important;
 }
 
 .custom-control .custom-control-input:checked ~ .custom-control-label:after {
@@ -4580,7 +4581,7 @@ textarea,
 }
 
 .message-item.user .bubble {
-  background: #0B152D000;
+  background: #B152D0;
   color: #FFF;
   border-radius: 16px 16px 0 16px;
 }
@@ -4629,7 +4630,7 @@ textarea,
 }
 
 .progress-bar {
-  background: #0B152D000;
+  background: #B152D0;
   height: 14px;
   line-height: 1em;
   display: flex;
@@ -4744,7 +4745,7 @@ textarea,
 }
 
 .chip-primary {
-  background: #0B152D000 !important;
+  background: #B152D0 !important;
   color: #fff !important;
 }
 
@@ -4754,8 +4755,8 @@ textarea,
 
 .chip-primary.chip-outline {
   background: transparent !important;
-  color: #0B152D000 !important;
-  box-shadow: inset 0 0 0 1px #0B152D000 !important;
+  color: #B152D0 !important;
+  box-shadow: inset 0 0 0 1px #B152D0 !important;
 }
 
 .chip-danger {
@@ -5196,7 +5197,7 @@ textarea,
 }
 
 .form-wizard-section .button-item.active strong {
-  background: #0B152D000;
+  background: #B152D0;
   color: #fff;
 }
 
@@ -5290,7 +5291,7 @@ textarea,
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #0B152D000;
+  background: #B152D0;
   border-radius: 100%;
   color: #fff !important;
 }
@@ -5303,7 +5304,7 @@ textarea,
 }
 
 .fab-button .fab:hover, .fab-button .fab:active {
-  background: #0B152D000;
+  background: #B152D0;
 }
 
 .fab-button.text .fab {
@@ -5342,7 +5343,7 @@ textarea,
 
 .fab-button .dropdown-menu .dropdown-item {
   padding: 0;
-  background: #0B152D000;
+  background: #B152D0;
   width: 42px;
   height: 42px;
   display: flex !important;
@@ -5355,7 +5356,7 @@ textarea,
 }
 
 .fab-button .dropdown-menu .dropdown-item:hover, .fab-button .dropdown-menu .dropdown-item:active {
-  background: #0B152D000;
+  background: #B152D0;
 }
 
 .fab-button .dropdown-menu .dropdown-item i.icon,
@@ -5548,7 +5549,7 @@ textarea,
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #0B152D000 !important;
+  color: #B152D0 !important;
   font-size: 13px;
   border-right: 1px solid #E1E1E1;
   padding: 16px 6px;
@@ -5934,7 +5935,7 @@ textarea,
 }
 
 .pagination .page-item .page-link {
-  background: #0B152D000;
+  background: #B152D0;
   border: 0;
   color: #FFF;
   box-shadow: 0 !important;
@@ -6345,7 +6346,7 @@ textarea,
 
 .profile-info .link {
   margin-top: 4px;
-  color: #0B152D000;
+  color: #B152D0;
 }
 
 .profile-stats {
@@ -6393,9 +6394,9 @@ textarea,
   font-size: 24px;
   align-items: center;
   justify-content: center;
-  background: #0B152D000;
+  background: #B152D0;
   position: relative;
-  border: 2px solid #0B152D000;
+  border: 2px solid #B152D0;
 }
 
 .stepper .stepper-button:last-child {
@@ -6410,10 +6411,10 @@ textarea,
   box-shadow: none !important;
   background: transparent;
   text-align: center;
-  border: 2px solid #0B152D000;
+  border: 2px solid #B152D0;
   font-size: 17px;
   font-weight: 500;
-  color: #0B152D000;
+  color: #B152D0;
 }
 
 .stepper-sm {
@@ -6448,13 +6449,13 @@ textarea,
 }
 
 .stepper-primary .stepper-button {
-  background: #0B152D000;
-  border-color: #0B152D000;
+  background: #B152D0;
+  border-color: #B152D0;
 }
 
 .stepper-primary .form-control {
-  border-color: #0B152D000;
-  color: #0B152D000;
+  border-color: #B152D0;
+  color: #B152D0;
 }
 
 .stepper-secondary .stepper-button {
@@ -6519,8 +6520,8 @@ textarea,
 
 .stepper-outline-primary .stepper-button {
   background: transparent;
-  color: #0B152D000;
-  border-color: #0B152D000;
+  color: #B152D0;
+  border-color: #B152D0;
 }
 
 .stepper-outline-primary .stepper-button:first-child {
@@ -6532,8 +6533,8 @@ textarea,
 }
 
 .stepper-outline-primary .form-control {
-  border-color: #0B152D000;
-  color: #0B152D000;
+  border-color: #B152D0;
+  color: #B152D0;
 }
 
 .stepper-outline-secondary .stepper-button {
@@ -6698,7 +6699,7 @@ textarea,
 
 .product-detail-header .detail-footer .price .current-price {
   font-size: 24px;
-  color: #0B152D000;
+  color: #B152D0;
   font-weight: 500;
 }
 
@@ -6737,7 +6738,7 @@ textarea,
 .cart-item .in .text .price {
   font-weight: 500;
   font-size: 15px;
-  color: #0B152D000;
+  color: #B152D0;
 }
 
 .cart-item .cart-item-footer {
@@ -7532,7 +7533,7 @@ body.dark-mode-active .form-wizard-section .button-item p {
 }
 
 body.dark-mode-active .form-wizard-section .button-item.active strong {
-  background: #0B152D000;
+  background: #B152D0;
   color: #fff;
 }
 
@@ -7597,7 +7598,7 @@ body.dark-mode-active .message-item .footer {
 }
 
 body.dark-mode-active .message-item.user .bubble {
-  background: #0B152D000;
+  background: #B152D0;
 }
 
 body.dark-mode-active .chatFooter {
@@ -8571,7 +8572,7 @@ text-align: left;
 	border: 1px solid #0B152D;
     width: 100%;
     display: block;
-    box-shadow: 0px 8px 5px -9px #0B152D000 inset;
+    box-shadow: 0px 8px 5px -9px #B152D0 inset;
 	padding:10px;
 	border-radius:0px;
 }
