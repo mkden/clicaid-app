@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="mk.clicaid.app" version="1.8.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="mk.clicaid.app" version="1.9.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Clicaid Prozakon</name>
     <description>С нами Ваша жизнь будет в безопасности</description>
     <author email="info@clicaid.ru" href="https://clicaid.ru">Clicaid</author>
@@ -47,15 +47,32 @@
             <string>Clicaid Прозакон</string>
         </edit-config>
 
-    <!-- Описание цели доступа к геолокации при использовании приложения -->
-    <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
-        <string>Приложению требуется доступ к вашей геолокации, чтобы показывать актуальную информацию и ближайшие объекты.</string>
-    </edit-config>
+        <!-- Описание цели доступа к геолокации при использовании приложения -->
+        <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
+            <string>Приложению требуется доступ к вашей геолокации, чтобы показывать актуальную информацию и ближайшие объекты.</string>
+        </edit-config>
 
-    <!-- ОБЯЗАТЕЛЬНО: Описание цели доступа к геолокации всегда (включая фоновый режим) -->
-    <edit-config file="*-Info.plist" mode="merge" target="NSLocationAlwaysAndWhenInUseUsageDescription">
-        <string>Приложению требуется постоянный доступ к геолокации для работы в фоновом режиме и предоставления актуальной информации о ближайших объектах даже когда приложение не активно.</string>
-    </edit-config>
+        <!-- ОБЯЗАТЕЛЬНО: Описание цели доступа к геолокации всегда (включая фоновый режим) -->
+        <edit-config file="*-Info.plist" mode="merge" target="NSLocationAlwaysAndWhenInUseUsageDescription">
+            <string>Приложению требуется постоянный доступ к геолокации для работы в фоновом режиме и предоставления актуальной информации о ближайших объектах даже когда приложение не активно.</string>
+        </edit-config>
+
+        <!-- Разрешения для push-уведомлений OneSignal -->
+        <edit-config file="*-Info.plist" mode="merge" target="NSRemoteNotificationUsageDescription">
+            <string>Для отправки уведомлений о важных событиях и обновлениях.</string>
+        </edit-config>
+        
+        <!-- Background modes для push-уведомлений -->
+        <config-file parent="UIBackgroundModes" target="*-Info.plist">
+            <array>
+                <string>remote-notification</string>
+            </array>
+        </config-file>
+
+        <!-- Разрешение для звука уведомлений -->
+        <edit-config file="*-Info.plist" mode="merge" target="NSMicrophoneUsageDescription">
+            <string>Для воспроизведения звука уведомлений</string>
+        </edit-config>
 
     </platform>
 
@@ -79,16 +96,40 @@
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application/activity" xmlns:android="http://schemas.android.com/apk/res/android">
             <activity android:exported="true" />
         </edit-config>
+
+        <!-- Настройки для Android 12+ -->
+        <preference name="android-targetSdkVersion" value="34" />
+        
+        <!-- OneSignal для Android -->
+        <resource-file src="onesignal.gradle" target="app/onesignal.gradle" />
     </platform>
 
     <!-- PLUGINS -->
     <plugin name="cordova-plugin-network-information" spec="^2.0.2" />
-    <plugin name="cordova-plugin-geolocation" spec="^4.1.0">
+    <plugin name="cordova-plugin-geolocation" spec="^5.0.0">
         <variable name="GPS_REQUIRED" value="true" />
     </plugin>
+    
+    <!-- OneSignal Push Notifications -->
+    <plugin name="onesignal-cordova-plugin" spec="^5.2.16">
+        <variable name="ONESIGNAL_APP_ID" value="8c912104-8b46-497f-9ea2-d0cd76def931" />
+        <variable name="ONESIGNAL_ANDROID_SUPPORTS_MAJOR_VERSION" value="false" />
+        <variable name="ONESIGNAL_IOS_SUPPORTS_AUTOMATIC_FOREGROUND_ALERTS" value="true" />
+    </plugin>
+
+    <!-- Дополнительные плагины, которые у вас уже установлены -->
+    <plugin name="cordova-plugin-camera" spec="^7.0.0" />
+    <plugin name="cordova-plugin-crop" spec="^0.4.0" />
+    <plugin name="cordova-plugin-theme-detection" spec="^0.1.0" />
+    <plugin name="cordova-plugin-android-permissions" spec="^1.1.5" />
 
     <!-- GLOBAL PREFERENCES -->
     <preference name="android-minSdkVersion" value="24" />
     <preference name="android-targetSdkVersion" value="34" />
     <preference name="android-compileSdkVersion" value="34" />
+    
+    <!-- OneSignal preferences 
+    <preference name="onesignal-android-sender-id" value="YOUR_FCM_SENDER_ID_HERE" />-->
+    <preference name="onesignal-autoRegister" value="true" />
+    <preference name="onesignal-notification-opened-handler" value="true" />
 </widget>
