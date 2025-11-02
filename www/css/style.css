@@ -6954,6 +6954,17 @@ background-size: cover;
     color: #ff0000;
 }
 
+
+body .appBottomMenu .item i.icon,
+body .appBottomMenu .item ion-icon,
+body .appBottomMenu .item strong {
+  color: #000000;
+}
+
+
+
+
+
 body.dark-mode-active .redt{
 color: #fff;
 }
