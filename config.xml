@@ -57,17 +57,29 @@
             <string>Приложению требуется постоянный доступ к геолокации для работы в фоновом режиме и предоставления актуальной информации о ближайших объектах даже когда приложение не активно.</string>
         </edit-config>
 
-        <!-- Разрешения для push-уведомлений OneSignal -->
+
+      <!-- OneSignal App ID -->
+        <config-file target="*-Info.plist" parent="OneSignal_APP_ID">
+            <string>8c912104-8b46-497f-9ea2-d0cd76def931</string>
+        </config-file>
+        
+        <config-file target="*-Info.plist" parent="OneSignal_notificationServiceExtension">
+            <string>NotificationService</string>
+        </config-file>
+
+        <!-- Разрешения для уведомлений -->
         <edit-config file="*-Info.plist" mode="merge" target="NSRemoteNotificationUsageDescription">
             <string>Для отправки уведомлений о важных событиях и обновлениях.</string>
         </edit-config>
-        
-        <!-- Background modes для push-уведомлений -->
+
+        <!-- Background modes -->
         <config-file parent="UIBackgroundModes" target="*-Info.plist">
             <array>
                 <string>remote-notification</string>
             </array>
         </config-file>
+
+
 
         <!-- Разрешение для звука уведомлений -->
         <edit-config file="*-Info.plist" mode="merge" target="NSMicrophoneUsageDescription">

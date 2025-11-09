@@ -35,7 +35,11 @@
       "android"
     ],
     "plugins": {
-      "onesignal-cordova-plugin": {},
+      "onesignal-cordova-plugin": {
+        "ONESIGNAL_APP_ID": "8c912104-8b46-497f-9ea2-d0cd76def931",
+        "ONESIGNAL_ANDROID_SUPPORTS_MAJOR_VERSION": "16",
+        "ONESIGNAL_IOS_SUPPORTS_AUTOMATIC_FOREGROUND_ALERTS": "true"
+      },
       "cordova-plugin-geolocation": {
         "GPS_REQUIRED": "true"
       },
