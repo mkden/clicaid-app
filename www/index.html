@@ -4,17 +4,51 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#000000">
     <link rel="stylesheet" href="css/style.css">
 
 <script src="cordova.js"></script>
 <script src="js/index.js"></script>
+<script>	
+var id_user=window.localStorage.getItem("id_user");
+var user_prava=window.localStorage.getItem("user_prava");
+ 
+
+
+	
+	
+	
+if(user_prava==2)
+{		
+setTimeout("location.href = 'zlist.html';",100);
+}
+else if(user_prava==4)
+{		
+setTimeout("location.href = 'kurerpage.html';",100);
+}
+else if(user_prava==0){
+window.location.href = "home.html";
+}	
+else{
+window.location.href = "login.html";
+}
+
+
+window.plugins.OneSignal.enableInAppAlertNotification(true);
+
+
+
+
+
+
+
+
+</script>
+	
 </head>
 
 <body>
 
+ 
 
     <!-- ///////////// Js Files ////////////////////  -->
     <!-- Jquery -->
@@ -28,91 +62,7 @@
     <!-- Base Js File -->
     <script src="js/base.js"></script>
   
-    <!-- OneSignal Initialization -->
-    <script>
-        // Ждем полной загрузки устройства и плагинов
-        document.addEventListener('deviceready', onDeviceReady, false);
 
-        function onDeviceReady() {
-            console.log('Device is ready, initializing app...');
-            
-            // Сначала инициализируем OneSignal
-            initializeOneSignal();
-            
-            // Затем обрабатываем логику перенаправления
-            handleUserRedirect();
-        }
-
-        function initializeOneSignal() {
-            // Проверяем, доступен ли плагин OneSignal
-            if (window.plugins && window.plugins.OneSignal) {
-                console.log('Initializing OneSignal...');
-                
-                var OneSignal = window.plugins.OneSignal;
-                
-                // Включаем in-app уведомления
-                OneSignal.enableInAppAlertNotification(true);
-                
-                // Инициализация OneSignal
-                OneSignal.startInit("8c912104-8b46-497f-9ea2-d0cd76def931", "897966400632")
-                    .handleNotificationOpened(function(jsonData) {
-                        console.log('Notification opened: ' + JSON.stringify(jsonData));
-                    })
-                    .handleNotificationReceived(function(jsonData) {
-                        console.log('Notification received: ' + JSON.stringify(jsonData));
-                    })
-                    .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                    .endInit();
-
-                // Запрашиваем разрешение на уведомления
-                setTimeout(function() {
-                    OneSignal.getPermissionSubscriptionStatus(function(status) {
-                        console.log('OneSignal status:', status);
-                        
-                        if (!status.permissionStatus.hasPrompted) {
-                            console.log('Requesting push notification permission...');
-                            OneSignal.promptForPushNotificationsWithUserResponse(function(accepted) {
-                                console.log('User accepted notifications: ' + accepted);
-                            });
-                        }
-                    });
-                }, 3000);
-
-            } else {
-                console.error('OneSignal plugin not available');
-                // Пытаемся снова через секунду
-                setTimeout(initializeOneSignal, 1000);
-            }
-        }
-
-        function handleUserRedirect() {
-            var id_user = window.localStorage.getItem("id_user");
-            var user_prava = window.localStorage.getItem("user_prava");
-            
-            console.log('User data:', { id_user: id_user, user_prava: user_prava });
-
-            // Ждем немного для стабильности, затем перенаправляем
-            setTimeout(function() {
-                if (user_prava == 2) {
-                    window.location.href = 'zlist.html';
-                } else if (user_prava == 4) {
-                    window.location.href = 'kurerpage.html';
-                } else if (user_prava == 0) {
-                    window.location.href = 'home.html';
-                } else {
-                    window.location.href = 'login.html';
-                }
-            }, 500);
-        }
-
-        // Fallback: если deviceready не сработал через 5 секунд
-        setTimeout(function() {
-            if (!window.cordova) {
-                console.log('Cordova not ready, proceeding without plugins...');
-                handleUserRedirect();
-            }
-        }, 5000);
-    </script>
 
 </body>
 </html>
