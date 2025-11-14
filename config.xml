@@ -81,7 +81,6 @@
             <activity android:exported="true" />
         </edit-config>
         <preference name="android-targetSdkVersion" value="34" />
-        <resource-file src="onesignal.gradle" target="app/onesignal.gradle" />
     </platform>
     <plugin name="cordova-plugin-network-information" spec="^2.0.2" />
     <plugin name="cordova-plugin-geolocation" spec="^5.0.0">
