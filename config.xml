@@ -127,8 +127,8 @@
 
     <!-- Общие Android-префы -->
     <preference name="android-minSdkVersion" value="24" />
-    <preference name="android-targetSdkVersion" value="34" />
-    <preference name="android-compileSdkVersion" value="34" />
+    <preference name="android-targetSdkVersion" value="35" />
+    <preference name="android-compileSdkVersion" value="35" />
 
     <!-- OneSignal Android -->
     <preference name="onesignal-android-sender-id" value="897966400632" />
