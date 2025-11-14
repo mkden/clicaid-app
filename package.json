@@ -8,7 +8,8 @@
     "serve": "ionic serve",
     "serve:lab": "ionic serve --lab",
     "serve:external": "ionic serve --external",
-    "cordova:browser": "ionic cordova run browser"
+    "cordova:browser": "ionic cordova run browser",
+    "postinstall": "node scripts/fix-android-permissions.js"
   },
   "keywords": [
     "ecosystem:cordova"

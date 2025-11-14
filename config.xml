@@ -111,25 +111,6 @@
             <activity android:exported="true" />
         </edit-config>
 
-        <!-- ДОБАВЛЯЕМ namespace tools на корневой <manifest> -->
-        <edit-config file="app/src/main/AndroidManifest.xml"
-                     mode="merge"
-                     target="/manifest"
-                     xmlns:android="http://schemas.android.com/apk/res/android">
-            <manifest xmlns:tools="http://schemas.android.com/tools" />
-        </edit-config>
-
-        <!-- Фикс дубликата WRITE_EXTERNAL_STORAGE -->
-        <edit-config file="app/src/main/AndroidManifest.xml"
-                     mode="merge"
-                     target="/manifest"
-                     xmlns:android="http://schemas.android.com/apk/res/android">
-            <uses-permission
-                android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-                android:maxSdkVersion="28"
-                tools:node="replace" />
-        </edit-config>
-
         <preference name="android-targetSdkVersion" value="34" />
     </platform>
 
