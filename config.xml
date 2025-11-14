@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="mk.clicaid.app" version="1.9.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="mk.clicaid.app" version="1.9.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Clicaid Prozakon</name>
     <description>С нами Ваша жизнь будет в безопасности</description>
     <author email="info@clicaid.ru" href="https://clicaid.ru">Clicaid</author>
@@ -63,25 +63,28 @@
             <string>Для воспроизведения звука уведомлений</string>
         </edit-config>
     </platform>
-    <platform name="android">
-        <allow-intent href="market:*" />
-        <icon density="ldpi" src="ldpi.png" />
-        <icon density="mdpi" src="mdpi.png" />
-        <icon density="hdpi" src="hdpi.png" />
-        <icon density="xhdpi" src="xhdpi.png" />
-        <icon density="xxhdpi" src="xxhdpi.png" />
-        <icon density="xxxhdpi" src="xxxhdpi.png" />
-        <preference name="AndroidXEnabled" value="true" />
-        <preference name="AndroidPersistentFileLocation" value="Compatibility" />
-        <preference name="SplashScreenDelay" value="1000" />
-        <preference name="AutoHideSplashScreen" value="true" />
-        <preference name="FadeSplashScreen" value="true" />
-        <preference name="FadeSplashScreenDuration" value="2000" />
-        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application/activity" xmlns:android="http://schemas.android.com/apk/res/android">
-            <activity android:exported="true" />
-        </edit-config>
-        <preference name="android-targetSdkVersion" value="34" />
-    </platform>
+<platform name="android">
+    <allow-intent href="market:*" />
+    <icon density="ldpi" src="ldpi.png" />
+    <icon density="mdpi" src="mdpi.png" />
+    <icon density="hdpi" src="hdpi.png" />
+    <icon density="xhdpi" src="xhdpi.png" />
+    <icon density="xxhdpi" src="xxhdpi.png" />
+    <icon density="xxxhdpi" src="xxxhdpi.png" />
+    <preference name="AndroidXEnabled" value="true" />
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+    <preference name="SplashScreenDelay" value="1000" />
+    <preference name="AutoHideSplashScreen" value="true" />
+    <preference name="FadeSplashScreen" value="true" />
+    <preference name="FadeSplashScreenDuration" value="2000" />
+    <edit-config file="app/src/main/AndroidManifest.xml"
+                 mode="merge"
+                 target="/manifest/application/activity"
+                 xmlns:android="http://schemas.android.com/apk/res/android">
+        <activity android:exported="true" />
+    </edit-config>
+    <preference name="android-targetSdkVersion" value="34" />
+</platform>
     <plugin name="cordova-plugin-network-information" spec="^2.0.2" />
     <plugin name="cordova-plugin-geolocation" spec="^5.0.0">
         <variable name="GPS_REQUIRED" value="true" />
