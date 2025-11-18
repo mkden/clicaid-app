@@ -42,6 +42,7 @@ openssl pkcs12 -export -inkey private.key -in certificate.pem -out certificate.p
 
 
 
+
 cordova build android --release -- --keystore=android.keystore --storePassword=mortal32323 --alias=aliasf --password=mortal32323
 
 
