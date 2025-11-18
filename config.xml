@@ -41,11 +41,11 @@
         <icon height="80" src="icon-small-40@2x.png" width="80" />
         <icon height="120" src="icon-small-40@3x.png" width="120" />
 
-        <splash height="1136" src="Default-568h@2x.png" width="640" />
-        <splash height="1334" src="Default-667h@2x.png" width="750" />
-        <splash height="2208" src="Default-Portrait-736h@3x.png" width="1242" />
-        <splash height="1024" src="Default-Portrait.png" width="768" />
-        <splash height="2048" src="Default-Portrait@2x.png" width="1536" />
+        <splash height="1136" src="Default-568h@2x~iphone" width="640" />
+        <splash height="1334" src="Default-667h.png" width="750" />
+        <splash height="2208" src="Default-736h.png" width="1242" />
+        <splash height="1024" src="Default-Portrait~ipad.png" width="768" />
+        <splash height="2048" src="Default-Portrait@2x~ipad.png" width="1536" />
         <splash src="Default~iphone.png" />
         <splash src="Default@2x~iphone.png" />
 
