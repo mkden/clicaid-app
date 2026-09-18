@@ -30,7 +30,7 @@
  <script type="text/javascript">
         function showSettings() {
             $.ajax({
-                url: "https://clicaid.ru/api-mobile/checkSettings.php",
+                url: "https://clicaid.maya.place/api-mobile/checkSettings.php",
                 dataType:"json",
                 cache: false,
                 success: function(data){
@@ -53,7 +53,7 @@
             var lat = position.coords.latitude;
             var lng = position.coords.longitude;
             $.ajax({
-                url: "https://clicaid.ru/api-mobile/adv-zakazi.php?id_user="+id_user+"&lat="+lat+"&lng="+lng, 
+                url: "https://clicaid.maya.place/api-mobile/adv-zakazi.php?id_user="+id_user+"&lat="+lat+"&lng="+lng,
                 cache: false
             }).done(function(data) {
             });
@@ -209,7 +209,7 @@
             var mycord1 = parseFloat(uadr[0]);
             var mycord2 = parseFloat(uadr[1]);
 
-            $("#avatar").attr("src", "https://clicaid.ru/"+p.avatar);
+            $("#avatar").attr("src", "https://clicaid.maya.place/"+p.avatar);
             $("#name").text(p.uname);
             $("#adress").text(p.adress);
             $("#ucord").text(p.ucord);
@@ -225,7 +225,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content" style="background-color: rgb(255,255,255,0.6)">
                             <div class="modal-icon">
-                                <img src="https://clicaid.ru/${p.avatar}" class="img-responsive lk33">
+                                <img src="https://clicaid.maya.place/${p.avatar}" class="img-responsive lk33">
                             </div>
                             <div style="padding: 1rem 1rem;text-align: center;">
                                 <h1 class="">${p.uname}</h1>
@@ -268,7 +268,7 @@
         function show() {  
             $('#DialogBlockButton').hide();
             $.ajax({  
-                url: "https://clicaid.ru/api-mobile/adv-zakazi.php?id_user="+id_user+"&page=2", 
+                url: "https://clicaid.maya.place/api-mobile/adv-zakazi.php?id_user="+id_user+"&page=2",
                 dataType:"json",
                 cache: false,  
                 success: function(data){
@@ -287,11 +287,11 @@
 
         function showb() {  
             $.ajax({  
-                url: "https://clicaid.ru/api-mobile/user-info.php?id_user="+id_user, 
+                url: "https://clicaid.maya.place/api-mobile/user-info.php?id_user="+id_user,
                 dataType:"json", 
                 cache: false,  
                 success: function(data){ 
-                    $("#uava").attr("src", "https://clicaid.ru/"+data.avatar);
+                    $("#uava").attr("src", "https://clicaid.maya.place/"+data.avatar);
                     $("#fname").text(data.name);
                 }  
             });  
@@ -299,7 +299,7 @@
 
         function showsmena() {  
             $.ajax({  
-                url: "https://clicaid.ru/api-mobile/smena-kur.php?id_user="+id_user, 
+                url: "https://clicaid.maya.place/api-mobile/smena-kur.php?id_user="+id_user,
                 dataType:"text", 
                 cache: false,  
                 success: function(data){ 
@@ -317,7 +317,7 @@
         }
 
         function startsmena() {
-            $.post("https://clicaid.ru/api-mobile/smena-kur.php?id_user="+id_user, { start:1 }).done(function(data) {
+            $.post("https://clicaid.maya.place/api-mobile/smena-kur.php?id_user="+id_user, { start:1 }).done(function(data) {
                 $('.error').text('Смена открыта!');
                 notification('notification', 3000);		
                 $('#smena').html('<a href="#" class="btn btn-text-primary btn-block shadowed" onclick="endsmena();">Завершить работу</a>');
@@ -327,7 +327,7 @@
         }
 
         function endsmena() {
-            $.post("https://clicaid.ru/api-mobile/smena-kur.php?id_user="+id_user, { end:1 }).done(function(data) {
+            $.post("https://clicaid.maya.place/api-mobile/smena-kur.php?id_user="+id_user, { end:1 }).done(function(data) {
                 $('.error').text('Смена закрыта!');
                 notification('notification', 3000);
                 $('#smena').html('<a href="#" class="btn btn-text-primary btn-block shadowed" onclick="startsmena();">Приступить к работе</a>');
@@ -338,7 +338,7 @@
 
         function clickz(self, id, avatar, kurcord1, kurcord2, start1, start2, endcord1, endcord2) {  
             $.ajax({  
-                url: "https://clicaid.ru/api-mobile/adv-zakazi.php?id_user="+id_user+"&checkz=1&odrer="+id, 
+                url: "https://clicaid.maya.place/api-mobile/adv-zakazi.php?id_user="+id_user+"&checkz=1&odrer="+id,
                 dataType:"text",
                 cache: false,  
                 success: function(data){
@@ -420,7 +420,7 @@
             var endMarker = L.marker([endcord1, endcord2], {
                 title: 'Конец',
                 icon: L.icon({
-                    iconUrl: "https://clicaid.ru/"+avatar,
+                    iconUrl: "https://clicaid.maya.place/"+avatar,
                     iconSize: [32, 32],
                     iconAnchor: [16, 16]
                 })
@@ -465,7 +465,7 @@
                     document.getElementById('stepInfo').innerHTML = stepsHtml;
                     
                     $.ajax({  
-                        url: "https://clicaid.ru/api-mobile/adv-zakazi.php?status=2&odrer="+id+"&id_user="+id_user+"&time="+time+"&km="+km, 
+                        url: "https://clicaid.maya.place/api-mobile/adv-zakazi.php?status=2&odrer="+id+"&id_user="+id_user+"&time="+time+"&km="+km,
                         dataType:"text", 
                         cache: false  
                     });
@@ -476,7 +476,7 @@
             if (positionInterval) clearInterval(positionInterval);
             positionInterval = setInterval(function() {
                 $.ajax({  
-                    url: "https://clicaid.ru/api-mobile/getcordkur.php?za=1&order_number="+id, 
+                    url: "https://clicaid.maya.place/api-mobile/getcordkur.php?za=1&order_number="+id,
                     dataType:"json", 
                     cache: false,  
                     success: function(data){ 
@@ -512,7 +512,7 @@
             notification('notification-ok', 3000);
 
             $.ajax({  
-                url: "https://clicaid.ru/api-mobile/adv-zakazi.php?status=3&odrer="+id+"&id_user="+id_user, 
+                url: "https://clicaid.maya.place/api-mobile/adv-zakazi.php?status=3&odrer="+id+"&id_user="+id_user,
                 dataType:"text", 
                 cache: false,  
                 success: function(data){ 

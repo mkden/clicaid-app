@@ -542,7 +542,7 @@ return `
       function showAdress()  
         {   
 $.ajax({  
-url: "https://clicaid.ru/api-mobile/adress-list.php?id_user="+id_user, 
+url: "https://clicaid.maya.place/api-mobile/adress-list.php?id_user="+id_user,
 dataType:"json",
 cache: false,  
 success: function(data){  
@@ -559,7 +559,7 @@ document.getElementById("adress-list").innerHTML = `${data.map(adressTemplate).j
 		function showa()  
 {  
 $.ajax({  
-url: "https://clicaid.ru/api-mobile/user-info.php?id_user="+id_user, 
+url: "https://clicaid.maya.place/api-mobile/user-info.php?id_user="+id_user,
 dataType:"json", 
 cache: false,  
 success: function(data){   
@@ -568,7 +568,7 @@ $("#myname").text(data.familia+' '+data.name+' '+data.otchestvo);
 window.localStorage.setItem("nameuser", data.name);
 
 
-$("#output").attr("src", "https://clicaid.ru/"+data.avatar);
+$("#output").attr("src", "https://clicaid.maya.place/"+data.avatar);
 $("#fname").val(data.name);
 $("#ffamilia").val(data.familia);
 $("#fotchestvo").val(data.otchestvo);
@@ -631,7 +631,7 @@ var imgUrl=$('.image-upload img').attr('src');
 
 	//отправляем через ajax
 	$.ajax({
-		url: "https://clicaid.ru/api-mobile/user-page.php?id_user="+id_user,
+		url: "https://clicaid.maya.place/api-mobile/user-page.php?id_user="+id_user,
 		type: "POST",
 		dataType : "text", 
 		cache: false,
@@ -697,7 +697,7 @@ function showadr(ids)
 $("#adrForm").show();
 $("#deladr").hide();
 $.ajax({  
-url: "https://clicaid.ru/api-mobile/adress-list.php?id="+ids, 
+url: "https://clicaid.maya.place/api-mobile/adress-list.php?id="+ids,
 dataType:"json", 
 cache: false,  
 success: function(data){ 
@@ -734,7 +734,7 @@ $("#message_f").html('<img src="images/loader.gif">');
 
     $.ajax({
            type: "POST",
-           url: "https://clicaid.ru/api-mobile/adress-list.php?id_user="+id_user,
+           url: "https://clicaid.maya.place/api-mobile/adress-list.php?id_user="+id_user,
            data: $('#adrForm').serialize(), // serializes the form's elements.
            success: function(data)
            {
@@ -757,7 +757,7 @@ $("#message_f").html('<img src="images/loader.gif">');
 
     $.ajax({
            type: "POST",
-           url: "https://clicaid.ru/api-mobile/adress-list.php?id_user="+id_user,
+           url: "https://clicaid.maya.place/api-mobile/adress-list.php?id_user="+id_user,
            data: $('#adrdelForm').serialize(), // serializes the form's elements.
            success: function(data)
            {
@@ -836,7 +836,7 @@ function delprofile()
 {  
 var nameuser = window.localStorage.getItem("nameuser");
 $.ajax({  
-url: "https://clicaid.ru/api-mobile/user-info.php?del=1&id_user="+id_user+"&name="+name, 
+url: "https://clicaid.maya.place/api-mobile/user-info.php?del=1&id_user="+id_user+"&name="+name,
 cache: false,  
 success: function(data){   
 

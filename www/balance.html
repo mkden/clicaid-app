@@ -55,8 +55,8 @@
 <input id="eshopId" type="hidden" value="459518" name="eshopId">
 <input id="serviceName" type="hidden" value="" name="serviceName">
 <input type="hidden" value="RUB" name="recipientCurrency">
-<input type="hidden" value="https://clicaid.ru/mkmoney/success.php?n=android" name="successUrl">
-<input type="hidden" value="https://clicaid.ru/mkmoney/mkmoney/fail.php" name="failUrl">
+<input type="hidden" value="https://clicaid.maya.place/mkmoney/success.php?n=android" name="successUrl">
+<input type="hidden" value="https://clicaid.maya.place/mkmoney/mkmoney/fail.php" name="failUrl">
 <input id="userName" type="hidden" value="" name="userName">
 <input id="userEmail" type="hidden" value="" name="user_email">
 <input id="userField_1" type="hidden" value="mob" name="userField_1">
@@ -145,7 +145,7 @@ $("#userName").val(id_user);
 function showa()  
 {  
 $.ajax({  
-url: "https://clicaid.ru/api-mobile/user-info.php?id_user="+id_user, 
+url: "https://clicaid.maya.place/api-mobile/user-info.php?id_user="+id_user,
 dataType:"json", 
 cache: false,  
 success: function(data){   

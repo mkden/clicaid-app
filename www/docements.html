@@ -150,7 +150,7 @@ var c = checkConnection();
 function pTemplate(p) {
 
 return  `
-<a href="https://clicaid.ru/files/${p.file}" >
+<a href="https://clicaid.maya.place/files/${p.file}" >
 
 
     <div class="row section">
@@ -173,7 +173,7 @@ var id_user = window.localStorage.getItem("id_user");
 function showl()  
 {  
 $.ajax({  
-url: "https://clicaid.ru/api-mobile/docs.php?list=1&id_user="+id_user, 
+url: "https://clicaid.maya.place/api-mobile/docs.php?list=1&id_user="+id_user,
 dataType:"json",
 cache: false,  
 success: function(data){

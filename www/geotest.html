@@ -588,7 +588,7 @@ var mycord = $('#cord').val();
 		else{	
 var z = window.localStorage.getItem("z");	
 		            $.ajax({
-                url:'https://clicaid.ru/api-mobile/order.php?z='+z+'&id_user='+id_user,
+                url:'https://clicaid.maya.place/api-mobile/order.php?z='+z+'&id_user='+id_user,
                 type:'post',
                 data:{adress:adress,cord:mycord},
 				     success:function(data){

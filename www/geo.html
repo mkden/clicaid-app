@@ -328,7 +328,7 @@ function adressTemplate(p){ return `<option value="${p.cord}">${p.title}</option
 
 function showAdress(){
   $.ajax({
-    url: "https://clicaid.ru/api-mobile/adress-list.php?id_user=" + id_user,
+    url: "https://clicaid.maya.place/api-mobile/adress-list.php?id_user=" + id_user,
     dataType: "json", 
     cache: false
   }).done(function(data){
@@ -348,7 +348,7 @@ function changea(){
   var text = select.options[select.selectedIndex].text;
   $("#cord").val(idvalue);
   $.ajax({
-    url: "https://clicaid.ru/api-mobile/adress-list.php?id_user="+id_user+"&text="+encodeURIComponent(text),
+    url: "https://clicaid.maya.place/api-mobile/adress-list.php?id_user="+id_user+"&text="+encodeURIComponent(text),
     dataType: "text", 
     cache: false
   }).done(function(data){ 
@@ -755,7 +755,7 @@ $(".vizov").on('click', function(e){
   }
 
   $.ajax({
-    url: 'https://clicaid.ru/api-mobile/order.php?id_user=' + encodeURIComponent(id_user),
+    url: 'https://clicaid.maya.place/api-mobile/order.php?id_user=' + encodeURIComponent(id_user),
     type: 'post',
     data: { adress: adress, cord: mycord }
   }).done(function(data){
