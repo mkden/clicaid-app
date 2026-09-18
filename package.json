@@ -1,7 +1,7 @@
 {
   "name": "mk.clicaid.app",
   "displayName": "Сlicaid",
-  "version": "1.0.0",
+  "version": "1.9.8",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
   "scripts": {
@@ -26,8 +26,7 @@
     "cordova-plugin-crop": "^0.4.0",
     "cordova-plugin-geolocation": "^5.0.0",
     "cordova-plugin-network-information": "^2.0.2",
-    "cordova-plugin-theme-detection": "^1.3.0",
-    "onesignal-cordova-plugin": "5.2.16"
+    "onesignal-cordova-plugin": "5.2.15"
   },
   "cordova": {
     "platforms": [
@@ -43,7 +42,7 @@
         "ANDROIDX_CORE_VERSION": "1.6.+"
       },
       "cordova-plugin-crop": {},
-      "cordova-plugin-theme-detection": {},
+      "cordova-plugin-file": {},
       "cordova-plugin-android-permissions": {},
       "cordova-plugin-network-information": {},
       "onesignal-cordova-plugin": {},

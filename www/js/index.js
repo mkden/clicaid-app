@@ -1,18 +1,24 @@
-// Add to index.js or the first page that loads with your app.
+// Initialize OneSignal after Cordova is ready.
 document.addEventListener('deviceready', OneSignalInit, false);
+
 function OneSignalInit() {
-    // Uncomment to set OneSignal device logging to VERBOSE  
-    // window.plugins.OneSignal.setLogLevel(6, 0);
-    
-    // NOTE: Update the setAppId value below with your OneSignal AppId.
-    window.plugins.OneSignal.setAppId("8c912104-8b46-497f-9ea2-d0cd76def931");
-    window.plugins.OneSignal.setNotificationOpenedHandler(function(jsonData) {
-        console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+    var oneSignal = window.plugins && window.plugins.OneSignal;
+    if (!oneSignal) {
+        console.error('OneSignal plugin is not available');
+        return;
+    }
+
+    oneSignal.initialize('8c912104-8b46-497f-9ea2-d0cd76def931');
+
+    oneSignal.Notifications.addEventListener('click', function(event) {
+        console.log('notificationClicked: ' + JSON.stringify(event));
     });
-    
-    // iOS - Prompts the user for notification permissions.
-    //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 6) to better communicate to your users what notifications they will get.
-    window.plugins.OneSignal.promptForPushNotificationsWithUserResponse(function(accepted) {
-        console.log("User accepted notifications: " + accepted);
-    });
+
+    oneSignal.Notifications.requestPermission(true)
+        .then(function(accepted) {
+            console.log('User accepted notifications: ' + accepted);
+        })
+        .catch(function(error) {
+            console.error('OneSignal permission error:', error);
+        });
 }
