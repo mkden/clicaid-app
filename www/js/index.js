@@ -27,6 +27,13 @@
         try {
             oneSignal.initialize(APP_ID);
 
+            var userId = window.localStorage.getItem('id_user');
+            if (userId && userId !== 'null' && userId !== 'undefined' &&
+                typeof oneSignal.login === 'function') {
+                oneSignal.login(String(userId));
+                console.log('OneSignal external user:', userId);
+            }
+
             if (oneSignal.Notifications &&
                 typeof oneSignal.Notifications.addEventListener === 'function') {
                 oneSignal.Notifications.addEventListener('click', function (event) {
