@@ -142,8 +142,9 @@
     <preference name="android-targetSdkVersion" value="35" />
     <preference name="android-compileSdkVersion" value="35" />
 
-    <!-- OneSignal Android -->
-    <preference name="onesignal-android-sender-id" value="897966400632" />
-    <preference name="onesignal-autoRegister" value="true" />
-    <preference name="onesignal-notification-opened-handler" value="true" />
+    <!-- OneSignal Android 5.x -->
+    <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest"
+                 xmlns:android="http://schemas.android.com/apk/res/android">
+        <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    </config-file>
 </widget>
