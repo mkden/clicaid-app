@@ -350,7 +350,7 @@ if (keyCode == 13){
 
        var tel = $("#tel").val();
             $.ajax({
-                url:'https://clicaid.maya.place/api-mobile/checkUser.php',
+                url:'https://clicaid.prozakon.pro/api-mobile/checkUser.php',
                 type:'post',
 				//dataType:"json",
                 data:{tel:tel,type:'log'},
@@ -381,7 +381,7 @@ $("#message3").html("<b>На номер "+tel+" отправленно СМС с
 	 $("#log").hide();
         var tel = $("#tel").val();
             $.ajax({
-                url:'https://clicaid.maya.place/api-mobile/checkUser.php',
+                url:'https://clicaid.prozakon.pro/api-mobile/checkUser.php',
                 type:'post',
 				//dataType:"json",
                 data:{tel:tel,type:'log'},
@@ -438,7 +438,7 @@ $('#message2').html('<b style="color:red">Некорректная дата ро
 	}
 else{
             $.ajax({
-                url:'https://clicaid.maya.place/api-mobile/checkUser.php',
+                url:'https://clicaid.prozakon.pro/api-mobile/checkUser.php',
                 type:'post',
 				dataType:"text",
                 data:{name:name,otchestvo:otchestvo,familia:familia,tel:tel,agedate:agedate,age:age,type:'reg'},
@@ -487,7 +487,7 @@ if(tel1.length>6){var tel = tel1;}else{var tel = tel2;}
 	 
 	 
 	 	             $.ajax({
-                url:'https://clicaid.maya.place/api-mobile/checkUser.php',
+                url:'https://clicaid.prozakon.pro/api-mobile/checkUser.php',
                 type:'post',
 				dataType:"json",
                 data:{tel:tel,code:code},

@@ -40,7 +40,7 @@ function Successgeo(position) {
 var lat = position.coords.latitude;
 var lng = position.coords.longitude;
 $.ajax({
-url: "https://clicaid.maya.place/api-mobile/kur-zakazi.php?id_user="+id_user+"&lat="+lat+"&lng="+lng,
+url: "https://clicaid.prozakon.pro/api-mobile/kur-zakazi.php?id_user="+id_user+"&lat="+lat+"&lng="+lng,
 cache: false
 }).done(function(data) {
 });
@@ -347,7 +347,7 @@ var callcenter = window.localStorage.getItem("callcenter");
 function showst()  
 {  
 $.ajax({  
-url: "https://clicaid.maya.place/api-mobile/user-info.php?z=a&id_user="+id_user,
+url: "https://clicaid.prozakon.pro/api-mobile/user-info.php?z=a&id_user="+id_user,
 dataType:"json", 
 cache: false,  
 success: function(data){
@@ -358,7 +358,7 @@ $('#gdatadv').show();
 }
 else if(data.status=='3'){
 $.ajax({  
-url: "https://clicaid.maya.place/api-mobile/adv-zakazi.php?status=0&z=a&id_user="+id_user+"&otz=0",
+url: "https://clicaid.prozakon.pro/api-mobile/adv-zakazi.php?status=0&z=a&id_user="+id_user+"&otz=0",
 dataType:"text", 
 cache: false,  
 success: function(data){ 
@@ -428,7 +428,7 @@ if(balance<pricea){
      else{
 if(a==0 && latu>0){
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/order.php?z=a&za='+a+'&id_user='+id_user,
+url:'https://clicaid.prozakon.pro/api-mobile/order.php?z=a&za='+a+'&id_user='+id_user,
 type:'post',
 data:{adress:myadress,cord:mycord},
 success:function(data){
@@ -447,7 +447,7 @@ $(".error").text("Сервиса Clicaid пока здесь нет.");
 else if(a==1 && latu>0){
 $('#ModalBasic').modal('toggle');
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
+url:'https://clicaid.prozakon.pro/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
 type:'post',
 data:{adress:myadress,cord:mycord},
 success:function(data){
@@ -466,7 +466,7 @@ $(".error").text("Сервиса Clicaid пока здесь нет.");
 else if(a==2 && latu>0){
 $('#ModalBasic').modal('toggle');
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
+url:'https://clicaid.prozakon.pro/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
 type:'post',
 data:{adress:myadress,cord:mycord},
 success:function(data){
@@ -486,7 +486,7 @@ else if(a==3 && latu>0){
 var textpost =  $('#textpost').val();
 $('#ModalBasic').modal('toggle');
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
+url:'https://clicaid.prozakon.pro/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
 type:'post',
 data:{adress:myadress,cord:mycord,textpost:textpost},
 success:function(data){
@@ -564,7 +564,7 @@ function showa()
 {  
 $("#callcenter").attr("href", "tel:"+callcenter);
 $.ajax({  
-url: "https://clicaid.maya.place/api-mobile/user-info.php?z=a&id_user="+id_user,
+url: "https://clicaid.prozakon.pro/api-mobile/user-info.php?z=a&id_user="+id_user,
 dataType:"json", 
 cache: false,  
 success: function(data){

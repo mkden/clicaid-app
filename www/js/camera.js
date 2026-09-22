@@ -39,7 +39,7 @@ function cameraTakePicture() {
                 options.chunkedMode = false;
 
                 var ft = new FileTransfer();
-                ft.upload(data, "https://clicaid.maya.place/api-mobile/user-page.php?id_user="+id_user, function(result){
+                ft.upload(data, "https://clicaid.prozakon.pro/api-mobile/user-page.php?id_user="+id_user, function(result){
                    $("#message_form").html('<i class="far fa-check"></i>').show('slow');
                 }, function(error){
                  //alert('error : ' + JSON.stringify(error));
@@ -92,7 +92,7 @@ function cameraGetPicture() {
                 options.chunkedMode = false;
 
                 var ft = new FileTransfer();
-                ft.upload(imageURL, "https://clicaid.maya.place/api-mobile/user-page.php?id_user="+id_user, function(result){
+                ft.upload(imageURL, "https://clicaid.prozakon.pro/api-mobile/user-page.php?id_user="+id_user, function(result){
                    $("#message_form").html('<i class="far fa-check"></i>').show('slow');
                 }, function(error){
                     //alert('error : ' + JSON.stringify(error));

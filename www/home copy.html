@@ -38,7 +38,7 @@ function Successgeo(position) {
 var lat = position.coords.latitude;
 var lng = position.coords.longitude;
 $.ajax({
-url: "https://clicaid.maya.place/api-mobile/adv-zakazi.php?id_user="+id_user+"&lat="+lat+"&lng="+lng,
+url: "https://clicaid.prozakon.pro/api-mobile/adv-zakazi.php?id_user="+id_user+"&lat="+lat+"&lng="+lng,
 cache: false
 }).done(function(data) {
 });
@@ -691,7 +691,7 @@ var callcenter = window.localStorage.getItem("callcenter");
 
 function showpol()  {
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/politika.php',
+url:'https://clicaid.prozakon.pro/api-mobile/politika.php',
 dataType:"json", 
 cache: false, 
  success:function(data){
@@ -704,7 +704,7 @@ $("#pol").html(data.pol);
 function showst()  
 {  
 $.ajax({  
-url: "https://clicaid.maya.place/api-mobile/user-info.php?z=a&id_user="+id_user,
+url: "https://clicaid.prozakon.pro/api-mobile/user-info.php?z=a&id_user="+id_user,
 dataType:"json", 
 cache: false,  
 success: function(data){
@@ -803,7 +803,7 @@ if(balance<price){
      else{
 if(a==0 && latu>0){
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/order.php?z=a&za='+a+'&id_user='+id_user,
+url:'https://clicaid.prozakon.pro/api-mobile/order.php?z=a&za='+a+'&id_user='+id_user,
 type:'post',
 data:{adress:myadress,cord:mycord},
 success:function(data){
@@ -822,7 +822,7 @@ $(".error").text("Сервиса Clicaid пока здесь нет.");
 else if(a==1 && latu>0){
 $('#ModalBasic').modal('toggle');
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
+url:'https://clicaid.prozakon.pro/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
 type:'post',
 data:{adress:myadress,cord:mycord},
 success:function(data){
@@ -841,7 +841,7 @@ $(".error").text("Сервиса Clicaid пока здесь нет.");
 else if(a==2 && latu>0){
 $('#ModalBasic').modal('toggle');
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
+url:'https://clicaid.prozakon.pro/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
 type:'post',
 data:{adress:myadress,cord:mycord},
 success:function(data){
@@ -861,7 +861,7 @@ else if(a==3 && latu>0){
 var textpost =  $('#textpost').val();
 $('#ModalBasic').modal('toggle');
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
+url:'https://clicaid.prozakon.pro/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
 type:'post',
 data:{adress:myadress,cord:mycord,textpost:textpost},
 success:function(data){
@@ -942,11 +942,11 @@ window.location.href = "geo.html";
 {  
 $("#callcenter").attr("href", "tel:"+callcenter);
 $.ajax({  
-url: "https://clicaid.maya.place/api-mobile/user-info.php?z=a&id_user="+id_user,
+url: "https://clicaid.prozakon.pro/api-mobile/user-info.php?z=a&id_user="+id_user,
 dataType:"json", 
 cache: false,  
 success: function(data){   
-$("#uava").attr("src", "https://clicaid.maya.place/"+data.avatar);
+$("#uava").attr("src", "https://clicaid.prozakon.pro/"+data.avatar);
 $("#fname").text(data.name);
 $("#balance").text(data.balance);
 window.localStorage.setItem("balance", data.balance);
@@ -1045,7 +1045,7 @@ if(balance<pricev){
 
 if (latu > 0)  {	
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/order.php?id_user='+id_user,
+url:'https://clicaid.prozakon.pro/api-mobile/order.php?id_user='+id_user,
 type:'post',
 data:{adress:myadress,cord:mycord},
 success:function(data){
@@ -1096,7 +1096,7 @@ var mycity = encodeURI(mycit);
         function showSettings()
         {
         $.ajax({
-        url: "https://clicaid.maya.place/api-mobile/checkSettings.php",
+        url: "https://clicaid.prozakon.pro/api-mobile/checkSettings.php",
         dataType:"json",
         cache: false,
         success: function(data){
@@ -1147,7 +1147,7 @@ var message=$('#textcon').val();
 var dt = new Date().toDateString();
 if(dt != localStorage.getItem('date')) {
 $.ajax({  
-url: "https://clicaid.maya.place/api-mobile/vopros.php?id_user="+id_user,
+url: "https://clicaid.prozakon.pro/api-mobile/vopros.php?id_user="+id_user,
 dataType:"text", 
 type: "post",
 data:{message:message},
@@ -1180,7 +1180,7 @@ var otz = $("input[type='radio'][name='choice_radio']:checked").val();
 
 
 $.ajax({  
-url: "https://clicaid.maya.place/api-mobile/adv-zakazi.php?status=0&id_user="+id_user+"&z=a&otz="+otz,
+url: "https://clicaid.prozakon.pro/api-mobile/adv-zakazi.php?status=0&id_user="+id_user+"&z=a&otz="+otz,
 dataType:"text", 
 cache: false,  
 success: function(data){ 

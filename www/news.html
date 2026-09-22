@@ -142,7 +142,7 @@ return `
         <h3>${p.title}</h3>
     </div>
         <div class="col-12">
-            <img src="https://clicaid.maya.place/images/news/${p.image}" />
+            <img src="https://clicaid.prozakon.pro/images/news/${p.image}" />
         </div>
 
         <div class="col-12">
@@ -163,12 +163,12 @@ function show()
 {  
 var id= window.localStorage.getItem("id_news");
 $.ajax({  
-url: "https://clicaid.maya.place/api-mobile/news.php?id="+id,
+url: "https://clicaid.prozakon.pro/api-mobile/news.php?id="+id,
 dataType:"json",
 cache: false,  
 success: function(data){
 
-    document.getElementById("list").innerHTML = '<div class="section bgn pt-1 mt-1 pb-2"><div class="row item news"><div class="col-12"><h3>'+data.name+'</h3></div><div class="col-12"><img class="nimg" src="https://clicaid.maya.place/images/news/'+data.image+'" /></div><div class="col-12"><p>'+data.body+'</p></div></div></div>';
+    document.getElementById("list").innerHTML = '<div class="section bgn pt-1 mt-1 pb-2"><div class="row item news"><div class="col-12"><h3>'+data.name+'</h3></div><div class="col-12"><img class="nimg" src="https://clicaid.prozakon.pro/images/news/'+data.image+'" /></div><div class="col-12"><p>'+data.body+'</p></div></div></div>';
 
 }  
 });  

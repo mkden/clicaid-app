@@ -38,7 +38,7 @@ function Successgeo(position) {
 var lat = position.coords.latitude;
 var lng = position.coords.longitude;
 $.ajax({
-url: "https://clicaid.maya.place/api-mobile/adv-zakazi.php?id_user="+id_user+"&lat="+lat+"&lng="+lng,
+url: "https://clicaid.prozakon.pro/api-mobile/adv-zakazi.php?id_user="+id_user+"&lat="+lat+"&lng="+lng,
 cache: false
 }).done(function(data) {
 });
@@ -219,11 +219,11 @@ navigator.geolocation.getCurrentPosition( Successgeo, Errorgeo, {
 						<div class="abBoxt"><br/>Помощь<br/>адвоката</div>
                     </div>
                
-                    <div class="col-4" data-toggle="modal" data-target="#ModalBasic" onclick="clicka(3)">
+                    <div class="col-4" data-toggle="modal" data-target="#ModalBasic" onclick="openDirectAppRequest('Судебная экспертиза')">
                         <div class="abBox">
 						<i class="mk-box"></i>
 						</div>
-						<div class="abBoxt"><br/>Помощь<br/>юриста</div>
+						<div class="abBoxt"><br/>Судебная<br/>экспертиза</div>
                     </div>
 
                     <div class="col-4" data-toggle="modal" data-target="#ModalBasic" onclick="clicka(2)">
@@ -757,7 +757,7 @@ var callcenter = window.localStorage.getItem("callcenter");
 
 function showpol()  {
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/politika.php',
+url:'https://clicaid.prozakon.pro/api-mobile/politika.php',
 dataType:"json", 
 cache: false, 
  success:function(data){
@@ -769,7 +769,7 @@ $("#pol").html(data.pol);
 
 function checkUser() {
   $.ajax({
-    url: "https://clicaid.maya.place/api-mobile/user-info.php?z=a&id_user=" + id_user,
+    url: "https://clicaid.prozakon.pro/api-mobile/user-info.php?z=a&id_user=" + id_user,
     dataType: "json",
     cache: false,
     success: function(data) {
@@ -784,7 +784,7 @@ function checkUser() {
       } else if (data.status == '0') {
         // если вернуло 0 → проверяем второй запрос
         $.ajax({
-          url: "https://clicaid.maya.place/api-mobile/user-info.php?z=&id_user=" + id_user,
+          url: "https://clicaid.prozakon.pro/api-mobile/user-info.php?z=&id_user=" + id_user,
           dataType: "json",
           cache: false,
           success: function(data2) {
@@ -870,7 +870,7 @@ if(balance<price){
      else{
 if(a==0 && latu>0){
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/order.php?z=a&za='+a+'&id_user='+id_user,
+url:'https://clicaid.prozakon.pro/api-mobile/order.php?z=a&za='+a+'&id_user='+id_user,
 type:'post',
 data:{adress:myadress,cord:mycord},
 success:function(data){
@@ -889,7 +889,7 @@ $(".error").text("Сервиса Clicaid пока здесь нет.");
 else if(a==1 && latu>0){
 $('#ModalBasic').modal('toggle');
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
+url:'https://clicaid.prozakon.pro/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
 type:'post',
 data:{adress:myadress,cord:mycord},
 success:function(data){
@@ -908,7 +908,7 @@ $(".error").text("Сервиса Clicaid пока здесь нет.");
 else if(a==2 && latu>0){
 $('#ModalBasic').modal('toggle');
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
+url:'https://clicaid.prozakon.pro/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
 type:'post',
 data:{adress:myadress,cord:mycord},
 success:function(data){
@@ -928,7 +928,7 @@ else if(a==3 && latu>0){
 var textpost =  $('#textpost').val();
 $('#ModalBasic').modal('toggle');
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
+url:'https://clicaid.prozakon.pro/api-mobile/order.php?z=a&za='+a+'&zb='+b+'&id_user='+id_user,
 type:'post',
 data:{adress:myadress,cord:mycord,textpost:textpost},
 success:function(data){
@@ -1012,11 +1012,11 @@ window.location.href = "geo.html";
 {  
 $("#callcenter").attr("href", "tel:"+callcenter);
 $.ajax({  
-url: "https://clicaid.maya.place/api-mobile/user-info.php?z=a&id_user="+id_user,
+url: "https://clicaid.prozakon.pro/api-mobile/user-info.php?z=a&id_user="+id_user,
 dataType:"json", 
 cache: false,  
 success: function(data){   
-$("#uava").attr("src", "https://clicaid.maya.place/"+data.avatar);
+$("#uava").attr("src", "https://clicaid.prozakon.pro/"+data.avatar);
 $("#fname").text(data.name);
 $("#balance").text(data.balance);
 window.localStorage.setItem("balance", data.balance);
@@ -1047,7 +1047,7 @@ return `
         <h3>${p.title}</h3>
     </div>
         <div class="col-4">
-            <img src="https://clicaid.maya.place/images/news/${p.image}" />
+            <img src="https://clicaid.prozakon.pro/images/news/${p.image}" />
         </div>
 
         <div class="col-8 fulltext">
@@ -1063,7 +1063,7 @@ return `
 function shownews()  
         {   
 $.ajax({  
-url: "https://clicaid.maya.place/api-mobile/news.php?list=1",
+url: "https://clicaid.prozakon.pro/api-mobile/news.php?list=1",
 dataType:"json",
 cache: false,  
 success: function(data){  
@@ -1174,7 +1174,7 @@ if(balance<pricev){
 
 if (latu > 0)  {	
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/order.php?id_user='+id_user,
+url:'https://clicaid.prozakon.pro/api-mobile/order.php?id_user='+id_user,
 type:'post',
 data:{adress:myadress,cord:mycord},
 success:function(data){
@@ -1225,7 +1225,7 @@ var mycity = encodeURI(mycit);
         function showSettings()
         {
         $.ajax({
-        url: "https://clicaid.maya.place/api-mobile/checkSettings.php",
+        url: "https://clicaid.prozakon.pro/api-mobile/checkSettings.php",
         dataType:"json",
         cache: false,
         success: function(data){
@@ -1286,7 +1286,7 @@ var tip=$('#tipd').val();
 var dt = new Date().toDateString();
 if(dt!= localStorage.getItem('date')) {
 $.ajax({  
-url: "https://clicaid.maya.place/api-mobile/vopros.php?id_user="+id_user,
+url: "https://clicaid.prozakon.pro/api-mobile/vopros.php?id_user="+id_user,
 dataType:"text", 
 type: "post",
 data:{message:message,tip:tip},
@@ -1320,7 +1320,7 @@ var otz = $("input[type='radio'][name='choice_radio']:checked").val();
 
 
 $.ajax({  
-url: "https://clicaid.maya.place/api-mobile/adv-zakazi.php?status=0&id_user="+id_user+"&z=a&otz="+otz,
+url: "https://clicaid.prozakon.pro/api-mobile/adv-zakazi.php?status=0&id_user="+id_user+"&z=a&otz="+otz,
 dataType:"text", 
 cache: false,  
 success: function(data){ 
@@ -1377,6 +1377,142 @@ $("#vizov,#aa,#ab,#ba,#bb,#bc,#bd,#calla,#urcat").removeClass("disabledbutton");
 	
 </script>
 
+
+
+<!-- dynamic-app-categories -->
+<script>
+var appCategoryIndex = {};
+var appCategoryPath = {};
+var currentAppCategory = null;
+
+function appEsc(value) {
+    return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+function appIcon(value) {
+    var v = String(value || 'mk-box').replace(/[^a-zA-Z0-9 _-]/g, '');
+    return v || 'mk-box';
+}
+function indexAppCategories(items, parentPath, parentId) {
+    (items || []).forEach(function(item) {
+        item._parent = parentId || 0;
+        item._path = parentPath ? parentPath + ' → ' + item.title : item.title;
+        appCategoryIndex[item.id] = item;
+        appCategoryPath[item.id] = item._path;
+        indexAppCategories(item.children || [], item._path, item.id);
+    });
+}
+function renderAppRoot(items) {
+    if (!items || !items.length) return;
+    var html = items.map(function(item) {
+        return '<div class="col-4" data-toggle="modal" data-target="#ModalBasic" ' +
+            'onclick="openAppCategory(' + Number(item.id) + ')">' +
+            '<div class="abBox"><i class="' + appIcon(item.icon) + '"></i></div>' +
+            '<div class="abBoxt"><br/>' + appEsc(item.title) + '</div></div>';
+    }).join('');
+    $('#urcat').html(html);
+}
+
+function loadAppCategories() {
+    $.ajax({
+        url: 'https://clicaid.prozakon.pro/api-mobile/app-categories.php?_=' + Date.now(),
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+            if (!data || data.status !== true || !Array.isArray(data.items)) return;
+            appCategoryIndex = {};
+            appCategoryPath = {};
+            indexAppCategories(data.items, '', 0);
+            renderAppRoot(data.items);
+        }
+    });
+}
+
+function openAppCategory(id) {
+    var item = appCategoryIndex[id];
+    if (!item) return;
+    if (item.node_type === 'tree') {
+        $('#title').text(item.title);
+        var children = item.children || [];
+        var html = '<div class="center">';
+        if (item._parent) {
+            html += '<p><button type="button" class="btn btn-light mr-1 mb-2 aBaton" ' +
+                'onclick="openAppCategory(' + Number(item._parent) + ')">← Назад</button></p>';
+        }
+        if (!children.length) {
+            html += '<p class="text-muted">В этой категории пока нет кнопок.</p>';
+        } else {
+            children.forEach(function(child) {
+                html += '<p><button type="button" class="btn btn-outline-dark mr-1 mb-1 aBaton" ' +
+                    'onclick="openAppCategory(' + Number(child.id) + ')">' +
+                    appEsc(child.title) + '</button></p>';
+            });
+        }
+        html += '</div>';
+        $('#ModalBasic .modal-body').html(html);
+        $('#ModalBasic').modal('show');
+        return;
+    }
+    openDirectAppRequest(item.title, item.id, item._path);
+}
+
+function openDirectAppRequest(title, id, path) {
+    currentAppCategory = {
+        id: Number(id || 0),
+        title: String(title || 'Заявка'),
+        path: String(path || title || 'Заявка')
+    };
+    $('#title').text(currentAppCategory.title);
+    var html = '<div class="row"><div class="col-10"><b>' +
+        appEsc(currentAppCategory.title) + '</b></div>' +
+        '<div class="col-2"><i class="fas fa-briefcase"></i></div></div><br/>' +
+        '<label for="dynamicRequestText" class="atextlabel">Опишите ситуацию</label>' +
+        '<textarea class="atextaria" id="dynamicRequestText" rows="8"></textarea>' +
+        '<div class="form-button-group bniz">' +
+        '<button id="dynamicRequestSend" type="button" class="btn btn-primary btn-block btn-lg" ' +
+        'onclick="submitAppCategoryRequest()">Отправить заявку</button></div>';
+    $('#ModalBasic .modal-body').html(html);
+    $('#ModalBasic').modal('show');
+}
+function submitAppCategoryRequest() {
+    var message = $.trim($('#dynamicRequestText').val() || '');
+    if (!message) {
+        $('.error').text('Опишите ситуацию.');
+        notification('notification', 3000);
+        return;
+    }
+    var idUser = window.localStorage.getItem('id_user') || '';
+    $('#dynamicRequestSend').prop('disabled', true).text('Отправляем...');
+    $.ajax({
+        url: 'https://clicaid.prozakon.pro/api-mobile/vopros.php?id_user=' + encodeURIComponent(idUser),
+        type: 'post',
+        dataType: 'text',
+        cache: false,
+        data: {
+            message: message,
+            tip: currentAppCategory ? currentAppCategory.path : 'Заявка'
+        },
+        success: function() {
+            $('#ModalBasic .modal-body').html(
+                '<div class="text-center"><h4>Заявка отправлена.</h4>' +
+                '<p>Мы свяжемся с вами в ближайшее время.</p></div>'
+            );
+        },
+        error: function() {
+            $('#dynamicRequestSend').prop('disabled', false).text('Отправить заявку');
+            $('.error').text('Не удалось отправить заявку. Попробуйте ещё раз.');
+            notification('notification', 3000);
+        }
+    });
+}
+
+$(document).ready(function() {
+    loadAppCategories();
+    setInterval(loadAppCategories, 20000);
+});
+</script>
 
 <script src="cordova.js"></script>
 

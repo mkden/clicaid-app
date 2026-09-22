@@ -29,7 +29,7 @@
     <script type="text/javascript">
         function showSettings() {
             $.ajax({
-                url: "https://clicaid.maya.place/api-mobile/checkSettings.php",
+                url: "https://clicaid.prozakon.pro/api-mobile/checkSettings.php",
                 dataType:"json",
                 cache: false,
                 success: function(data){
@@ -52,7 +52,7 @@
             var lat = position.coords.latitude;
             var lng = position.coords.longitude;
             $.ajax({
-                url: "https://clicaid.maya.place/api-mobile/kur-zakazi.php?id_user="+id_user+"&lat="+lat+"&lng="+lng,
+                url: "https://clicaid.prozakon.pro/api-mobile/kur-zakazi.php?id_user="+id_user+"&lat="+lat+"&lng="+lng,
                 cache: false
             }).done(function(data) {});
         }
@@ -207,7 +207,7 @@
             var mycord1 = parseFloat(uadr[0]);
             var mycord2 = parseFloat(uadr[1]);
 
-            $("#avatar").attr("src", "https://clicaid.maya.place/"+p.avatar);
+            $("#avatar").attr("src", "https://clicaid.prozakon.pro/"+p.avatar);
             $("#name").text(p.uname);
             $("#adress").text(p.adress);
             $("#ucord").text(p.ucord);
@@ -223,7 +223,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content" style="background-color: rgb(255,255,255,0.6)">
                             <div class="modal-icon">
-                                <img src="https://clicaid.maya.place/${p.avatar}" class="img-responsive lk33">
+                                <img src="https://clicaid.prozakon.pro/${p.avatar}" class="img-responsive lk33">
                             </div>
                             <div style="padding: 1rem 1rem;text-align: center;">
                                 <h1 class="">${p.uname}</h1>
@@ -266,7 +266,7 @@
         function show() {  
             $('#DialogBlockButton').hide();
             $.ajax({  
-                url: "https://clicaid.maya.place/api-mobile/kur-zakazi.php?id_user="+id_user+"&page=2",
+                url: "https://clicaid.prozakon.pro/api-mobile/kur-zakazi.php?id_user="+id_user+"&page=2",
                 dataType:"json",
                 cache: false,  
                 success: function(data){
@@ -285,11 +285,11 @@
 
         function showb() {  
             $.ajax({  
-                url: "https://clicaid.maya.place/api-mobile/user-info.php?id_user="+id_user,
+                url: "https://clicaid.prozakon.pro/api-mobile/user-info.php?id_user="+id_user,
                 dataType:"json", 
                 cache: false,  
                 success: function(data){ 
-                    $("#uava").attr("src", "https://clicaid.maya.place/"+data.avatar);
+                    $("#uava").attr("src", "https://clicaid.prozakon.pro/"+data.avatar);
                     $("#fname").text(data.name);
                 }  
             });  
@@ -297,7 +297,7 @@
 
         function showsmena() {  
             $.ajax({  
-                url: "https://clicaid.maya.place/api-mobile/smena-kur.php?id_user="+id_user,
+                url: "https://clicaid.prozakon.pro/api-mobile/smena-kur.php?id_user="+id_user,
                 dataType:"text", 
                 cache: false,  
                 success: function(data){ 
@@ -315,7 +315,7 @@
         }
 
         function startsmena() {
-            $.post("https://clicaid.maya.place/api-mobile/smena-kur.php?id_user="+id_user, { start:1 }).done(function(data) {
+            $.post("https://clicaid.prozakon.pro/api-mobile/smena-kur.php?id_user="+id_user, { start:1 }).done(function(data) {
                 $('.error').text('Смена открыта!');
                 notification('notification', 3000);		
                 $('#smena').html('<a href="#" class="btn btn-text-primary btn-block shadowed" onclick="endsmena();">Завершить работу</a>');
@@ -325,7 +325,7 @@
         }
 
         function endsmena() {
-            $.post("https://clicaid.maya.place/api-mobile/smena-kur.php?id_user="+id_user, { end:1 }).done(function(data) {
+            $.post("https://clicaid.prozakon.pro/api-mobile/smena-kur.php?id_user="+id_user, { end:1 }).done(function(data) {
                 $('.error').text('Смена закрыта!');
                 notification('notification', 3000);
                 $('#smena').html('<a href="#" class="btn btn-text-primary btn-block shadowed" onclick="startsmena();">Приступить к работе</a>');
@@ -336,7 +336,7 @@
 
         function clickz(self, id, avatar, kurcord1, kurcord2, start1, start2, endcord1, endcord2) {  
             $.ajax({  
-                url: "https://clicaid.maya.place/api-mobile/kur-zakazi.php?id_user="+id_user+"&checkz=1&odrer="+id,
+                url: "https://clicaid.prozakon.pro/api-mobile/kur-zakazi.php?id_user="+id_user+"&checkz=1&odrer="+id,
                 dataType:"text",
                 cache: false,  
                 success: function(data){
@@ -438,7 +438,7 @@
                     var km = (route.summary.totalDistance / 1000).toFixed(1);
                     
                     $.ajax({  
-                        url: "https://clicaid.maya.place/api-mobile/kur-zakazi.php?status=2&odrer="+id+"&id_user="+id_user+"&time="+time+"&km="+km,
+                        url: "https://clicaid.prozakon.pro/api-mobile/kur-zakazi.php?status=2&odrer="+id+"&id_user="+id_user+"&time="+time+"&km="+km,
                         dataType:"text", 
                         cache: false  
                     });
@@ -449,7 +449,7 @@
             if (positionInterval) clearInterval(positionInterval);
             positionInterval = setInterval(function() {
                 $.ajax({  
-                    url: "https://clicaid.maya.place/api-mobile/getcordkur.php?order_number="+id,
+                    url: "https://clicaid.prozakon.pro/api-mobile/getcordkur.php?order_number="+id,
                     dataType:"json", 
                     cache: false,  
                     success: function(data){ 
@@ -481,7 +481,7 @@
             notification('notification-ok', 3000);
 
             $.ajax({  
-                url: "https://clicaid.maya.place/api-mobile/kur-zakazi.php?status=3&odrer="+id+"&id_user="+id_user,
+                url: "https://clicaid.prozakon.pro/api-mobile/kur-zakazi.php?status=3&odrer="+id+"&id_user="+id_user,
                 dataType:"text", 
                 cache: false,  
                 success: function(data){ 

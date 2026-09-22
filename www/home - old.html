@@ -38,7 +38,7 @@ function Successgeo(position) {
 var lat = position.coords.latitude;
 var lng = position.coords.longitude;
 $.ajax({
-url: "https://clicaid.maya.place/api-mobile/kur-zakazi.php?id_user="+id_user+"&lat="+lat+"&lng="+lng,
+url: "https://clicaid.prozakon.pro/api-mobile/kur-zakazi.php?id_user="+id_user+"&lat="+lat+"&lng="+lng,
 cache: false
 }).done(function(data) {
 });
@@ -587,7 +587,7 @@ if(balance<pricev){
 
 if (latu > 0)  {	
 $.ajax({
-url:'https://clicaid.maya.place/api-mobile/order.php?id_user='+id_user,
+url:'https://clicaid.prozakon.pro/api-mobile/order.php?id_user='+id_user,
 type:'post',
 data:{adress:myadress,cord:mycord},
 success:function(data){
@@ -637,7 +637,7 @@ var mycity = encodeURI(mycit);
         function showSettings()
         {
         $.ajax({
-        url: "https://clicaid.maya.place/api-mobile/checkSettings.php",
+        url: "https://clicaid.prozakon.pro/api-mobile/checkSettings.php",
         dataType:"json",
         cache: false,
         success: function(data){
@@ -682,11 +682,11 @@ window.location.href = "geo.html";
 		function showa()  
 {  
 $.ajax({  
-url: "https://clicaid.maya.place/api-mobile/user-info.php?id_user="+id_user,
+url: "https://clicaid.prozakon.pro/api-mobile/user-info.php?id_user="+id_user,
 dataType:"json", 
 cache: false,  
 success: function(data){   
-$("#uava").attr("src", "https://clicaid.maya.place/"+data.avatar);
+$("#uava").attr("src", "https://clicaid.prozakon.pro/"+data.avatar);
 $("#fname").text(data.name);
 $("#balance").text(data.balance);
 window.localStorage.setItem("balance", data.balance);
@@ -718,7 +718,7 @@ $('.redt').show();
 		function showst()  
 {  
 $.ajax({  
-url: "https://clicaid.maya.place/api-mobile/user-info.php?id_user="+id_user,
+url: "https://clicaid.prozakon.pro/api-mobile/user-info.php?id_user="+id_user,
 dataType:"json", 
 cache: false,  
 success: function(data){   
@@ -759,7 +759,7 @@ var otz = $("input[type='radio'][name='choice_radio']:checked").val();
 
 
 $.ajax({  
-url: "https://clicaid.maya.place/api-mobile/kur-zakazi.php?status=0&id_user="+id_user+"&otz="+otz,
+url: "https://clicaid.prozakon.pro/api-mobile/kur-zakazi.php?status=0&id_user="+id_user+"&otz="+otz,
 dataType:"text", 
 cache: false,  
 success: function(data){ 
