@@ -25,7 +25,8 @@ module.exports = function restrictCordovaIOSPlatforms(context) {
 
     let updated = original.replace(/SUPPORTS_MACCATALYST = YES;/g, 'SUPPORTS_MACCATALYST = NO;');
     updated = updated.replace(/^([ \t]*)SDKROOT = iphoneos;$/gm, function (matched, indent, offset, full) {
-        const lineBefore = full.slice(0, offset).split('\n').slice(-1)[0];
+        const previousLines = full.slice(0, offset).split(/\r?\n/);
+        const lineBefore = previousLines[previousLines.length - 2] || '';
         // Project may be prepared twice (after_prepare + after_platform_add).
         if (/SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";/.test(lineBefore)) return matched;
         return indent + 'SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";\n' + matched;
