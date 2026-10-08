@@ -39,6 +39,7 @@ jobs:
           node --check www/js/index.js
           ruby -c fastlane/Gymfile
           grep -Fx 'destination("generic/platform=iOS")' fastlane/Gymfile
+          grep -Fx 'xcargs("DEVELOPMENT_TEAM=F2BCHMBHU9")' fastlane/Gymfile
           echo "FASTLANE IOS DESTINATION CONFIG PASSED"
           node <<'NODE'
           const fs = require('fs');
