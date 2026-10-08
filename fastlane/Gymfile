@@ -8,3 +8,9 @@ destination("generic/platform=iOS")
 # xcodebuild target, including these package dependencies.
 # This does not replace the Appflow-installed Apple Distribution certificate/profile.
 xcargs("DEVELOPMENT_TEAM=F2BCHMBHU9")
+
+# Appflow passes CODE_SIGN_IDENTITY globally even though it has already
+# configured the App target for manual Distribution signing. Swift package
+# targets must not inherit that global override. The wrapper removes only
+# the command-line identity during archive; app target signing stays intact.
+xcodebuild_command("bash #{File.expand_path('../scripts/appflow-xcodebuild.sh', __dir__)}")
