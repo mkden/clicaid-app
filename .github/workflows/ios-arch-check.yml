@@ -57,7 +57,7 @@ jobs:
           set -euo pipefail
           WORKSPACE="$(find platforms/ios -maxdepth 1 -name '*.xcworkspace' -print -quit)"
           PROJECT="$(find platforms/ios -maxdepth 1 -name '*.xcodeproj' -print -quit)"
-          SCHEME="Clicaid Prozakon"
+          SCHEME="App"
           if [ -n "$WORKSPACE" ]; then
             xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -configuration Release -sdk iphoneos \
               -archivePath "$PWD/Clicaid.xcarchive" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO archive
