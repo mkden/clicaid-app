@@ -1,0 +1,118 @@
+name: Clicaid Android Signed Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [android-release-1.9.11, main]
+    paths:
+      - 'config.xml'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'www/**'
+      - '.github/workflows/android-release.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build-android:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: android-actions/setup-android@v3
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.14'
+
+      - name: Install Android 35 build dependencies
+        run: |
+          sdkmanager --install "platforms;android-35" "build-tools;35.0.0" "platform-tools"
+
+      - name: Install Cordova dependencies
+        run: |
+          npm ci
+          npm install --global cordova@latest
+          cordova --version
+
+      - name: Prepare Android 14 native project
+        run: |
+          cordova platform add android@14.0.1 --nosave
+          cordova prepare android
+
+      - name: Build signed APK using existing signing configuration
+        run: |
+          test -f build.json
+          test -f clicaid.keystore
+          cordova build android --release --buildConfig=build.json
+
+      - name: Verify APK signature, package, permissions, and migration compatibility
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK="platforms/android/app/build/outputs/apk/release/app-release.apk"
+          test -s "$APK"
+          SIGNER="$ANDROID_HOME/build-tools/35.0.0/apksigner"
+          AAPT="$ANDROID_HOME/build-tools/35.0.0/aapt"
+          "$SIGNER" verify --verbose --print-certs "$APK"
+          "$AAPT" dump badging "$APK" | head -n 6
+          "$AAPT" dump badging "$APK" | grep -q "name='mk.clicaid.app'"
+          "$AAPT" dump badging "$APK" | grep -q "versionName='1.9.11'"
+          "$AAPT" dump permissions "$APK" | grep -q "android.permission.POST_NOTIFICATIONS"
+          unzip -p "$APK" assets/www/js/index.js | grep -q 'oneSignal.initialize(APP_ID)'
+          unzip -p "$APK" assets/www/js/index.js | grep -q 'oneSignal.login(String(userId))'
+          unzip -p "$APK" assets/www/index.html | grep -q 'uristpage.html'
+          if curl --fail --location --silent --show-error --max-time 50 \
+            "https://clicaid.prozakon.pro/clicaid.apk" --output previous.apk; then
+            OLD_SHA="$("$SIGNER" verify --print-certs previous.apk | sed -n 's/^Signer #1 certificate SHA-256 digest: //p' | head -1)"
+            NEW_SHA="$("$SIGNER" verify --print-certs "$APK" | sed -n 's/^Signer #1 certificate SHA-256 digest: //p' | head -1)"
+            if [ -z "$OLD_SHA" ] || [ -z "$NEW_SHA" ] || [ "$OLD_SHA" != "$NEW_SHA" ]; then
+              echo "::error::APK signing certificate does not match previous published version!"
+              exit 1
+            fi
+            echo "Previous APK signature matches new APK signature"
+          else
+            echo "::warning::Could not download old APK to compare signing certificate"
+          fi
+          mkdir -p out
+          cp "$APK" out/clicaid-1.9.11.apk
+          sha256sum out/clicaid-1.9.11.apk
+          echo "### Android APK 1.9.11 signed and validated" >> "$GITHUB_STEP_SUMMARY"
+          echo "Package: mk.clicaid.app" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload signed APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: clicaid-1.9.11-signed-apk
+          path: out/clicaid-1.9.11.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Publish APK on GitHub Releases after main succeeds
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="v1.9.11"
+          APK="out/clicaid-1.9.11.apk"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$APK" --clobber
+          else
+            gh release create "$TAG" "$APK" \
+              --title "Clicaid Prozakon Android 1.9.11" \
+              --notes "Signed Android APK from verified main. Includes push and navigation fixes."
+          fi

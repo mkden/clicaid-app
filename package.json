@@ -1,7 +1,7 @@
 {
   "name": "mk.clicaid.app",
   "displayName": "Сlicaid",
-  "version": "1.9.10",
+  "version": "1.9.11",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
   "scripts": {

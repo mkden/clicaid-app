@@ -38,7 +38,7 @@ jobs:
           const pkg = require('./package.json');
           const lock = require('./package-lock.json');
           const index = fs.readFileSync('www/index.html', 'utf8');
-          assert(cfg.includes('version="1.9.10"'), 'Cordova version');
+          assert(cfg.includes('version="' + pkg.version + '"'), 'Cordova version');
           assert(pkg.version === '1.9.10' && lock.version === pkg.version, 'Version mismatch');
           assert(pkg.devDependencies['cordova-ios'] === '8.1.1', 'iOS version');
           assert(pkg.devDependencies['onesignal-cordova-plugin'] === '5.6.0', 'OneSignal version');
