@@ -13,4 +13,8 @@ xcargs("DEVELOPMENT_TEAM=F2BCHMBHU9")
 # configured the App target for manual Distribution signing. Swift package
 # targets must not inherit that global override. The wrapper removes only
 # the command-line identity during archive; app target signing stays intact.
-xcodebuild_command("bash #{File.expand_path('../scripts/appflow-xcodebuild.sh', __dir__)}")
+# Fastlane evaluates Gymfile in the project context: __dir__ is not guaranteed
+# to point at the fastlane/ folder. Resolve from the repository working directory.
+appflow_wrapper = File.expand_path("scripts/appflow-xcodebuild.sh", Dir.pwd)
+raise "Appflow xcodebuild wrapper missing: #{appflow_wrapper}" unless File.file?(appflow_wrapper)
+xcodebuild_command("bash #{appflow_wrapper}")
