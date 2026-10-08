@@ -28,6 +28,9 @@
     <!-- iOS -->
     <platform name="ios">
         <preference name="deployment-target" value="15.0" />
+        <!-- Enforce iPhone/iPad destinations for Appflow on Xcode 26. -->
+        <hook type="after_prepare" src="scripts/restrict-ios-platforms.js" />
+        <hook type="after_platform_add" src="scripts/restrict-ios-platforms.js" />
 
 <icon src="icon-1024.png" width="1024" height="1024"/>
 <icon src="icon-small.png" width="29" height="29"/>
