@@ -27,7 +27,7 @@
 
     <!-- iOS -->
     <platform name="ios">
-        <preference name="deployment-target" value="13.0" />
+        <preference name="deployment-target" value="15.0" />
 
 <icon src="icon-1024.png" width="1024" height="1024"/>
 <icon src="icon-small.png" width="29" height="29"/>
