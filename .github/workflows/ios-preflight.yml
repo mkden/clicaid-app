@@ -3,7 +3,7 @@ name: Prozakon iOS App Store Preflight
 on:
   workflow_dispatch:
   push:
-    branches: [main, fix-appflow-ios-visionos-20261008, fix-appflow-swift-package-signing]
+    branches: [main, fix-appflow-wrapper-path-20261008]
     paths:
       - 'config.xml'
       - 'package.json'
@@ -41,6 +41,25 @@ jobs:
           grep -Fx 'destination("generic/platform=iOS")' fastlane/Gymfile
           grep -Fx 'xcargs("DEVELOPMENT_TEAM=F2BCHMBHU9")' fastlane/Gymfile
           grep -F 'xcodebuild_command(' fastlane/Gymfile
+          ruby <<'RUBY'
+          class GymfileCheck
+            attr_reader :wrapper_command
+            def destination(value)
+              raise "Wrong destination: #{value}" unless value == "generic/platform=iOS"
+            end
+            def xcargs(value)
+              raise "Wrong development team: #{value}" unless value == "DEVELOPMENT_TEAM=F2BCHMBHU9"
+            end
+            def xcodebuild_command(value)
+              @wrapper_command = value
+            end
+          end
+          config = GymfileCheck.new
+          config.instance_eval(File.read("fastlane/Gymfile"), File.expand_path("fastlane/Gymfile"))
+          expected = "bash #{File.expand_path('scripts/appflow-xcodebuild.sh', Dir.pwd)}"
+          raise "Wrong Appflow wrapper path: #{config.wrapper_command}" unless config.wrapper_command == expected
+          puts "APPFLOW GYMFILE PATH VALID: #{config.wrapper_command}"
+          RUBY
           bash -n scripts/appflow-xcodebuild.sh
           echo "FASTLANE IOS DESTINATION CONFIG PASSED"
           node <<'NODE'
