@@ -37,8 +37,12 @@ jobs:
 
       - name: Install Android 35 build dependencies
         run: |
+          set -euo pipefail
           echo "ANDROID_HOME=$ANDROID_HOME"
-          sdkmanager --install "platforms;android-35" "build-tools;35.0.0" "platform-tools"
+          SDKMANAGER="$(find "$ANDROID_HOME/cmdline-tools" -maxdepth 3 -type f -name sdkmanager -print -quit)"
+          test -n "$SDKMANAGER"
+          echo "$(dirname "$SDKMANAGER")" >> "$GITHUB_PATH"
+          "$SDKMANAGER" --install "platforms;android-35" "build-tools;35.0.0" "platform-tools"
 
       - name: Install Cordova dependencies
         run: |
