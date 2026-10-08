@@ -2,3 +2,9 @@
 # a Cordova iOS 8 app as visionOS on newer Xcode builds.
 # Keep this setting explicit: OneSignal XCFramework supports iOS, not visionOS.
 destination("generic/platform=iOS")
+
+# Cordova iOS 8 uses Swift Package Manager targets (including Cordova_Cordova).
+# Appflow manually signs only the main App target; pass Team ID to *every*
+# xcodebuild target, including these package dependencies.
+# This does not replace the Appflow-installed Apple Distribution certificate/profile.
+xcargs("DEVELOPMENT_TEAM=F2BCHMBHU9")
