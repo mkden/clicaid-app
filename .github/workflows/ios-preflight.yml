@@ -10,6 +10,7 @@ on:
       - 'package-lock.json'
       - 'www/**'
       - 'scripts/**'
+      - 'fastlane/**'
       - '.github/workflows/ios-preflight.yml'
 
 permissions:
@@ -36,6 +37,9 @@ jobs:
         run: |
           set -euo pipefail
           node --check www/js/index.js
+          ruby -c fastlane/Gymfile
+          grep -Fx 'destination("generic/platform=iOS")' fastlane/Gymfile
+          echo "FASTLANE IOS DESTINATION CONFIG PASSED"
           node <<'NODE'
           const fs = require('fs');
           const assert = require('assert');
