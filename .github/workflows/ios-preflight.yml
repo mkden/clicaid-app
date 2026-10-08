@@ -1,0 +1,113 @@
+name: Prozakon iOS App Store Preflight
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'config.xml'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'www/**'
+      - '.github/workflows/ios-preflight.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify-ios:
+    runs-on: macos-15
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Verify application source
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check www/js/index.js
+          node <<'NODE'
+          const fs = require('fs');
+          const assert = require('assert');
+          const cfg = fs.readFileSync('config.xml', 'utf8');
+          const pkg = require('./package.json');
+          const lock = require('./package-lock.json');
+          const index = fs.readFileSync('www/index.html', 'utf8');
+          assert(cfg.includes('version="1.9.10"'), 'Cordova version');
+          assert(pkg.version === '1.9.10' && lock.version === pkg.version, 'Version mismatch');
+          assert(pkg.devDependencies['cordova-ios'] === '8.1.1', 'iOS version');
+          assert(pkg.devDependencies['onesignal-cordova-plugin'] === '5.6.0', 'OneSignal version');
+          assert(cfg.includes('name="deployment-target" value="15.0"'), 'iOS minimum version');
+          assert(cfg.includes('8c912104-8b46-497f-9ea2-d0cd76def931'), 'OneSignal App ID');
+          assert(!index.includes('zlist.html'), 'Missing legacy lawyer screen');
+          assert(index.includes('uristpage.html'), 'Lawyer startup route');
+          for (const page of ['index','home','login','kurerpage','uristpage']) {
+            const html = fs.readFileSync('www/' + page + '.html', 'utf8');
+            assert(html.includes('src="js/index.js"'), page + ' missing push initialization');
+            assert(html.includes('src="cordova.js"'), page + ' missing cordova runtime');
+          }
+          const push = fs.readFileSync('www/js/index.js', 'utf8');
+          assert(push.includes('oneSignal.initialize(APP_ID)'), 'OneSignal init');
+          assert(push.includes('oneSignal.login(String(userId))'), 'OneSignal user mapping');
+          assert(push.includes('requestPermission('), 'Notification permission');
+          console.log('SOURCE PREFLIGHT PASSED');
+          NODE
+
+      - name: Install exact dependencies
+        run: |
+          npm ci
+          npm install -g cordova@latest
+
+      - name: Generate clean native iOS project
+        run: |
+          cordova platform add ios@8.1.1 --nosave
+          cordova prepare ios
+          cordova platform ls
+          xcodebuild -version
+
+      - name: Archive for physical iOS devices without signing
+        run: |
+          set -euo pipefail
+          xcodebuild -workspace platforms/ios/App.xcworkspace -scheme App -configuration Release \
+            -sdk iphoneos -destination 'generic/platform=iOS' \
+            -archivePath "$PWD/Clicaid.xcarchive" \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO archive
+
+      - name: Check bundle executables and arm64 architectures
+        shell: bash
+        run: |
+          set -euo pipefail
+          APP="$(find Clicaid.xcarchive/Products/Applications -maxdepth 1 -name '*.app' -print -quit)"
+          test -n "$APP"
+          MAIN="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$APP/Info.plist")"
+          BUNDLE_ID="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP/Info.plist")"
+          test "$BUNDLE_ID" = 'mk.clicaid.app'
+          test -f "$APP/$MAIN"
+          test -f "$APP/www/js/index.js"
+          file "$APP/$MAIN"
+          lipo -info "$APP/$MAIN"
+          lipo -archs "$APP/$MAIN" | grep -qw arm64
+          COUNT=0
+          while IFS= read -r BUNDLE; do
+            [ -f "$BUNDLE/Info.plist" ] || continue
+            EXEC="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$BUNDLE/Info.plist" 2>/dev/null || true)"
+            [ -n "$EXEC" ] || continue
+            BIN="$BUNDLE/$EXEC"
+            echo "Inspecting $BIN"
+            test -f "$BIN"
+            file "$BIN"
+            lipo -info "$BIN"
+            lipo -archs "$BIN" | grep -qw arm64
+            COUNT=$((COUNT+1))
+          done < <(find "$APP" -type d \( -name '*.framework' -o -name '*.appex' \))
+          echo "Verified $COUNT embedded framework/extension executables."
+          echo "### iOS architecture validation passed" >> "$GITHUB_STEP_SUMMARY"
+          echo "Main executable: $MAIN (arm64)" >> "$GITHUB_STEP_SUMMARY"
+          echo "Embedded executables checked: $COUNT" >> "$GITHUB_STEP_SUMMARY"
+          echo "Bundle ID: $BUNDLE_ID" >> "$GITHUB_STEP_SUMMARY"
+          echo "Note: this archive is unsigned; Appflow must still export and sign its IPA." >> "$GITHUB_STEP_SUMMARY"
