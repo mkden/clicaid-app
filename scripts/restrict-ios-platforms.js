@@ -36,5 +36,25 @@ module.exports = function restrictCordovaIOSPlatforms(context) {
     const iphoneOnly = (updated.match(/SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";/g) || []).length;
     if (iphoneOnly < 2) throw new Error('[iOS platform hook] Could not enforce iphoneos/iphonesimulator on project');
     if (updated !== original) fs.writeFileSync(projectFile, updated, 'utf8');
+
+    // Xcode 26.4+ forbids importing netinet6/in6.h directly. This exact
+    // upstream fix shipped in cordova-plugin-network-information 3.1.0.
+    // Patch only the generated iOS source so Android and the pinned JS
+    // plugin version remain unchanged.
+    const reachabilityFile = path.join(
+        projectRoot, 'platforms', 'ios', 'App', 'Plugins',
+        'cordova-plugin-network-information', 'CDVReachability.m'
+    );
+    if (fs.existsSync(reachabilityFile)) {
+        const source = fs.readFileSync(reachabilityFile, 'utf8');
+        const cleaned = source.replace(/^#import <netinet6\\/in6\\.h>\\r?\\n/gm, '');
+        if (cleaned !== source) {
+            if (!source.includes('#import <netinet/in.h>')) {
+                throw new Error('[iOS platform hook] Expected public netinet/in.h header is absent');
+            }
+            fs.writeFileSync(reachabilityFile, cleaned, 'utf8');
+            console.log('[iOS platform hook] Removed Xcode 26-incompatible private network header.');
+        }
+    }
     console.log('[iOS platform hook] iPhone/iPad only, Mac Catalyst disabled (Xcode/Appflow).');
 };
