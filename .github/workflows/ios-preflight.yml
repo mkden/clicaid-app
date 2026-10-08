@@ -3,7 +3,7 @@ name: Prozakon iOS App Store Preflight
 on:
   workflow_dispatch:
   push:
-    branches: [main, fix-appflow-ios-visionos-20261008]
+    branches: [main, fix-appflow-ios-visionos-20261008, fix-appflow-swift-package-signing]
     paths:
       - 'config.xml'
       - 'package.json'
@@ -40,6 +40,8 @@ jobs:
           ruby -c fastlane/Gymfile
           grep -Fx 'destination("generic/platform=iOS")' fastlane/Gymfile
           grep -Fx 'xcargs("DEVELOPMENT_TEAM=F2BCHMBHU9")' fastlane/Gymfile
+          grep -F 'xcodebuild_command(' fastlane/Gymfile
+          bash -n scripts/appflow-xcodebuild.sh
           echo "FASTLANE IOS DESTINATION CONFIG PASSED"
           node <<'NODE'
           const fs = require('fs');
@@ -94,13 +96,34 @@ jobs:
           xcodebuild -version
           xcodebuild -workspace platforms/ios/App.xcworkspace -scheme App -configuration Release -showdestinations
 
+      - name: Verify Appflow Xcode build wrapper filters only global signing override
+        shell: bash
+        run: |
+          set -euo pipefail
+          TMP="$(mktemp -d)"
+          printf '#!/usr/bin/env bash\\nprintf "%%s\\n" "$@" > "$CLICAID_CAPTURE"\\n' > "$TMP/mock"
+          chmod +x "$TMP/mock"
+          export CLICAID_XCODEBUILD_BIN="$TMP/mock"
+          CLICAID_CAPTURE="$TMP/archive-args" bash scripts/appflow-xcodebuild.sh \\
+            -workspace App.xcworkspace -scheme App DEVELOPMENT_TEAM=F2BCHMBHU9 \\
+            -destination generic/platform=iOS archive \\
+            'CODE_SIGN_IDENTITY=Apple Distribution: Hrihorii Shevchenko (F2BCHMBHU9)'
+          ! grep -q '^CODE_SIGN_IDENTITY=' "$TMP/archive-args"
+          grep -qx 'DEVELOPMENT_TEAM=F2BCHMBHU9' "$TMP/archive-args"
+          grep -qx 'archive' "$TMP/archive-args"
+          grep -qx 'generic/platform=iOS' "$TMP/archive-args"
+          CLICAID_CAPTURE="$TMP/non-archive-args" bash scripts/appflow-xcodebuild.sh \\
+            -showBuildSettings 'CODE_SIGN_IDENTITY=Apple Distribution: Test'
+          grep -qx 'CODE_SIGN_IDENTITY=Apple Distribution: Test' "$TMP/non-archive-args"
+          echo "APPFLOW SIGNING WRAPPER PASSED"
+
       - name: Archive for physical iOS devices without signing
         run: |
           set -euo pipefail
-          xcodebuild -workspace platforms/ios/App.xcworkspace -scheme App -configuration Release \
+          bash scripts/appflow-xcodebuild.sh -workspace platforms/ios/App.xcworkspace -scheme App -configuration Release \
             -destination 'generic/platform=iOS' \
             -archivePath "$PWD/Clicaid.xcarchive" \
-            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO archive
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO DEVELOPMENT_TEAM=F2BCHMBHU9 archive 'CODE_SIGN_IDENTITY=Apple Distribution: Test'
 
       - name: Check bundle executables and arm64 architectures
         shell: bash
