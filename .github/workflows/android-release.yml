@@ -31,14 +31,13 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - uses: android-actions/setup-android@v3
-
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.14'
 
       - name: Install Android 35 build dependencies
         run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
           sdkmanager --install "platforms;android-35" "build-tools;35.0.0" "platform-tools"
 
       - name: Install Cordova dependencies
