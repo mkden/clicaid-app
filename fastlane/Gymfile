@@ -1,0 +1,4 @@
+# Fastlane gym (used internally by Ionic Appflow) can incorrectly auto-detect
+# a Cordova iOS 8 app as visionOS on newer Xcode builds.
+# Keep this setting explicit: OneSignal XCFramework supports iOS, not visionOS.
+destination("generic/platform=iOS")
