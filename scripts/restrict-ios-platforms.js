@@ -47,7 +47,9 @@ module.exports = function restrictCordovaIOSPlatforms(context) {
     );
     if (fs.existsSync(reachabilityFile)) {
         const source = fs.readFileSync(reachabilityFile, 'utf8');
-        const cleaned = source.replace(/^#import <netinet6\\/in6\\.h>\\r?\\n/gm, '');
+        const cleaned = source
+            .replace('#import <netinet6/in6.h>\r\n', '')
+            .replace('#import <netinet6/in6.h>\n', '');
         if (cleaned !== source) {
             if (!source.includes('#import <netinet/in.h>')) {
                 throw new Error('[iOS platform hook] Expected public netinet/in.h header is absent');
