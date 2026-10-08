@@ -9,6 +9,7 @@ on:
       - 'package.json'
       - 'package-lock.json'
       - 'www/**'
+      - 'scripts/**'
       - '.github/workflows/ios-preflight.yml'
 
 permissions:
@@ -78,6 +79,10 @@ jobs:
           const matches = project.match(/SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";/g) || [];
           if (matches.length < 2 || project.includes('SUPPORTS_MACCATALYST = YES')) {
             throw new Error('Non-iOS destinations still enabled in Xcode project');
+          }
+          const reachability = fs.readFileSync('platforms/ios/App/Plugins/cordova-plugin-network-information/CDVReachability.m', 'utf8');
+          if (reachability.includes('#import <netinet6/in6.h>')) {
+            throw new Error('Xcode 26 private network header was not removed');
           }
           console.log('APPFLOW PLATFORM HOOK PASSED', matches.length);
           NODE
