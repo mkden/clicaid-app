@@ -3,7 +3,7 @@ name: Prozakon iOS App Store Preflight
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, fix-appflow-ios-visionos-20261008]
     paths:
       - 'config.xml'
       - 'package.json'
@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   verify-ios:
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 50
     steps:
       - uses: actions/checkout@v4
@@ -39,7 +39,7 @@ jobs:
           const lock = require('./package-lock.json');
           const index = fs.readFileSync('www/index.html', 'utf8');
           assert(cfg.includes('version="' + pkg.version + '"'), 'Cordova version');
-          assert(pkg.version === '1.9.10' && lock.version === pkg.version, 'Version mismatch');
+          assert(pkg.version === lock.version && lock.packages[''].version === pkg.version, 'Version mismatch');
           assert(pkg.devDependencies['cordova-ios'] === '8.1.1', 'iOS version');
           assert(pkg.devDependencies['onesignal-cordova-plugin'] === '5.6.0', 'OneSignal version');
           assert(cfg.includes('name="deployment-target" value="15.0"'), 'iOS minimum version');
@@ -68,13 +68,23 @@ jobs:
           cordova platform add ios@8.1.1 --nosave
           cordova prepare ios
           cordova platform ls
+          node <<'NODE'
+          const fs = require('fs');
+          const project = fs.readFileSync('platforms/ios/App.xcodeproj/project.pbxproj', 'utf8');
+          const matches = project.match(/SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";/g) || [];
+          if (matches.length < 2 || project.includes('SUPPORTS_MACCATALYST = YES')) {
+            throw new Error('Non-iOS destinations still enabled in Xcode project');
+          }
+          console.log('APPFLOW PLATFORM HOOK PASSED', matches.length);
+          NODE
           xcodebuild -version
+          xcodebuild -workspace platforms/ios/App.xcworkspace -scheme App -configuration Release -showdestinations
 
       - name: Archive for physical iOS devices without signing
         run: |
           set -euo pipefail
           xcodebuild -workspace platforms/ios/App.xcworkspace -scheme App -configuration Release \
-            -sdk iphoneos -destination 'generic/platform=iOS' \
+            -destination 'generic/platform=iOS' \
             -archivePath "$PWD/Clicaid.xcarchive" \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO archive
 
