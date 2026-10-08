@@ -101,18 +101,21 @@ jobs:
         run: |
           set -euo pipefail
           TMP="$(mktemp -d)"
-          printf '#!/usr/bin/env bash\\nprintf "%%s\\n" "$@" > "$CLICAID_CAPTURE"\\n' > "$TMP/mock"
+          cat > "$TMP/mock" <<'MOCK'
+          #!/usr/bin/env bash
+          printf '%s\n' "$@" > "$CLICAID_CAPTURE"
+          MOCK
           chmod +x "$TMP/mock"
           export CLICAID_XCODEBUILD_BIN="$TMP/mock"
-          CLICAID_CAPTURE="$TMP/archive-args" bash scripts/appflow-xcodebuild.sh \\
-            -workspace App.xcworkspace -scheme App DEVELOPMENT_TEAM=F2BCHMBHU9 \\
-            -destination generic/platform=iOS archive \\
+          CLICAID_CAPTURE="$TMP/archive-args" bash scripts/appflow-xcodebuild.sh \
+            -workspace App.xcworkspace -scheme App DEVELOPMENT_TEAM=F2BCHMBHU9 \
+            -destination generic/platform=iOS archive \
             'CODE_SIGN_IDENTITY=Apple Distribution: Hrihorii Shevchenko (F2BCHMBHU9)'
           ! grep -q '^CODE_SIGN_IDENTITY=' "$TMP/archive-args"
           grep -qx 'DEVELOPMENT_TEAM=F2BCHMBHU9' "$TMP/archive-args"
           grep -qx 'archive' "$TMP/archive-args"
           grep -qx 'generic/platform=iOS' "$TMP/archive-args"
-          CLICAID_CAPTURE="$TMP/non-archive-args" bash scripts/appflow-xcodebuild.sh \\
+          CLICAID_CAPTURE="$TMP/non-archive-args" bash scripts/appflow-xcodebuild.sh \
             -showBuildSettings 'CODE_SIGN_IDENTITY=Apple Distribution: Test'
           grep -qx 'CODE_SIGN_IDENTITY=Apple Distribution: Test' "$TMP/non-archive-args"
           echo "APPFLOW SIGNING WRAPPER PASSED"
