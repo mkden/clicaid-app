@@ -1,0 +1,111 @@
+name: iOS Architecture Check
+
+on:
+  push:
+    branches:
+      - fix-ios-90085
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ios-archive-check:
+    runs-on: macos-15
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          npm install
+          npm install -g cordova@latest
+
+      - name: Refresh lockfile
+        run: |
+          if ! git diff --quiet package-lock.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add package-lock.json
+            git commit -m "Refresh lockfile for iOS build stack"
+            git push
+          fi
+
+      - name: Recreate iOS platform
+        run: |
+          cordova platform rm ios --nosave || true
+          cordova platform add ios@8.1.1 --nosave
+          cordova prepare ios
+          cordova platform ls
+
+      - name: Show native dependency configuration
+        run: |
+          echo "Xcode:"
+          xcodebuild -version
+          echo "iOS project:"
+          find platforms/ios -maxdepth 2 \( -name "*.xcworkspace" -o -name "*.xcodeproj" -o -name "Podfile" -o -name "Package.resolved" \) -print
+          grep -R "OneSignal" platforms/ios/Podfile platforms/ios/*.xcodeproj/project.pbxproj 2>/dev/null || true
+
+      - name: Archive without signing
+        run: |
+          set -euo pipefail
+          WORKSPACE="$(find platforms/ios -maxdepth 1 -name '*.xcworkspace' -print -quit)"
+          PROJECT="$(find platforms/ios -maxdepth 1 -name '*.xcodeproj' -print -quit)"
+          SCHEME="Clicaid Prozakon"
+          if [ -n "$WORKSPACE" ]; then
+            xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -configuration Release -sdk iphoneos \
+              -archivePath "$PWD/Clicaid.xcarchive" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO archive
+          else
+            xcodebuild -project "$PROJECT" -scheme "$SCHEME" -configuration Release -sdk iphoneos \
+              -archivePath "$PWD/Clicaid.xcarchive" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO archive
+          fi
+
+      - name: Validate Mach-O architectures
+        run: |
+          set -euo pipefail
+          APP="$(find Clicaid.xcarchive/Products/Applications -maxdepth 1 -name '*.app' -print -quit)"
+          test -n "$APP"
+          MAIN_EXEC="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$APP/Info.plist")"
+          echo "Main app: $APP"
+          echo "Main executable: $MAIN_EXEC"
+          file "$APP/$MAIN_EXEC"
+          lipo -info "$APP/$MAIN_EXEC"
+          lipo -archs "$APP/$MAIN_EXEC" | grep -qw arm64
+
+          FAIL=0
+          while IFS= read -r BUNDLE; do
+            PLIST="$BUNDLE/Info.plist"
+            [ -f "$PLIST" ] || continue
+            EXEC="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$PLIST" 2>/dev/null || true)"
+            [ -n "$EXEC" ] || continue
+            BIN="$BUNDLE/$EXEC"
+            echo "Checking: $BIN"
+            if [ ! -f "$BIN" ]; then
+              echo "::error::Bundle executable is missing: $BIN"
+              FAIL=1
+              continue
+            fi
+            file "$BIN"
+            if ! lipo -info "$BIN"; then
+              echo "::error::lipo failed for bundle executable: $BIN"
+              FAIL=1
+            fi
+          done < <(find "$APP" -type d \( -name '*.framework' -o -name '*.appex' \))
+          test "$FAIL" -eq 0
+
+      - name: Archive diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-architecture-diagnostics
+          path: |
+            Clicaid.xcarchive
+            platforms/ios/Podfile
+            platforms/ios/Podfile.lock
+          if-no-files-found: ignore
