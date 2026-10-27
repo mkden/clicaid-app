@@ -58,6 +58,7 @@ module.exports = function restrictCordovaIOSPlatforms(context) {
             console.log('[iOS platform hook] Removed Xcode 26-incompatible private network header.');
         }
     }
+    require('./ensure-ios-orientations')(projectRoot);
     require('./normalize-ios-assets')(projectRoot);
     console.log('[iOS platform hook] iPhone/iPad only, Mac Catalyst disabled (Xcode/Appflow).');
 };
