@@ -3,7 +3,7 @@ name: Prozakon iOS App Store Preflight
 on:
   workflow_dispatch:
   push:
-    branches: [main, fix-ios-resource-executable-flags]
+    branches: [main, fix-ios-ipad-multitasking-orientations]
     paths:
       - 'config.xml'
       - 'package.json'
@@ -38,6 +38,7 @@ jobs:
           set -euo pipefail
           node --check www/js/index.js
           node --check scripts/normalize-ios-assets.js
+          node --check scripts/ensure-ios-orientations.js
           ruby -c fastlane/Gymfile
           grep -Fx 'destination("generic/platform=iOS")' fastlane/Gymfile
           grep -Fx 'xcargs("DEVELOPMENT_TEAM=F2BCHMBHU9")' fastlane/Gymfile
@@ -162,6 +163,37 @@ jobs:
           file "$APP/$MAIN"
           lipo -info "$APP/$MAIN"
           lipo -archs "$APP/$MAIN" | grep -qw arm64
+
+          # Check the actual archived Info.plist that Apple validates, not
+          # merely config.xml or Xcode project settings.
+          node <<'NODE'
+          const fs = require('fs');
+          const { execFileSync } = require('child_process');
+          const assert = require('assert');
+          const apps = 'Clicaid.xcarchive/Products/Applications';
+          const app = fs.readdirSync(apps).find(n => n.endsWith('.app'));
+          assert(app, 'No .app in archived applications');
+          const plistPath = apps + '/' + app + '/Info.plist';
+          const plist = JSON.parse(execFileSync('plutil', ['-convert','json','-o','-',plistPath], {encoding:'utf8'}));
+          const all = [
+            'UIInterfaceOrientationPortrait',
+            'UIInterfaceOrientationPortraitUpsideDown',
+            'UIInterfaceOrientationLandscapeLeft',
+            'UIInterfaceOrientationLandscapeRight'
+          ];
+          const ipad = plist['UISupportedInterfaceOrientations~ipad'] || plist.UISupportedInterfaceOrientations;
+          const iphone = plist['UISupportedInterfaceOrientations~iphone'];
+          console.log('ARCHIVED IPAD ORIENTATIONS:', JSON.stringify(ipad));
+          console.log('ARCHIVED IPHONE ORIENTATIONS:', JSON.stringify(iphone));
+          for (const orientation of all) {
+            assert(ipad && ipad.includes(orientation), 'Missing required iPad orientation: ' + orientation);
+          }
+          assert.deepStrictEqual(iphone, ['UIInterfaceOrientationPortrait'],
+            'Portrait-only iPhone setting must stay intact');
+          assert(plist.UIRequiresFullScreen !== true, 'Deprecated fullscreen iPad compatibility mode enabled');
+          console.log('APP STORE IPAD MULTITASKING ORIENTATIONS PASSED');
+          NODE
+
           COUNT=0
           while IFS= read -r BUNDLE; do
             [ -f "$BUNDLE/Info.plist" ] || continue
