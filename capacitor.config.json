@@ -1,0 +1,14 @@
+{
+  "appId": "mk.clicaid.app",
+  "appName": "Clicaid Prozakon",
+  "webDir": "cap-web",
+  "ios": {
+    "minVersion": "15.0",
+    "backgroundColor": "#ffffff",
+    "contentInset": "automatic"
+  },
+  "server": {
+    "iosScheme": "capacitor",
+    "hostname": "localhost"
+  }
+}

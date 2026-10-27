@@ -1,8 +1,7 @@
 {
   "name": "Clicaid",
+  "type": "custom",
   "integrations": {
-    "cordova": {}
-  },
-  "type": "angular",
-  "id": "mk.clicaid.app"
+    "capacitor": {}
+  }
 }
