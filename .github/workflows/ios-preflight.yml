@@ -176,7 +176,7 @@ jobs:
             COUNT=$((COUNT+1))
           done < <(find "$APP" -type d \( -name '*.framework' -o -name '*.appex' \))
           echo "Verified $COUNT embedded framework/extension executables."
-          BAD_ASSETS="$(find "$APP/PEPhotoCropEditor.bundle" -type f \\( -name '*.png' -o -name '*.strings' \\) -perm /111 -print || true)"
+          BAD_ASSETS="$(find "$APP/PEPhotoCropEditor.bundle" -type f \( -name '*.png' -o -name '*.strings' \) -perm /111 -print || true)"
           if [ -n "$BAD_ASSETS" ]; then
             echo "::error::Non-Mach-O iOS crop resources are incorrectly executable:"
             echo "$BAD_ASSETS"
