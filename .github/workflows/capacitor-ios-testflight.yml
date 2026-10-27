@@ -1,0 +1,90 @@
+name: Capacitor iOS native build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [capacitor-ios-testflight]
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'capacitor.config.json'
+      - 'ionic.config.json'
+      - 'www/**'
+      - 'cap-src/**'
+      - 'scripts/build-capacitor-web.js'
+      - 'scripts/configure-capacitor-ios.js'
+      - 'ios/**'
+      - '.github/workflows/capacitor-ios-testflight.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  ios-capacitor:
+    runs-on: macos-26
+    timeout-minutes: 60
+    env:
+      ONESIGNAL_DISABLE_LOCATION: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Capacitor packages and compile the real Prozakon screens
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+          node -e "const p=require('./package.json');if(p.version!=='1.9.12')throw Error('Wrong version')"
+          node -e "const fs=require('fs');const h=fs.readFileSync('cap-web/index.html','utf8');if(h.includes('src=\"cordova.js\"')||!h.includes('capacitor-push.js'))throw Error('Capacitor web bootstrap incorrect')"
+      - name: Prepare native Capacitor iOS app using CocoaPods
+        run: |
+          set -euo pipefail
+          if [ ! -f ios/App/App.xcodeproj/project.pbxproj ]; then
+            npx cap add ios --packagemanager CocoaPods
+          fi
+          npx cap sync ios
+          node scripts/configure-capacitor-ios.js
+          cd ios/App
+          pod install
+      - name: Verify native settings
+        run: |
+          set -euo pipefail
+          test -f ios/App/App.xcworkspace/contents.xcworkspacedata
+          test -f ios/App/App/App.entitlements
+          grep -q '<key>aps-environment</key>' ios/App/App/App.entitlements
+          grep -q 'CODE_SIGN_ENTITLEMENTS = App/App.entitlements' ios/App/App.xcodeproj/project.pbxproj
+          grep -q '1.9.12' ios/App/App.xcodeproj/project.pbxproj
+          grep -q '8c912104-8b46-497f-9ea2-d0cd76def931' cap-web/js/capacitor-push.js
+          xcodebuild -workspace ios/App/App.xcworkspace -scheme App -showdestinations | tail -n 25
+      - name: Build iOS arm64 archive without distribution certificate
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcodebuild -workspace ios/App/App.xcworkspace -scheme App -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$PWD/Prozakon-Capacitor.xcarchive" \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO archive > xcode-capacitor.log 2>&1 || { tail -n 150 xcode-capacitor.log; exit 1; }
+          tail -n 15 xcode-capacitor.log
+          APP="$(find Prozakon-Capacitor.xcarchive/Products/Applications -maxdepth 1 -name '*.app' -print -quit)"
+          test -n "$APP"
+          BIN="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$APP/Info.plist")"
+          test -f "$APP/$BIN"
+          file "$APP/$BIN"
+          lipo -archs "$APP/$BIN" | grep -qw arm64
+          BID="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP/Info.plist")"
+          test "$BID" = 'mk.clicaid.app'
+          test -f "$APP/public/index.html"
+          echo "Capacitor arm64 archive succeeded." >> "$GITHUB_STEP_SUMMARY"
+      - name: Save prepared Xcode project and lockfile to this branch
+        if: success()
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json ios/
+          if git diff --cached --quiet; then
+            echo "Project is already synchronized"
+          else
+            git commit -m "Save validated Capacitor iOS Xcode project and lockfile"
+            git push origin HEAD:capacitor-ios-testflight
+          fi
