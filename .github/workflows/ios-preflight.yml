@@ -3,7 +3,7 @@ name: Prozakon iOS App Store Preflight
 on:
   workflow_dispatch:
   push:
-    branches: [main, fix-appflow-wrapper-path-20261008]
+    branches: [main, fix-ios-resource-executable-flags]
     paths:
       - 'config.xml'
       - 'package.json'
@@ -37,6 +37,7 @@ jobs:
         run: |
           set -euo pipefail
           node --check www/js/index.js
+          node --check scripts/normalize-ios-assets.js
           ruby -c fastlane/Gymfile
           grep -Fx 'destination("generic/platform=iOS")' fastlane/Gymfile
           grep -Fx 'xcargs("DEVELOPMENT_TEAM=F2BCHMBHU9")' fastlane/Gymfile
@@ -175,6 +176,13 @@ jobs:
             COUNT=$((COUNT+1))
           done < <(find "$APP" -type d \( -name '*.framework' -o -name '*.appex' \))
           echo "Verified $COUNT embedded framework/extension executables."
+          BAD_ASSETS="$(find "$APP/PEPhotoCropEditor.bundle" -type f \\( -name '*.png' -o -name '*.strings' \\) -perm /111 -print || true)"
+          if [ -n "$BAD_ASSETS" ]; then
+            echo "::error::Non-Mach-O iOS crop resources are incorrectly executable:"
+            echo "$BAD_ASSETS"
+            exit 1
+          fi
+          echo "Crop bundle resources are non-executable."
           echo "### iOS architecture validation passed" >> "$GITHUB_STEP_SUMMARY"
           echo "Main executable: $MAIN (arm64)" >> "$GITHUB_STEP_SUMMARY"
           echo "Embedded executables checked: $COUNT" >> "$GITHUB_STEP_SUMMARY"
